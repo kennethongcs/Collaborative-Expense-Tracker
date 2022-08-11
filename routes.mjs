@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import db from './models/index.mjs';
 
-import initUsersController from './controllers/users.mjs';
+import initUsersController from './controllers/users-controller.mjs';
 
 export default function routes(app) {
   const usersController = initUsersController(db);
