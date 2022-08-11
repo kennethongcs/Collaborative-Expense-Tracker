@@ -1,7 +1,7 @@
 module.exports = {
   development: {
-    username: '<YOUR_USER_NAME>',
-    password: null,
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
     database: '<YOUR_APP_NAME>_development',
     host: '127.0.0.1',
     dialect: 'postgres',
