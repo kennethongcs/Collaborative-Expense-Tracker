@@ -11,6 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -36,6 +37,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(email);
@@ -49,7 +52,7 @@ const Login = () => {
         .then((response) => {
           console.log(response.data);
 
-          // move to the main page
+          navigate('/dashboard');
         })
         .catch((error) => console.log(error));
     } else {
@@ -127,7 +130,7 @@ const Login = () => {
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link component={RouterLink} to="/signup" variant="body2">
                     Don't have an account? Sign Up
                   </Link>
                 </Grid>

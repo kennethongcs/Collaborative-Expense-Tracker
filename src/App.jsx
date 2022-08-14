@@ -5,15 +5,22 @@ import {
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import Error from './components/Error.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import SharedLayout from './components/SharedLayout.jsx';
+import SingleExpense from './components/SingleExpense.jsx';
 
 const App = () => (
   <Router>
     <div className="app">
       <Routes>
-        <Route path="/" element={<Login />}>
-          <Route path="signup" element={<Signup />} />
-          <Route path="*" element={<Error />} />
+        <Route path="/" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="dashboard" element={<SharedLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="stats" element={<div>stats</div>} />
+          <Route path="expenses/:expenseId" element={<SingleExpense />} />
         </Route>
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   </Router>
