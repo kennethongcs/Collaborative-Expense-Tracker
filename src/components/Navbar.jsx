@@ -1,11 +1,51 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => (
   <nav>
-    <Link to="/dashboard">Home</Link>
-    <Link to="stats">Stats</Link>
-    <Link to="expenses/123">Expense</Link>
+    <NavLink
+      style={({ isActive }) => ({
+        display: 'inline',
+        margin: '0 1rem',
+        color: isActive ? 'red' : '',
+      })}
+      to="/dashboard"
+    >
+      Home
+    </NavLink>
+    <NavLink
+      style={({ isActive }) => ({
+        display: 'inline',
+        margin: '0 1rem',
+        color: isActive ? 'red' : '',
+      })}
+      to="stats"
+    >
+      Stats
+
+    </NavLink>
+    <NavLink
+      style={({ isActive }) => ({
+        display: 'inline',
+        margin: '0 1rem',
+        color: isActive ? 'red' : '',
+      })}
+      to="expenses/123"
+    >
+      Expense
+
+    </NavLink>
+    <NavLink
+      style={({ isActive }) => ({
+        display: 'inline',
+        margin: '0 1rem',
+        color: isActive ? 'red' : '',
+      })}
+      to="/"
+    >
+      Sign out
+
+    </NavLink>
   </nav>
 );
 

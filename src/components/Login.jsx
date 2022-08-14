@@ -10,7 +10,6 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
@@ -33,7 +32,7 @@ const theme = createTheme({
   },
 });
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -44,17 +43,21 @@ const Login = () => {
     console.log(email);
     if (email) {
       console.log('email exists!!');
-      axios
-        .post('/login', {
-          email,
-          password,
-        })
-        .then((response) => {
-          console.log(response.data);
+      // axios
+      //   .post('/login', {
+      //     email,
+      //     password,
+      //   })
+      //   .then((response) => {
+      //     console.log(response.data);
 
-          navigate('/dashboard');
-        })
-        .catch((error) => console.log(error));
+      //     // TODO: get display name from /login
+      const displayName = 'FirstName';
+
+      setUser({ displayName, email });
+      navigate('/dashboard');
+      //   })
+      //   .catch((error) => console.log(error));
     } else {
       console.log('nothing entered');
     }
