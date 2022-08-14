@@ -1,10 +1,22 @@
 import React from 'react';
-import LoginForm from './components/LoginForm.jsx';
+import {
+  BrowserRouter as Router, Routes, Route,
+} from 'react-router-dom';
+import Login from './components/Login.jsx';
+import Signup from './components/Signup.jsx';
+import Error from './components/Error.jsx';
 
-export default function App() {
-  return (
+const App = () => (
+  <Router>
     <div className="app">
-      <div className="login"><LoginForm /></div>
+      <Routes>
+        <Route path="/" element={<Login />}>
+          <Route path="signup" element={<Signup />} />
+          <Route path="*" element={<Error />} />
+        </Route>
+      </Routes>
     </div>
-  );
-}
+  </Router>
+);
+
+export default App;
