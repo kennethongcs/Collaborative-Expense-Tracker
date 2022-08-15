@@ -8,7 +8,10 @@ export default function initUserModel(sequelize, DataTypes) {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      username: {
+      firstName: {
+        type: DataTypes.STRING,
+      },
+      lastName: {
         type: DataTypes.STRING,
       },
       email: {
