@@ -25,7 +25,8 @@ export default function initUsersController(db) {
       // create new user
       const user = await db.User.create({
         where: {
-          username: username,
+          firstname: firstname,
+          lastname: lastname,
           password: hashedPassword,
           email: email,
         },
@@ -38,5 +39,30 @@ export default function initUsersController(db) {
     }
   };
 
-  return signup;
+  const login = async (req, res) => {
+    const { email } = req.body;
+    const { password } = req.body;
+
+    try {
+      const userDetails = await db.User.findOne({
+        where: {
+          email: email,
+        },
+      });
+
+      const hashedPassword = getHashSalted(hashedPassword);
+
+      if (hashedPassword === userDetails.password) {
+        res.send({
+          user: user.email,
+          firstname: user.firstname,
+          lastname: user.lastname,
+        });
+      }
+    } catch (err) {
+      console.log(`Login error: ${err}`);
+    }
+  };
+
+  return { signup, login };
 }
