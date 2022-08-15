@@ -30,6 +30,9 @@ export default function initUsersController(db) {
           email: email,
         },
       });
+      res.send({
+        user: user.username,
+      });
     } catch (err) {
       console.log(`create user err: ${err}`);
     }
