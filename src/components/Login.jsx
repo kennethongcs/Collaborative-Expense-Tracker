@@ -16,9 +16,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" mt={props.sx.mt}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>
+      Your Website
       {' '}
       {new Date().getFullYear()}
       .
@@ -41,6 +39,7 @@ const Login = ({ setUser }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(email);
+
     if (email) {
       console.log('email exists!!');
       // axios
@@ -51,13 +50,14 @@ const Login = ({ setUser }) => {
       //   .then((response) => {
       //     console.log(response.data);
 
-      //     // TODO: get display name from /login
-      const displayName = 'FirstName';
+      // TODO: get display name from /login
+      const firstName = 'FirstName';
+      const lastName = 'LastName';
 
-      setUser({ displayName, email });
-      navigate('/dashboard');
-      //   })
-      //   .catch((error) => console.log(error));
+      setUser({ firstName, lastName, email });
+      navigate('/welcome');
+      // })
+      // .catch((error) => console.log(error));
     } else {
       console.log('nothing entered');
     }

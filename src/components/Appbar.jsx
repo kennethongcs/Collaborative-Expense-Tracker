@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Navbar = () => (
+const Appbar = () => (
   <nav>
     <NavLink
       style={({ isActive }) => ({
@@ -30,17 +30,6 @@ const Navbar = () => (
         margin: '0 1rem',
         color: isActive ? 'red' : '',
       })}
-      to="expenses/123"
-    >
-      Expense
-
-    </NavLink>
-    <NavLink
-      style={({ isActive }) => ({
-        display: 'inline',
-        margin: '0 1rem',
-        color: isActive ? 'red' : '',
-      })}
       to="/"
     >
       Sign out
@@ -49,4 +38,4 @@ const Navbar = () => (
   </nav>
 );
 
-export default Navbar;
+export default Appbar;

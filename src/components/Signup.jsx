@@ -17,9 +17,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" mt={props.sx.mt}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>
+      Your Website
       {' '}
       {new Date().getFullYear()}
       .
@@ -46,7 +44,8 @@ const Signup = () => {
         .post('/signup', {
           email,
           password,
-          displayName: `${firstName} ${lastName}`,
+          firstname: firstName,
+          lastname: lastName,
         })
         .then((response) => {
           console.log(response.data);

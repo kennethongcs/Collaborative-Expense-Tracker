@@ -1,14 +1,14 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar.jsx';
+import Appbar from './Appbar.jsx';
 import BottomNav from './BottomNav.jsx';
 
-const SharedLayout = () => (
+const DashboardLayout = () => (
   <>
-    <Navbar />
+    <Appbar />
     <Outlet />
     <BottomNav />
   </>
 );
 
-export default SharedLayout;
+export default DashboardLayout;

@@ -1,42 +1,49 @@
 import React, { useState } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import SettingsIcon from '@mui/icons-material/Settings';
+import HomeIcon from '@mui/icons-material/Home';
+import AddIcon from '@mui/icons-material/Add';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import { useNavigate } from 'react-router-dom';
 
-const LabelBottomNavigation = () => {
-  const [value, setValue] = useState('recents');
+const BottomNav = () => {
+  const [value, setValue] = useState('home');
+  const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    if (newValue) {
+      navigate(`/dashboard/${newValue}`);
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   return (
     <BottomNavigation sx={{ width: '100%', bottom: 0, position: 'absolute' }} value={value} onChange={handleChange}>
       <BottomNavigationAction
-        label="Recents"
-        value="recents"
-        icon={<RestoreIcon />}
+        label="Home"
+        value=""
+        icon={<HomeIcon />}
       />
       <BottomNavigationAction
-        label="Favorites"
-        value="favorites"
-        icon={<FavoriteIcon />}
+        label="Add"
+        value="expense"
+        icon={<AddIcon />}
       />
       <BottomNavigationAction
-        label="Nearby"
-        value="nearby"
-        icon={<LocationOnIcon />}
+        label="Chart"
+        value="stats"
+        icon={<BarChartIcon />}
       />
       <BottomNavigationAction
-        label="Folder"
-        value="folder"
-        icon={<FolderIcon />}
+        label="Settings"
+        value="settings"
+        icon={<SettingsIcon />}
       />
     </BottomNavigation>
   );
 };
 
-export default LabelBottomNavigation;
+export default BottomNav;
