@@ -8,7 +8,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import { useNavigate } from 'react-router-dom';
 
 const BottomNav = () => {
-  const [value, setValue] = useState('home');
+  const [value, setValue] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {

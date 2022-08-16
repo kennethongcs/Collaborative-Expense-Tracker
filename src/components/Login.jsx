@@ -55,7 +55,7 @@ const Login = ({ setUser }) => {
       const lastName = 'LastName';
 
       setUser({ firstName, lastName, email });
-      navigate('/welcome');
+      navigate('/workspace');
       // })
       // .catch((error) => console.log(error));
     } else {

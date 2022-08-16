@@ -1,11 +1,11 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Appbar from './Appbar.jsx';
+import AppBar from './AppBar.jsx';
 import BottomNav from './BottomNav.jsx';
 
 const DashboardLayout = () => (
   <>
-    <Appbar />
+    <AppBar />
     <Outlet />
     <BottomNav />
   </>

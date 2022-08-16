@@ -3,7 +3,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { NavLink } from 'react-router-dom';
 
-const BottomNav = () => {
+const WorkspaceBottomNav = () => {
   const [value, setValue] = useState('recents');
 
   const handleChange = (event, newValue) => {
@@ -18,7 +18,7 @@ const BottomNav = () => {
           margin: '0 1rem',
           color: isActive ? 'red' : '',
         })}
-        to="/welcome/1"
+        to="/workspace/1"
       >
         1
       </NavLink>
@@ -28,7 +28,7 @@ const BottomNav = () => {
           margin: '0 1rem',
           color: isActive ? 'red' : '',
         })}
-        to="/welcome/2"
+        to="/workspace/2"
       >
         2
       </NavLink>
@@ -38,7 +38,7 @@ const BottomNav = () => {
           margin: '0 1rem',
           color: isActive ? 'red' : '',
         })}
-        to="/welcome/3"
+        to="/workspace/3"
       >
         3
       </NavLink>
@@ -48,7 +48,7 @@ const BottomNav = () => {
           margin: '0 1rem',
           color: isActive ? 'red' : '',
         })}
-        to="/welcome/4"
+        to="/workspace/4"
       >
         4
       </NavLink>
@@ -56,4 +56,4 @@ const BottomNav = () => {
   );
 };
 
-export default BottomNav;
+export default WorkspaceBottomNav;

@@ -10,7 +10,7 @@ import DashboardLayout from './components/DashboardLayout.jsx';
 import ExpenseDetail from './components/ExpenseDetail.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import WorkspaceForm from './components/WorkspaceForm.jsx';
-import WelcomeLayout from './components/WelcomeLayout.jsx';
+import WorkspaceLayout from './components/WorkspaceLayout.jsx';
 import CategoryForm from './components/CategoryForm.jsx';
 import CollaboratorForm from './components/CollaboratorForm.jsx';
 import ExpenseForm from './components/ExpenseForm.jsx';
@@ -26,8 +26,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login setUser={setUser} />} />
           <Route path="signup" element={<Signup />} />
-          <Route path="welcome" element={<WelcomeLayout />}>
+          <Route path="workspace" element={<WorkspaceLayout />}>
             <Route index element={<WorkspaceForm />} />
+            <Route path="1" element={<WorkspaceForm />} />
             <Route path="2" element={<CategoryForm />} />
             <Route path="3" element={<CollaboratorForm />} />
             <Route path="4" element={<ExpenseForm />} />

@@ -9,6 +9,12 @@ const ExpenseForm = () => (
     >
       Submit
     </NavLink>
+    <br />
+    <NavLink
+      to="/dashboard"
+    >
+      Skip
+    </NavLink>
   </div>
 );
 

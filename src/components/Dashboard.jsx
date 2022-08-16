@@ -9,7 +9,6 @@ const Dashboard = ({ user }) => (
       {' '}
       {user?.firstName}
     </h4>
-    <div>Profile button on top right</div>
     <div>Menu to change workspace if more than 1</div>
     <div>Chart for the current workspace</div>
     <div>Some info about collaborators in this workspace</div>
