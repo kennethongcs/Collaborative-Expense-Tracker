@@ -1,8 +1,8 @@
 module.exports = {
   development: {
     username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    database: '<YOUR_APP_NAME>_development',
+    password: null,
+    database: 'expense_tracker_development',
     host: '127.0.0.1',
     dialect: 'postgres',
   },
@@ -18,3 +18,5 @@ module.exports = {
     },
   },
 };
+
+// psql -d expense_tracker_development
