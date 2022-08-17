@@ -19,12 +19,13 @@ import Settings from './pages/Settings.jsx';
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [workspace, setWorkspace] = useState(null);
 
   return (
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/" element={<Login setUser={setUser} />} />
+          <Route path="/" element={<Login setUser={setUser} setWorkspace={setWorkspace} />} />
           <Route path="signup" element={<Signup />} />
           <Route path="workspace" element={<WorkspaceLayout />}>
             <Route index element={<WorkspaceForm />} />

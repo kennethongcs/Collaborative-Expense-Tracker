@@ -30,7 +30,7 @@ const theme = createTheme({
   },
 });
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, setWorkspace }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -50,12 +50,16 @@ const Login = ({ setUser }) => {
       //   .then((response) => {
       //     console.log(response.data);
 
-      // TODO: get display name from /login
+      // TODO: get names and workspace info from /login
       const firstName = 'FirstName';
       const lastName = 'LastName';
+      const workspaceId = null;
 
       setUser({ firstName, lastName, email });
-      navigate('/workspace');
+      setWorkspace(workspaceId);
+
+      if (workspaceId > 0) navigate('/dashboard');
+      else navigate('/workspace');
       // })
       // .catch((error) => console.log(error));
     } else {
