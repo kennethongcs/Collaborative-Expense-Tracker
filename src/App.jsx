@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import {
   BrowserRouter as Router, Routes, Route,
 } from 'react-router-dom';
-import Login from './components/Login.jsx';
-import Signup from './components/Signup.jsx';
+import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 import Error from './components/Error.jsx';
-import Dashboard from './components/Dashboard.jsx';
-import DashboardLayout from './components/DashboardLayout.jsx';
-import ExpenseDetail from './components/ExpenseDetail.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import DashboardLayout from './layouts/DashboardLayout.jsx';
+import ExpenseDetail from './pages/ExpenseDetail.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import WorkspaceForm from './components/WorkspaceForm.jsx';
-import WorkspaceLayout from './components/WorkspaceLayout.jsx';
-import CategoryForm from './components/CategoryForm.jsx';
-import CollaboratorForm from './components/CollaboratorForm.jsx';
-import ExpenseForm from './components/ExpenseForm.jsx';
-import Statistics from './components/Statistics.jsx';
-import Settings from './components/Settings.jsx';
+import WorkspaceForm from './pages/WorkspaceForm.jsx';
+import WorkspaceLayout from './layouts/WorkspaceLayout.jsx';
+import CategoryForm from './pages/CategoryForm.jsx';
+import CollaboratorForm from './pages/CollaboratorForm.jsx';
+import ExpenseForm from './pages/ExpenseForm.jsx';
+import Statistics from './pages/Statistics.jsx';
+import Settings from './pages/Settings.jsx';
 
 const App = () => {
   const [user, setUser] = useState(null);

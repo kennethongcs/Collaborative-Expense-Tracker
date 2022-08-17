@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import AppBar from './AppBar.jsx';
-import BottomNav from './BottomNav.jsx';
+import AppBar from '../components/AppBar.jsx';
+import BottomNav from '../components/BottomNav.jsx';
 
 const DashboardLayout = () => (
   <>
