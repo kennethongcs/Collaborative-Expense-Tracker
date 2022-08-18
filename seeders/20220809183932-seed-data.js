@@ -3,42 +3,42 @@ module.exports = {
     // Define user data
     const userData = [
       {
-        username: 'John',
+        first_name: 'John',
+        last_name: 'Doe',
         email: 'john@gmail.com',
         password: 'password',
-        income: 5000.10,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        username: 'Mary',
+        first_name: 'Mary',
+        last_name: 'Jane',
         email: 'mary@gmail.com',
         password: 'password',
-        income: 4000.10,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        username: 'Peter',
+        first_name: 'Peter',
+        last_name: 'Griffin',
         email: 'peter@gmail.com',
         password: 'password',
-        income: 3000.10,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        username: 'Ruth',
+        first_name: 'Ruth',
+        last_name: 'Boaz',
         email: 'ruth@gmail.com',
         password: 'password',
-        income: 2000.10,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
-        username: 'Simon',
+        first_name: 'Simon',
+        last_name: 'Says',
         email: 'simon@gmail.com',
         password: 'password',
-        income: 1000.10,
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -46,9 +46,10 @@ module.exports = {
 
     // Bulk insert users, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [johnUser, maryUser, peterUser, ruthUser, simonUser] = await queryInterface.bulkInsert('users', userData, {
-      returning: true,
-    });
+    const [johnUser, maryUser, peterUser, ruthUser, simonUser] =
+      await queryInterface.bulkInsert('users', userData, {
+        returning: true,
+      });
 
     // Define workspace data
     const workspaceData = [
@@ -74,11 +75,10 @@ module.exports = {
 
     // Bulk insert workspaces, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] = await queryInterface.bulkInsert(
-      'workspaces',
-      workspaceData,
-      { returning: true },
-    );
+    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] =
+      await queryInterface.bulkInsert('workspaces', workspaceData, {
+        returning: true,
+      });
 
     // Define user data
     const authorityData = [
@@ -96,9 +96,13 @@ module.exports = {
 
     // Bulk insert workspace_authorities, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [edit, view] = await queryInterface.bulkInsert('workspace_authorities', authorityData, {
-      returning: true,
-    });
+    const [edit, view] = await queryInterface.bulkInsert(
+      'workspace_authorities',
+      authorityData,
+      {
+        returning: true,
+      }
+    );
 
     // Define user workspace data based on generated users and workspaces and authorities
     const userWorkspaceData = [
@@ -107,6 +111,7 @@ module.exports = {
         user_id: johnUser.id,
         workspace_id: workspaceJohnSimon.id,
         workspace_authority_id: edit.id,
+        income: 5000.1,
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -115,6 +120,7 @@ module.exports = {
         user_id: peterUser.id,
         workspace_id: workspacePeterMary.id,
         workspace_authority_id: edit.id,
+        income: 4000.1,
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -123,6 +129,7 @@ module.exports = {
         user_id: maryUser.id,
         workspace_id: workspacePeterMary.id,
         workspace_authority_id: edit.id,
+        income: 3000.1,
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -131,6 +138,7 @@ module.exports = {
         user_id: ruthUser.id,
         workspace_id: workspaceRuthSimon.id,
         workspace_authority_id: edit.id,
+        income: 2000.1,
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -154,7 +162,14 @@ module.exports = {
 
     // Bulk insert user_workspaces, returning=true,
     // and destructure the returned results array, for use in payeeData and expenseData
-    const [userWsJohn, userWsPeter, userWsMary, userWsRuth, userWsSimonBiz, userWsSimonWs] = await queryInterface.bulkInsert('user_workspaces', userWorkspaceData, {
+    const [
+      userWsJohn,
+      userWsPeter,
+      userWsMary,
+      userWsRuth,
+      userWsSimonBiz,
+      userWsSimonWs,
+    ] = await queryInterface.bulkInsert('user_workspaces', userWorkspaceData, {
       returning: true,
     });
 
@@ -200,7 +215,14 @@ module.exports = {
 
     // Bulk insert payees, returning=true,
     // and destructure the returned results array, for use in expenseData
-    const [payeeJohn, payeePeter, payeeMary, payeeRuth, payeeSimonBiz, payeeSimonWs] = await queryInterface.bulkInsert('payees', payeeData, {
+    const [
+      payeeJohn,
+      payeePeter,
+      payeeMary,
+      payeeRuth,
+      payeeSimonBiz,
+      payeeSimonWs,
+    ] = await queryInterface.bulkInsert('payees', payeeData, {
       returning: true,
     });
 
@@ -252,7 +274,14 @@ module.exports = {
 
     // Bulk insert categories, returning=true,
     // and destructure the returned results array, for use in expenseData
-    const [catOnePeterMary, catTwoPeterMary, catOneJohnSimon, catTwoJohnSimon, catOneRuthSimon, catTwoRuthSimon] = await queryInterface.bulkInsert('categories', categoryData, {
+    const [
+      catOnePeterMary,
+      catTwoPeterMary,
+      catOneJohnSimon,
+      catTwoJohnSimon,
+      catOneRuthSimon,
+      catTwoRuthSimon,
+    ] = await queryInterface.bulkInsert('categories', categoryData, {
       returning: true,
     });
 
@@ -322,7 +351,18 @@ module.exports = {
 
     // Bulk insert payment modes, returning=true,
     // and destructure the returned results array, for use in expenseData
-    const [cashJohn, creditJohn, cashPeter, creditPeter, cashMary, creditMary, cashRuth, creditRuth, cashSimon, creditSimon] = await queryInterface.bulkInsert('payment_modes', payementModeData, {
+    const [
+      cashJohn,
+      creditJohn,
+      cashPeter,
+      creditPeter,
+      cashMary,
+      creditMary,
+      cashRuth,
+      creditRuth,
+      cashSimon,
+      creditSimon,
+    ] = await queryInterface.bulkInsert('payment_modes', payementModeData, {
       returning: true,
     });
 
@@ -362,9 +402,10 @@ module.exports = {
 
     // Bulk insert comments, returning=true,
     // and destructure the returned results array, for use in expenseData
-    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] = await queryInterface.bulkInsert('comments', commentData, {
-      returning: true,
-    });
+    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] =
+      await queryInterface.bulkInsert('comments', commentData, {
+        returning: true,
+      });
 
     // Define expense data
     const expenseData = [

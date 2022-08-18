@@ -8,7 +8,10 @@ export default function initUserModel(sequelize, DataTypes) {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      username: {
+      firstName: {
+        type: DataTypes.STRING,
+      },
+      lastName: {
         type: DataTypes.STRING,
       },
       email: {
@@ -16,9 +19,6 @@ export default function initUserModel(sequelize, DataTypes) {
       },
       password: {
         type: DataTypes.STRING,
-      },
-      income: {
-        type: DataTypes.FLOAT,
       },
       createdAt: {
         allowNull: false,
@@ -32,6 +32,6 @@ export default function initUserModel(sequelize, DataTypes) {
     {
       // The underscored option makes Sequelize reference snake_case names in the DB.
       underscored: true,
-    },
+    }
   );
 }
