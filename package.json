@@ -61,6 +61,7 @@
     "dotenv": "^16.0.1",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "jssha": "^3.2.0",
     "method-override": "^3.0.0",
     "pg": "^8.7.3",
     "react-router-dom": "^6.3.0",

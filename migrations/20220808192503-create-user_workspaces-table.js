@@ -28,6 +28,9 @@ module.exports = {
           key: 'id',
         },
       },
+      income: {
+        type: Sequelize.FLOAT,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

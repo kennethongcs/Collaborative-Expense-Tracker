@@ -29,6 +29,9 @@ export default function initUserWorkspaceModel(sequelize, DataTypes) {
           key: 'id',
         },
       },
+      income: {
+        type: DataTypes.FLOAT,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -41,6 +44,6 @@ export default function initUserWorkspaceModel(sequelize, DataTypes) {
     {
       // The underscored option makes Sequelize reference snake_case names in the DB.
       underscored: true,
-    },
+    }
   );
 }
