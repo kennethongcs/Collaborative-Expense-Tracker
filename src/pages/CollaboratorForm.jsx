@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const CollaboratorForm = () => (
-  <div>
-    <div>Add collaborator</div>
-    <div>Probably similar to adding categories but with collaborators</div>
-  </div>
+  // const[collaborator, setCollaborator] = useState('');
+  <>
+    <div>Add collaborator page</div>
+    <input type="text" placeholder="collaborators email / username"></input>
+    <button>Collaborate!</button>
+    {/* upon input, query db for users with that email / username */}
+  </>
 );
 
 export default CollaboratorForm;
