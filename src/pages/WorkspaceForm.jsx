@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-const WorkspaceForm = () => {
+const WorkspaceForm = ({ user, setWorkspace }) => {
   const [workspaceName, setWorkspaceName] = useState('');
   const [purpose, setPurpose] = useState('');
 
@@ -22,22 +22,24 @@ const WorkspaceForm = () => {
     event.preventDefault();
 
     if (workspaceName) {
-      // axios
-      //   .post('/login', {
-      //     email,
-      //     password,
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
+      axios
+        .post('/workspace', {
+          name: workspaceName,
+          purpose,
+          userId: user.id,
+        })
+        .then((response) => {
+          console.log(response.data);
+          const workspace = response.data;
 
-      // TODO: get workspace info from workspace api
-      const workspaceId = null;
+          setWorkspace({
+            id: workspace.workspace,
+            userId: workspace.userWorkspace,
+          });
 
-      // setWorkspace(workspaceId);
-
-      navigate('/workspace/2');
-      // })
-      // .catch((error) => console.log(error));
+          navigate('/workspace/2');
+        })
+        .catch((error) => console.log(error));
     } else {
       console.log('nothing entered');
     }
