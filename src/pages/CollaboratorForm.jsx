@@ -1,15 +1,40 @@
+/* eslint-disable react/self-closing-comp */
 import React, { useState, useRef } from 'react';
-import AppBar from '../components/AppBar.jsx';
+import axios from 'axios';
+
+import UserList from '../components/UserList.jsx';
 
 const CollaboratorForm = () => {
   const [collaborator, setCollaborator] = useState('');
+  const [retrievedUsers, setRetrievedUsers] = useState([
+    { name: 'ken', email: 'ken@gmail.com' },
+    { name: 'sam', email: 'sam@gmail.com' },
+  ]);
   const collaboratorName = useRef();
 
+  // add user email into input box
+  const whenUserIsClicked = (user) => {
+    collaboratorName.current.value = user.email;
+  };
+
+  // runs when any char is typed into "input box"
   const getCollaboratorName = () => {
     // should set timeout on this to prevent many queries to server
     const input = collaboratorName.current.value;
     console.log(input);
+    // axios to get user data from server
+    // axios
+    //   .get('/retrieveUsers', {
+    //     user: input,
+    //   })
+    //   .then((res) => {
+    //     console.log(`retrieved users: ${res}`);
+    //     const userList = res;
+    //     setRetrievedUsers(userList);
+    //   });
   };
+
+  // sends invitation email to invite to collaborate on workspace
   const submitEmail = () => {
     const input = collaboratorName.current.value;
     console.log(input);
@@ -24,7 +49,13 @@ const CollaboratorForm = () => {
         onChange={getCollaboratorName}
       ></input>
       <button onClick={submitEmail}>Collaborate!</button>
-      {/* upon input, query db for users with that email / username */}
+      <ul>
+        {/* upon input, query db for users with that email / username */}
+        <UserList
+          retrievedUsers={retrievedUsers}
+          whenUserIsClicked={whenUserIsClicked}
+        />
+      </ul>
     </div>
   );
 };
