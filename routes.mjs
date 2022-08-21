@@ -12,7 +12,7 @@ export default function routes(app) {
 
   app.post('/workspace', workspacesController.create);
 
-  app.get('/', (request, response) => {
+  app.get('*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));
   });
 }
