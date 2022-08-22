@@ -42,26 +42,27 @@ const Login = ({ setUser, setWorkspace }) => {
 
     if (email) {
       console.log('email exists!!');
-      // axios
-      //   .post('/login', {
-      //     email,
-      //     password,
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
+      axios
+        .post('/login', {
+          email,
+          password,
+        })
+        .then((response) => {
+          console.log(response.data);
+          const user = response.data;
 
-      // TODO: get names and workspace info from /login
-      const firstName = 'FirstName';
-      const lastName = 'LastName';
-      const workspaceId = null;
+          const { firstName, lastName, id } = user;
+          const workspaceId = null;
 
-      setUser({ firstName, lastName, email });
-      setWorkspace(workspaceId);
+          setUser({
+            id, firstName, lastName, email,
+          });
+          setWorkspace(workspaceId);
 
-      if (workspaceId > 0) navigate('/dashboard');
-      else navigate('/workspace');
-      // })
-      // .catch((error) => console.log(error));
+          if (workspaceId > 0) navigate('/dashboard');
+          else navigate('/workspace');
+        })
+        .catch((error) => console.log(error));
     } else {
       console.log('nothing entered');
     }

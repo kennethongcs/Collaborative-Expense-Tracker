@@ -6,7 +6,7 @@ import initUsersController from './controllers/users-controller.mjs';
 export default function routes(app) {
   const usersController = initUsersController(db);
 
-  app.get('*', (request, response) => {
+  app.get('/*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));
   });
 
