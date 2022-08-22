@@ -10,5 +10,6 @@ export default function routes(app) {
     response.sendFile(resolve('dist', 'main.html'));
   });
 
-  app.get('/signup', usersController.signup);
+  app.post('/signup', usersController.signup);
+  app.post('/retrieveusers', usersController.retrieveusers);
 }
