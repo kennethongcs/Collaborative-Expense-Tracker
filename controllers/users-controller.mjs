@@ -15,27 +15,42 @@ const getHashSalted = (input) => {
 
 export default function initUsersController(db) {
   const signup = async (req, res) => {
-    const { username } = req.body;
-    const { password } = req.body;
-    const { email } = req.body;
-
-    const hashedPassword = getHashSalted(password);
+    const {
+      firstname, lastname, password, email,
+    } = req.body;
 
     try {
-      // create new user
-      const user = await db.User.create({
+      const user = await db.User.findOne({
         where: {
-          firstname: firstname,
-          lastname: lastname,
-          password: hashedPassword,
-          email: email,
+          email,
         },
       });
-      res.send({
-        user: user.username,
-      });
-    } catch (err) {
-      console.log(`create user err: ${err}`);
+      console.log('user', user);
+
+      if (!user) {
+        const hashedPassword = getHashSalted(password);
+        console.log('hashed password', hashedPassword);
+
+        const newUser = {
+          email,
+          firstName: firstname,
+          lastName: lastname,
+          password: hashedPassword,
+        };
+
+        const userNew = await db.User.create(newUser);
+
+        res.send({
+          email: userNew.email,
+        });
+      } else {
+        res.status(409).send({
+          error: 'The email address is already in use.',
+        });
+      }
+    }
+    catch (error) {
+      console.log(error);
     }
   };
 
@@ -44,19 +59,24 @@ export default function initUsersController(db) {
     const { password } = req.body;
 
     try {
-      const userDetails = await db.User.findOne({
+      const user = await db.User.findOne({
         where: {
-          email: email,
+          email,
         },
       });
 
-      const hashedPassword = getHashSalted(hashedPassword);
+      const hashedPassword = getHashSalted(password);
 
-      if (hashedPassword === userDetails.password) {
+      if (hashedPassword === user.password) {
         res.send({
+          id: user.id,
           user: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
+        });
+      } else {
+        res.status(401).send({
+          error: 'The login information is incorrect.',
         });
       }
     } catch (err) {
