@@ -5,6 +5,7 @@ const IndividualUser = ({ user, whenUserIsClicked }) => {
     whenUserIsClicked(user);
     console.log(user.name);
   };
+  // TODO add uuid for key in prop
   return <li onClick={onUserClick}>{user.name}</li>;
 };
 
