@@ -9,10 +9,11 @@ export default function routes(app) {
 
   app.post('/signup', usersController.signup);
   app.post('/login', usersController.login);
-  app.post('/save', usersController.save);
+  app.post('/save', usersController.save);  
+  app.post('/retrieveusers', usersController.retrieveusers);
 
   app.post('/workspace', workspacesController.create);
-
+  
   app.get('*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));
   });
