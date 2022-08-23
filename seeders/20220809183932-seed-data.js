@@ -6,7 +6,7 @@ module.exports = {
         first_name: 'John',
         last_name: 'Doe',
         email: 'john@gmail.com',
-        password: 'password',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -14,7 +14,7 @@ module.exports = {
         first_name: 'Mary',
         last_name: 'Jane',
         email: 'mary@gmail.com',
-        password: 'password',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -22,7 +22,7 @@ module.exports = {
         first_name: 'Peter',
         last_name: 'Griffin',
         email: 'peter@gmail.com',
-        password: 'password',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -30,7 +30,7 @@ module.exports = {
         first_name: 'Ruth',
         last_name: 'Boaz',
         email: 'ruth@gmail.com',
-        password: 'password',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -38,7 +38,7 @@ module.exports = {
         first_name: 'Simon',
         last_name: 'Says',
         email: 'simon@gmail.com',
-        password: 'password',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -46,10 +46,9 @@ module.exports = {
 
     // Bulk insert users, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [johnUser, maryUser, peterUser, ruthUser, simonUser] =
-      await queryInterface.bulkInsert('users', userData, {
-        returning: true,
-      });
+    const [johnUser, maryUser, peterUser, ruthUser, simonUser] = await queryInterface.bulkInsert('users', userData, {
+      returning: true,
+    });
 
     // Define workspace data
     const workspaceData = [
@@ -75,10 +74,9 @@ module.exports = {
 
     // Bulk insert workspaces, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] =
-      await queryInterface.bulkInsert('workspaces', workspaceData, {
-        returning: true,
-      });
+    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] = await queryInterface.bulkInsert('workspaces', workspaceData, {
+      returning: true,
+    });
 
     // Define user data
     const authorityData = [
@@ -101,7 +99,7 @@ module.exports = {
       authorityData,
       {
         returning: true,
-      }
+      },
     );
 
     // Define user workspace data based on generated users and workspaces and authorities
@@ -402,10 +400,9 @@ module.exports = {
 
     // Bulk insert comments, returning=true,
     // and destructure the returned results array, for use in expenseData
-    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] =
-      await queryInterface.bulkInsert('comments', commentData, {
-        returning: true,
-      });
+    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] = await queryInterface.bulkInsert('comments', commentData, {
+      returning: true,
+    });
 
     // Define expense data
     const expenseData = [

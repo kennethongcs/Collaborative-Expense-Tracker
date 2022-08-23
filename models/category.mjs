@@ -14,6 +14,13 @@ export default function initCategoryModel(sequelize, DataTypes) {
       budget: {
         type: DataTypes.FLOAT,
       },
+      workspaceId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'workspaces',
+          key: 'id',
+        },
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
