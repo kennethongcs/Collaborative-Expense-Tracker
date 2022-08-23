@@ -1,4 +1,7 @@
 import jsSHA from 'jssha';
+import sequelizePackage from 'sequelize';
+
+const { Sequelize } = sequelizePackage;
 
 const getHashSalted = (input) => {
   // create new SHA object
@@ -48,8 +51,7 @@ export default function initUsersController(db) {
           error: 'The email address is already in use.',
         });
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -114,5 +116,25 @@ export default function initUsersController(db) {
     }
   };
 
-  return { signup, save, login };
+  const retrieveusers = async (req, res) => {
+    const { user } = req.body;
+    const input = user.toLowerCase();
+    console.log(input);
+    try {
+      const Op = Sequelize.Op;
+      const users = await db.User.findAll({
+        where: {
+          email: {
+            [Op.like]: `${input}%`,
+          },
+        },
+      });
+      console.log(users);
+      res.send(users);
+    } catch (err) {
+      console.log(`Error retrieving users: ${err}`);
+    }
+  };
+
+  return { signup, save, login, retrieveusers };
 }
