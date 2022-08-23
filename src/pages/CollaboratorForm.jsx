@@ -19,8 +19,8 @@ const CollaboratorForm = () => {
   const getCollaboratorName = () => {
     // should set timeout on this to prevent many queries to server
     const input = collaboratorName.current.value;
-    console.log(input);
-    if (input != '') {
+    // console.log(input);
+    if (input !== '') {
       // TODO
       // axios to get user data from server
       axios
@@ -29,7 +29,7 @@ const CollaboratorForm = () => {
         })
         .then((res) => {
           const { data } = res;
-          console.log(data);
+          // console.log(data);
           // console.log(`retrieved users: ${emails}`);
           setRetrievedUsers(data);
         });
