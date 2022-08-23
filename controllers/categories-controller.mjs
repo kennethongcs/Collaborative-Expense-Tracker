@@ -10,6 +10,7 @@ export default function initCategoriesController(db) {
           workspaceId: data.workspaceId,
         });
       });
+      res.send('Success!');
     }
     catch (error) {
       console.log(error);

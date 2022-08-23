@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import RenderBudgetInput from "../components/BudgetInput.jsx";
 import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const CategoryForm = () => {
   const [addCategory, setaddCategory] = useState([]);
@@ -65,8 +66,10 @@ const CategoryForm = () => {
     setCategoryBudgetList(newCategoryList);
   };
 
+  const navigate = useNavigate();
   const handleCategoryListSubmit = () => {
     // add user Id
+
     axios
       .post("/add-category", {
         categoryBudgetList,
@@ -74,8 +77,8 @@ const CategoryForm = () => {
         workspaceId: 3,
       })
       .then((response) => {
-        console.log("this is response");
         console.log(response);
+        navigate("/workspace/3");
       })
       .catch((error) => {
         console.log(error);
