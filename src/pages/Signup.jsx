@@ -44,8 +44,8 @@ const Signup = () => {
         .post('/signup', {
           email,
           password,
-          firstname: firstName,
-          lastname: lastName,
+          firstName,
+          lastName,
         })
         .then((response) => {
           console.log(response.data);

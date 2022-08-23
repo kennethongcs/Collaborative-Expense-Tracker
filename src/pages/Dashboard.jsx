@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Dashboard = ({ user }) => (
+const Dashboard = ({ user, workspace }) => (
   <div>
     <h2>This is the dashboard</h2>
     <h4>
@@ -13,6 +13,12 @@ const Dashboard = ({ user }) => (
     <div>Chart for the current workspace</div>
     <div>Some info about collaborators in this workspace</div>
     <div>Recent expenses for this workspace</div>
+    <br />
+    <div>
+      Currently looking at workspace
+      {' '}
+      { workspace?.id}
+    </div>
     <br />
     <div>
       Today

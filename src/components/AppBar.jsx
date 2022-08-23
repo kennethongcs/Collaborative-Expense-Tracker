@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 const pages = ['Expense', 'Chart', 'Settings'];
 const settings = ['Profile', 'Logout'];
 
-const AppBar = () => {
+const AppBar = ({ user }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
@@ -134,7 +134,7 @@ const AppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar>{user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase()}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
