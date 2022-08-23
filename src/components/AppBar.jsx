@@ -134,7 +134,7 @@ const AppBar = ({ user }) => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar>{user.firstName.charAt(0).toUpperCase()}</Avatar>
+                <Avatar>{user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase()}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
