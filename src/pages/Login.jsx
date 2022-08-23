@@ -22,7 +22,10 @@ function Copyright(props) {
       mt={props.sx.mt}
     >
       {'Copyright © '}
-      Your Website {new Date().getFullYear()}.
+      Your Website
+      {' '}
+      {new Date().getFullYear()}
+      .
     </Typography>
   );
 }
@@ -63,7 +66,7 @@ const Login = ({ setUser, setWorkspace }) => {
             lastName,
             email,
           });
-          setWorkspace(workspaceId);
+          setWorkspace({ id: workspaceId });
 
           if (workspaceId > 0) navigate('/dashboard');
           else navigate('/workspace');
@@ -86,10 +89,9 @@ const Login = ({ setUser, setWorkspace }) => {
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light'
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
+            backgroundColor: (t) => (t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900]),
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}

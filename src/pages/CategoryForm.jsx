@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
@@ -223,5 +224,20 @@ const CategoryForm = () => {
     </>
   );
 };
+=======
+import React from 'react';
+
+const CategoryForm = ({ workspace }) => (
+  <div>
+    <div>
+      Add categories for workspace
+      {' '}
+      { workspace?.id }
+    </div>
+    <div>Probably a search bar and list of added categories</div>
+    <div>Might show default categories</div>
+  </div>
+);
+>>>>>>> development
 
 export default CategoryForm;

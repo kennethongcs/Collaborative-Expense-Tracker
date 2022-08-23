@@ -31,23 +31,23 @@ const App = () => {
           <Route path="workspace" element={<WorkspaceLayout />}>
             <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
             <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
-            <Route path="2" element={<CategoryForm />} />
-            <Route path="3" element={<CollaboratorForm />} />
+            <Route path="2" element={<CategoryForm workspace={workspace} />} />
+            <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
             <Route path="4" element={<ExpenseForm />} />
           </Route>
-          <Route path="dashboard" element={<DashboardLayout />}>
+          <Route path="dashboard" element={<DashboardLayout user={user} />}>
             <Route
               index
               element={
                 // <ProtectedRoute user={user}>
-                <Dashboard user={user} />
+                <Dashboard user={user} workspace={workspace} />
                 // </ProtectedRoute>
               }
             />
-            <Route path="stats" element={<Statistics />} />
+            <Route path="stats" element={<Statistics />} workspace={workspace} />
             <Route path="expense" element={<ExpenseForm />} />
             <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
-            <Route path="settings" element={<Settings />} />
+            <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
