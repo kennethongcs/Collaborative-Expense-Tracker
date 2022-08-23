@@ -1,32 +1,31 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import axios from "axios";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import Box from "@mui/material/Box";
-import CardHeader from "@mui/material/CardHeader";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import RenderBudgetInput from "../components/BudgetInput.jsx";
-import { styled } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
+import CardHeader from '@mui/material/CardHeader';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import RenderBudgetInput from '../components/BudgetInput.jsx';
 
 const CategoryForm = () => {
   const [addCategory, setaddCategory] = useState([]);
   const [categoryBudgetList, setCategoryBudgetList] = useState([
-    { category: "Transport", budget: 0 },
-    { category: "Food", budget: 0 },
-    { category: "Groceries", budget: 0 },
-    { category: "Utilities", budget: 0 },
-    { category: "Clothes", budget: 0 },
-    { category: "Healthcare", budget: 0 },
-    { category: "Insurance", budget: 0 },
-    { category: "Donations", budget: 0 },
-    { category: "Entertainment", budget: 0 },
+    { category: 'Transport', budget: 0 },
+    { category: 'Food', budget: 0 },
+    { category: 'Groceries', budget: 0 },
+    { category: 'Utilities', budget: 0 },
+    { category: 'Clothes', budget: 0 },
+    { category: 'Healthcare', budget: 0 },
+    { category: 'Insurance', budget: 0 },
+    { category: 'Donations', budget: 0 },
+    { category: 'Entertainment', budget: 0 },
   ]);
 
   const CardHeaderNoPadding = styled(CardHeader)(`
@@ -40,7 +39,7 @@ const CategoryForm = () => {
   const budgetUpdate = (newBudget, categoryName) => {
     // update budget in categoryBudgetList
     const index = categoryBudgetList.findIndex(
-      (x) => x.category === categoryName
+      (x) => x.category === categoryName,
     );
     const tempCategoryList = [...categoryBudgetList];
     tempCategoryList[index] = { category: categoryName, budget: newBudget };
@@ -55,13 +54,13 @@ const CategoryForm = () => {
     ];
     // updates categoryBudgetList
     setCategoryBudgetList(updatedCategoryList);
-    setaddCategory("");
+    setaddCategory('');
   };
 
   const handleCategoryDelete = (element) => {
     // finds and delete category from categoryBudgetList
     const newCategoryList = categoryBudgetList.filter(
-      (x) => x.category !== element.category
+      (x) => x.category !== element.category,
     );
     // updates categoryBudgetList
     setCategoryBudgetList(newCategoryList);
@@ -72,14 +71,14 @@ const CategoryForm = () => {
     // add user Id
 
     axios
-      .post("/add-category", {
+      .post('/add-category', {
         categoryBudgetList,
         // hardcoded as 3 first
         workspaceId: 3,
       })
       .then((response) => {
         console.log(response);
-        navigate("/workspace/3");
+        navigate('/workspace/3');
       })
       .catch((error) => {
         console.log(error);
@@ -173,11 +172,11 @@ const CategoryForm = () => {
                 <Card sx={{ minWidth: 300, minHeight: 140 }} elevation={3}>
                   <CardHeaderNoPadding
                     // <CardHeader
-                    action={
+                    action={(
                       <IconButton onClick={() => handleCategoryDelete(element)}>
                         <DeleteOutlinedIcon />
                       </IconButton>
-                    }
+                    )}
                     title={element.category}
                   />
                   <Typography
@@ -186,7 +185,8 @@ const CategoryForm = () => {
                     paddingLeft={2}
                     paddingBottom={2}
                   >
-                    Budget: ${element.budget}
+                    Budget: $
+                    {element.budget}
                   </Typography>
                   <Grid container alignItems="center" justifyContent="center">
                     <Grid item>
@@ -224,20 +224,5 @@ const CategoryForm = () => {
     </>
   );
 };
-=======
-import React from 'react';
-
-const CategoryForm = ({ workspace }) => (
-  <div>
-    <div>
-      Add categories for workspace
-      {' '}
-      { workspace?.id }
-    </div>
-    <div>Probably a search bar and list of added categories</div>
-    <div>Might show default categories</div>
-  </div>
-);
->>>>>>> development
 
 export default CategoryForm;
