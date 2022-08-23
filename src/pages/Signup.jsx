@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" mt={props.sx.mt}>
-      {'Copyright © '}
-      Your Website
-      {' '}
-      {new Date().getFullYear()}
-      .
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      mt={props.sx.mt}
+    >
+      {"Copyright © "}
+      Your Website {new Date().getFullYear()}.
     </Typography>
   );
 }
@@ -28,10 +30,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const navigate = useNavigate();
 
@@ -39,9 +41,9 @@ const Signup = () => {
     event.preventDefault();
     console.log(email);
     if (email) {
-      console.log('email exists!!');
+      console.log("email exists!!");
       axios
-        .post('/signup', {
+        .post("/signup", {
           email,
           password,
           firstname: firstName,
@@ -49,11 +51,11 @@ const Signup = () => {
         })
         .then((response) => {
           console.log(response.data);
-          navigate('/');
+          navigate("/");
         })
         .catch((error) => console.log(error));
     } else {
-      console.log('nothing entered');
+      console.log("nothing entered");
     }
   };
 
@@ -64,18 +66,23 @@ const Signup = () => {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
