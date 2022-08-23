@@ -11,6 +11,9 @@ export default function routes(app) {
   app.get('/*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));
   });
+
   app.get('/signup', usersController.signup);
+  app.post('/signup', usersController.signup);
+  app.post('/retrieveusers', usersController.retrieveusers);
   app.post('/add-category', categoriesController.addCategories);
 }

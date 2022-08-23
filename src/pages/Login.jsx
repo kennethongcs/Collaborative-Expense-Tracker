@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios'; import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,12 +15,14 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" mt={props.sx.mt}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      mt={props.sx.mt}
+    >
       {'Copyright © '}
-      Your Website
-      {' '}
-      {new Date().getFullYear()}
-      .
+      Your Website {new Date().getFullYear()}.
     </Typography>
   );
 }
@@ -42,26 +45,30 @@ const Login = ({ setUser, setWorkspace }) => {
 
     if (email) {
       console.log('email exists!!');
-      // axios
-      //   .post('/login', {
-      //     email,
-      //     password,
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
+      axios
+        .post('/login', {
+          email,
+          password,
+        })
+        .then((response) => {
+          console.log(response.data);
+          const user = response.data;
 
-      // TODO: get names and workspace info from /login
-      const firstName = 'FirstName';
-      const lastName = 'LastName';
-      const workspaceId = null;
+          const { firstName, lastName, id } = user;
+          const workspaceId = null;
 
-      setUser({ firstName, lastName, email });
-      setWorkspace(workspaceId);
+          setUser({
+            id,
+            firstName,
+            lastName,
+            email,
+          });
+          setWorkspace(workspaceId);
 
-      if (workspaceId > 0) navigate('/dashboard');
-      else navigate('/workspace');
-      // })
-      // .catch((error) => console.log(error));
+          if (workspaceId > 0) navigate('/dashboard');
+          else navigate('/workspace');
+        })
+        .catch((error) => console.log(error));
     } else {
       console.log('nothing entered');
     }
@@ -79,7 +86,10 @@ const Login = ({ setUser, setWorkspace }) => {
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+            backgroundColor: (t) =>
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -100,7 +110,12 @@ const Login = ({ setUser, setWorkspace }) => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required

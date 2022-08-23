@@ -1,4 +1,7 @@
 import jsSHA from 'jssha';
+import sequelizePackage from 'sequelize';
+
+const { Sequelize } = sequelizePackage;
 
 const getHashSalted = (input) => {
   // create new SHA object
@@ -15,27 +18,39 @@ const getHashSalted = (input) => {
 
 export default function initUsersController(db) {
   const signup = async (req, res) => {
-    const { username } = req.body;
-    const { password } = req.body;
-    const { email } = req.body;
-
-    const hashedPassword = getHashSalted(password);
+    const { firstname, lastname, password, email } = req.body;
 
     try {
-      // create new user
-      const user = await db.User.create({
+      const user = await db.User.findOne({
         where: {
-          firstname: firstname,
-          lastname: lastname,
-          password: hashedPassword,
-          email: email,
+          email,
         },
       });
-      res.send({
-        user: user.username,
-      });
-    } catch (err) {
-      console.log(`create user err: ${err}`);
+      console.log('user', user);
+
+      if (!user) {
+        const hashedPassword = getHashSalted(password);
+        console.log('hashed password', hashedPassword);
+
+        const newUser = {
+          email,
+          firstName: firstname,
+          lastName: lastname,
+          password: hashedPassword,
+        };
+
+        const userNew = await db.User.create(newUser);
+
+        res.send({
+          email: userNew.email,
+        });
+      } else {
+        res.status(409).send({
+          error: 'The email address is already in use.',
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -44,19 +59,24 @@ export default function initUsersController(db) {
     const { password } = req.body;
 
     try {
-      const userDetails = await db.User.findOne({
+      const user = await db.User.findOne({
         where: {
-          email: email,
+          email,
         },
       });
 
-      const hashedPassword = getHashSalted(hashedPassword);
+      const hashedPassword = getHashSalted(password);
 
-      if (hashedPassword === userDetails.password) {
+      if (hashedPassword === user.password) {
         res.send({
+          id: user.id,
           user: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
+        });
+      } else {
+        res.status(401).send({
+          error: 'The login information is incorrect.',
         });
       }
     } catch (err) {
@@ -64,5 +84,25 @@ export default function initUsersController(db) {
     }
   };
 
-  return { signup, login };
+  const retrieveusers = async (req, res) => {
+    const { user } = req.body;
+    const input = user.toLowerCase();
+    console.log(input);
+    try {
+      const Op = Sequelize.Op;
+      const users = await db.User.findAll({
+        where: {
+          email: {
+            [Op.like]: `${input}%`,
+          },
+        },
+      });
+      console.log(users);
+      res.send(users);
+    } catch (err) {
+      console.log(`Error retrieving users: ${err}`);
+    }
+  };
+
+  return { signup, login, retrieveusers };
 }

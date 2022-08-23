@@ -29,8 +29,8 @@ const App = () => {
           />
           <Route path="signup" element={<Signup />} />
           <Route path="workspace" element={<WorkspaceLayout />}>
-            <Route index element={<WorkspaceForm />} />
-            <Route path="1" element={<WorkspaceForm />} />
+            <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
+            <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
             <Route path="2" element={<CategoryForm />} />
             <Route path="3" element={<CollaboratorForm />} />
             <Route path="4" element={<ExpenseForm />} />
