@@ -27,10 +27,7 @@ const App = () => {
     <Router>
       <div className="app">
         <Routes>
-          <Route
-            path="/"
-            element={<Login setUser={setUser} setWorkspace={setWorkspace} />}
-          />
+          <Route path="/" element={<Login setUser={setUser} setWorkspace={setWorkspace} />} />
           <Route path="signup" element={<Signup />} />
 
           <Route path="workspace/settings" element={<WorkspaceSettings user={user} />} />
@@ -46,11 +43,11 @@ const App = () => {
           <Route path="dashboard" element={<DashboardLayout user={user} />}>
             <Route
               index
-              element={
+              element={(
                 // <ProtectedRoute user={user}>
                 <Dashboard user={user} workspace={workspace} />
                 // </ProtectedRoute>
-              }
+            )}
             />
             <Route path="stats" element={<Statistics />} workspace={workspace} />
             <Route path="expense" element={<ExpenseForm />} />

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import {
   BrowserRouter as Router, Routes, Route,
@@ -18,6 +19,24 @@ import Statistics from './pages/Statistics.jsx';
 import Settings from './pages/Settings.jsx';
 import WorkspaceSettings from './pages/WorkspaceSettings.jsx';
 import Profile from './pages/Profile.jsx';
+=======
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
+import Error from "./components/Error.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import DashboardLayout from "./layouts/DashboardLayout.jsx";
+import ExpenseDetail from "./pages/ExpenseDetail.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import WorkspaceForm from "./pages/WorkspaceForm.jsx";
+import WorkspaceLayout from "./layouts/WorkspaceLayout.jsx";
+import CategoryForm from "./pages/CategoryForm.jsx";
+import CollaboratorForm from "./pages/CollaboratorForm.jsx";
+import ExpenseForm from "./pages/ExpenseForm.jsx";
+import Statistics from "./pages/Statistics.jsx";
+import Settings from "./pages/Settings.jsx";
+>>>>>>> development
 
 const App = () => {
   const [user, setUser] = useState(null);
