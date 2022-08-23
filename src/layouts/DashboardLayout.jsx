@@ -7,12 +7,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '../components/AppBar.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
-const DashboardLayout = () => {
+const DashboardLayout = ({ user }) => {
   const theme = createTheme();
 
   return (
     <>
-      <AppBar />
+      <AppBar user={user} />
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

@@ -34,7 +34,7 @@ const App = () => {
             <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
             <Route path="4" element={<ExpenseForm />} />
           </Route>
-          <Route path="dashboard" element={<DashboardLayout />}>
+          <Route path="dashboard" element={<DashboardLayout user={user} />}>
             <Route
               index
               element={(
