@@ -16,7 +16,7 @@ const getHashSalted = (input) => {
 export default function initUsersController(db) {
   const signup = async (req, res) => {
     const {
-      firstname, lastname, password, email,
+      firstName, lastName, password, email,
     } = req.body;
 
     try {
@@ -33,8 +33,8 @@ export default function initUsersController(db) {
 
         const newUser = {
           email,
-          firstName: firstname,
-          lastName: lastname,
+          firstName,
+          lastName,
           password: hashedPassword,
         };
 
@@ -46,6 +46,36 @@ export default function initUsersController(db) {
       } else {
         res.status(409).send({
           error: 'The email address is already in use.',
+        });
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  const save = async (req, res) => {
+    const {
+      firstName, lastName, email, id,
+    } = req.body;
+
+    try {
+      const user = await db.User.findOne({
+        where: {
+          id,
+        },
+      });
+      console.log('user', user);
+
+      if (user) {
+        user.email = email;
+        user.firstName = firstName;
+        user.lastName = lastName;
+
+        await user.save();
+
+        res.send({
+          email,
         });
       }
     }
@@ -71,8 +101,8 @@ export default function initUsersController(db) {
         res.send({
           id: user.id,
           user: user.email,
-          firstname: user.firstname,
-          lastname: user.lastname,
+          firstName: user.firstName,
+          lastName: user.lastName,
         });
       } else {
         res.status(401).send({
@@ -84,5 +114,5 @@ export default function initUsersController(db) {
     }
   };
 
-  return { signup, login };
+  return { signup, save, login };
 }

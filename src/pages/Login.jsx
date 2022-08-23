@@ -57,7 +57,7 @@ const Login = ({ setUser, setWorkspace }) => {
           setUser({
             id, firstName, lastName, email,
           });
-          setWorkspace(workspaceId);
+          setWorkspace({ id: workspaceId });
 
           if (workspaceId > 0) navigate('/dashboard');
           else navigate('/workspace');
