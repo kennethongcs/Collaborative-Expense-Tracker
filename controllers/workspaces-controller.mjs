@@ -35,5 +35,30 @@ export default function initWorkspacesController(db) {
     }
   };
 
-  return { create };
+  const NUM_OF_WORKSPACES = 6;
+
+  const retrieve = async (req, res) => {
+    const { userId, limit = NUM_OF_WORKSPACES } = req.query;
+
+    try {
+      const workspaces = await db.Workspace.findAll({
+        include: {
+          model: db.User,
+          where: {
+            id: userId,
+          },
+          attributes: [],
+        },
+        attributes: ['id', 'name', 'purpose'],
+        order: [['id', 'DESC']],
+        limit,
+      });
+
+      res.send(workspaces);
+    } catch (err) {
+      console.log(`retrieve workspace err: ${err}`);
+    }
+  };
+
+  return { create, retrieve };
 }

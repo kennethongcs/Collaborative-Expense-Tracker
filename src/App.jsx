@@ -33,7 +33,7 @@ const App = () => {
           />
           <Route path="signup" element={<Signup />} />
 
-          <Route path="workspace/settings" element={<WorkspaceSettings user={user} />} />
+          <Route path="workspace/settings" element={<WorkspaceSettings user={user} workspace={workspace} setWorkspace={setWorkspace} />} />
 
           <Route path="workspace" element={<WorkspaceLayout />}>
             <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
@@ -59,6 +59,7 @@ const App = () => {
           </Route>
 
           <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
+
           <Route path="*" element={<Error />} />
         </Routes>
       </div>

@@ -8,7 +8,11 @@ import AppBar from '../components/AppBar.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
 const DashboardLayout = ({ user }) => {
-  const theme = createTheme();
+  const theme = createTheme({
+    palette: {
+      mode: 'light',
+    },
+  });
 
   return (
     <>

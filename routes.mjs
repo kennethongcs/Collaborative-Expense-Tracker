@@ -15,6 +15,7 @@ export default function routes(app) {
   app.post('/save', usersController.save);
   app.post('/retrieveusers', usersController.retrieveusers);
   app.post('/workspace', workspacesController.create);
+  app.get('/workspace', workspacesController.retrieve);
   app.post('/add-category', categoriesController.addCategories);
 
   app.get('*', (request, response) => {

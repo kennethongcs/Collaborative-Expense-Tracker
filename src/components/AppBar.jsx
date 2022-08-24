@@ -27,7 +27,8 @@ const AppBar = ({ user }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   useEffect(() => {
-    setInitials(user?.firstName.charAt(0).toUpperCase() + user?.lastName.charAt(0).toUpperCase());
+    // setInitials(user?.firstName.charAt(0).toUpperCase() + user?.lastName.charAt(0).toUpperCase());
+    setInitials('HI');
   }, [user]);
 
   const handleOpenUserMenu = (event) => {

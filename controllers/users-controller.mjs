@@ -121,7 +121,7 @@ export default function initUsersController(db) {
     const input = user.toLowerCase();
     console.log(input);
     try {
-      const Op = Sequelize.Op;
+      const { Op } = Sequelize;
       const users = await db.User.findAll({
         where: {
           email: {
@@ -136,5 +136,7 @@ export default function initUsersController(db) {
     }
   };
 
-  return { signup, save, login, retrieveusers };
+  return {
+    signup, save, login, retrieveusers,
+  };
 }

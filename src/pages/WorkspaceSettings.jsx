@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
+import AvatarGroup from '@mui/material/AvatarGroup';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,36 +15,84 @@ import Container from '@mui/material/Container';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from 'react-router-dom';
 
-const WorkspaceSettings = ({ user }) => {
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import { red, green, blue } from '@mui/material/colors';
+
+const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
+  const [workspaceList, setWorkspaceList] = useState(null);
+
   const theme = createTheme();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    const params = {
+      params: {
+        // userId: user?.id,
+        userId: 10,
+      },
+    };
 
-    // if (email) {
-    //   const updatedUser = {
-    //     email,
-    //     firstName,
-    //     lastName,
-    //     id: user.id,
-    //   };
+    axios
+      .get('/workspace', params)
+      .then((response) => {
+        console.log(response.data);
+        setWorkspaceList(response.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
-    //   axios
-    //     .post('/save', updatedUser)
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       setUser(updatedUser);
-    //     })
-    //     .catch((error) => console.log(error));
-    // } else {
-    //   console.log('nothing entered');
-    // }
+  const handleWorkspaceSelect = (id) => {
+    console.log(`workspace id: ${id}`);
+    setWorkspace({ id });
   };
 
   const handleBackButton = () => {
     navigate(-1, { replace: true });
   };
+
+  const avatarColors = [red[500], green[500], blue[500]];
+
+  const StyledAvatar = ({ children, ...props }) => (
+    <Avatar
+      className={avatarColors[Math.floor(Math.random() * 3)]}
+      sx={{
+        height: 22, width: 22, fontSize: '0.8rem', bgcolor: avatarColors[Math.floor(Math.random() * 3)],
+      }}
+      {...props}
+    >
+      {children}
+    </Avatar>
+  );
+
+  const card = (workspaceItem) => (
+    <>
+      <CardContent>
+        <Typography variant="h6" component="div">
+          {workspaceItem.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {workspaceItem.purpose}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Button sx={{ fontSize: '0.8rem' }} onClick={() => handleWorkspaceSelect(workspaceItem.id)}>
+          {(workspaceItem.id === 71) ? 'Selected' : 'Select'}
+        </Button>
+        <AvatarGroup
+          max={3}
+          sx={{
+            '& .MuiAvatar-root': { width: 22, height: 22, fontSize: '0.8rem' },
+          }}
+        >
+          <StyledAvatar>HI</StyledAvatar>
+          <StyledAvatar>KO</StyledAvatar>
+          <StyledAvatar>YX</StyledAvatar>
+        </AvatarGroup>
+      </CardActions>
+    </>
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,9 +100,20 @@ const WorkspaceSettings = ({ user }) => {
         <CssBaseline />
         <Box mt={4}>
           <ArrowBackIosNewIcon onClick={handleBackButton} />
+        </Box>
+        <Box mt={3}>
           <Typography component="h1" variant="h5">
             Workspace Settings
           </Typography>
+        </Box>
+        <Box mt={3}>
+          <Grid container spacing={2}>
+            {workspaceList?.map((workspaceItem) => (
+              <Grid key={workspaceItem.id} item xs={6} sm={6}>
+                <Card variant="outlined">{card(workspaceItem)}</Card>
+              </Grid>
+            ))}
+          </Grid>
         </Box>
       </Container>
     </ThemeProvider>
