@@ -16,15 +16,7 @@ const DashboardLayout = ({ user }) => {
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            {' '}
+          <Box mt={4}>
             <Outlet />
           </Box>
         </Container>

@@ -57,6 +57,7 @@ const App = () => {
             <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
             <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
           </Route>
+
           <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
           <Route path="*" element={<Error />} />
         </Routes>

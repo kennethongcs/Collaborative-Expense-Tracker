@@ -49,14 +49,7 @@ const WorkspaceSettings = ({ user }) => {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+        <Box mt={4}>
           <ArrowBackIosNewIcon onClick={handleBackButton} />
           <Typography component="h1" variant="h5">
             Workspace Settings

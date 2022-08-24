@@ -7,9 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 const Settings = ({ user, setUser }) => {
-  const [email, setEmail] = useState(user.email);
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
+  const [email, setEmail] = useState(user?.email);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,8 +15,6 @@ const Settings = ({ user, setUser }) => {
     if (email) {
       const updatedUser = {
         email,
-        firstName,
-        lastName,
         id: user.id,
       };
 
@@ -42,35 +38,6 @@ const Settings = ({ user, setUser }) => {
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <TextField
-              autoComplete="given-name"
-              name="firstName"
-              required
-              fullWidth
-              id="firstName"
-              label="First Name"
-              autoFocus
-              value={firstName}
-              onChange={(event) => {
-                setFirstName(event.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="family-name"
-              value={lastName}
-              onChange={(event) => {
-                setLastName(event.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
             <TextField
               required
               fullWidth

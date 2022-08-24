@@ -5,18 +5,22 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = ({ user, setUser }) => {
-  const [email, setEmail] = useState(user.email);
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  // const [firstName, setFirstName] = useState(user.firstName);
+  // const [lastName, setLastName] = useState(user.lastName);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (email) {
+    if (firstName) {
       const updatedUser = {
-        email,
         firstName,
         lastName,
         id: user.id,
@@ -34,10 +38,15 @@ const Profile = ({ user, setUser }) => {
     }
   };
 
+  const handleBackButton = () => {
+    navigate(-1, { replace: true });
+  };
+
   return (
     <>
+      <ArrowBackIosNewIcon onClick={handleBackButton} />
       <Typography component="h1" variant="h5">
-        Settings
+        Profile
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
@@ -67,20 +76,6 @@ const Profile = ({ user, setUser }) => {
               value={lastName}
               onChange={(event) => {
                 setLastName(event.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
               }}
             />
           </Grid>
