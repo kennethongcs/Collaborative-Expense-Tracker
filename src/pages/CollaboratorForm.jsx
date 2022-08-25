@@ -40,6 +40,12 @@ const CollaboratorForm = () => {
   const submitEmail = () => {
     const input = collaboratorName.current.value;
     console.log(input);
+    axios.post('/joinworkspace'),
+      {
+        input,
+      }.then((res) => {
+        console.log(res);
+      });
   };
   return (
     <div>
