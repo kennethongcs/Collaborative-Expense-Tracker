@@ -57,15 +57,9 @@ const Login = ({ setUser, setWorkspace }) => {
           console.log(response.data);
           const user = response.data;
 
-          const { firstName, lastName, id } = user;
           const workspaceId = null;
 
-          setUser({
-            id,
-            firstName,
-            lastName,
-            email,
-          });
+          setUser(user);
           setWorkspace({ id: workspaceId });
 
           if (workspaceId > 0) navigate('/dashboard');

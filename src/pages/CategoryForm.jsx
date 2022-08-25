@@ -10,9 +10,9 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import RenderBudgetInput from '../components/BudgetInput.jsx';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import RenderBudgetInput from '../components/BudgetInput.jsx';
 
 const CategoryForm = () => {
   const [addCategory, setaddCategory] = useState([]);
@@ -39,7 +39,7 @@ const CategoryForm = () => {
   const budgetUpdate = (newBudget, categoryName) => {
     // update budget in categoryBudgetList
     const index = categoryBudgetList.findIndex(
-      (x) => x.category === categoryName
+      (x) => x.category === categoryName,
     );
     const tempCategoryList = [...categoryBudgetList];
     tempCategoryList[index] = { category: categoryName, budget: newBudget };
@@ -60,7 +60,7 @@ const CategoryForm = () => {
   const handleCategoryDelete = (element) => {
     // finds and delete category from categoryBudgetList
     const newCategoryList = categoryBudgetList.filter(
-      (x) => x.category !== element.category
+      (x) => x.category !== element.category,
     );
     // updates categoryBudgetList
     setCategoryBudgetList(newCategoryList);
@@ -172,11 +172,11 @@ const CategoryForm = () => {
                 <Card sx={{ minWidth: 300, minHeight: 140 }} elevation={3}>
                   <CardHeaderNoPadding
                     // <CardHeader
-                    action={
+                    action={(
                       <IconButton onClick={() => handleCategoryDelete(element)}>
                         <DeleteOutlinedIcon />
                       </IconButton>
-                    }
+                    )}
                     title={element.category}
                   />
                   <Typography
@@ -185,7 +185,8 @@ const CategoryForm = () => {
                     paddingLeft={2}
                     paddingBottom={2}
                   >
-                    Budget: ${element.budget}
+                    Budget: $
+                    {element.budget}
                   </Typography>
                   <Grid container alignItems="center" justifyContent="center">
                     <Grid item>

@@ -84,6 +84,9 @@ db.User.hasMany(db.PaymentMode);
 db.User.belongsToMany(db.Workspace, { through: 'user_workspaces' });
 db.User.belongsToMany(db.WorkspaceAuthority, { through: 'user_workspaces' });
 db.Workspace.belongsToMany(db.WorkspaceAuthority, { through: 'user_workspaces' });
+db.Workspace.belongsToMany(db.User, { through: 'user_workspaces' });
+db.WorkspaceAuthority.belongsToMany(db.User, { through: 'user_workspaces' });
+db.WorkspaceAuthority.belongsToMany(db.Workspace, { through: 'user_workspaces' });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
