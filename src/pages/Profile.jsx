@@ -10,10 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
+import Cookies from 'js-cookie';
 
 const Profile = ({ user, setUser }) => {
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
 
@@ -24,17 +23,17 @@ const Profile = ({ user, setUser }) => {
     event.preventDefault();
 
     if (firstName) {
-      const updatedUser = {
-        firstName,
-        lastName,
-        id: user.id,
-      };
+      const updatedUser = { ...user };
+      console.log(updatedUser);
+      updatedUser.firstName = firstName;
+      updatedUser.lastName = lastName;
+      console.log(updatedUser);
 
       axios
         .post('/save', updatedUser)
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
           setUser(updatedUser);
+          Cookies.set('user', JSON.stringify(updatedUser));
         })
         .catch((error) => console.log(error));
     } else {
