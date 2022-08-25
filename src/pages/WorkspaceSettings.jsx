@@ -88,6 +88,9 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
     navigate(-1, { replace: true });
   };
 
+  /**
+   * Go to workspace setup wizard.
+   */
   const handleAddButton = () => {
     navigate('/workspace');
   };

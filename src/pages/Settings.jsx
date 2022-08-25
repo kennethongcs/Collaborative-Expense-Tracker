@@ -14,15 +14,12 @@ const Settings = ({ user, setUser }) => {
     event.preventDefault();
 
     if (email) {
-      const updatedUser = {
-        email,
-        id: user.id,
-      };
+      const updatedUser = { ...user };
+      updatedUser.email = email;
 
       axios
         .post('/save', updatedUser)
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
           setUser(updatedUser);
           Cookies.set('user', JSON.stringify(updatedUser));
         })
