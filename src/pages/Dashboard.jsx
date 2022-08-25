@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -23,7 +23,7 @@ const Dashboard = ({ user, workspace }) => (
         <div>
           Currently looking at workspace
           {' '}
-          { workspace?.id}
+          { workspace?.name}
         </div>
         <br />
         <div>

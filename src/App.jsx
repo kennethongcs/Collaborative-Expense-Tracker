@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   BrowserRouter as Router, Routes, Route,
 } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Error from './components/Error.jsx';
@@ -20,8 +21,23 @@ import WorkspaceSettings from './pages/WorkspaceSettings.jsx';
 import Profile from './pages/Profile.jsx';
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [workspace, setWorkspace] = useState(null);
+  const [user, setUser] = useState(() => {
+    const loggedInUser = Cookies.get('user');
+    console.log(loggedInUser);
+    if (loggedInUser) {
+      return JSON.parse(loggedInUser);
+    }
+    return {};
+  });
+
+  const [workspace, setWorkspace] = useState(() => {
+    const selectedWorkspace = Cookies.get('workspace');
+    console.log(selectedWorkspace);
+    if (selectedWorkspace) {
+      return JSON.parse(selectedWorkspace);
+    }
+    return {};
+  });
 
   return (
     <Router>

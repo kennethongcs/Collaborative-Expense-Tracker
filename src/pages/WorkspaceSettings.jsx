@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from '@mui/material/Container';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -29,8 +30,7 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
   useEffect(() => {
     const params = {
       params: {
-        // userId: user?.id,
-        userId: 10,
+        userId: user?.id,
       },
     };
 
@@ -43,9 +43,9 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const handleWorkspaceSelect = (id) => {
-    console.log(`workspace id: ${id}`);
-    setWorkspace({ id });
+  const handleWorkspaceSelect = (selectedWorkspace) => {
+    setWorkspace(selectedWorkspace);
+    Cookies.set('workspace', JSON.stringify(selectedWorkspace));
   };
 
   const handleBackButton = () => {
@@ -56,7 +56,7 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
 
   const StyledAvatar = ({ children, ...props }) => (
     <Avatar
-      className={avatarColors[Math.floor(Math.random() * 3)]}
+      className={avatarColors[Math.floor(Math.random() * avatarColors.length)]}
       sx={{
         height: 22, width: 22, fontSize: '0.8rem', bgcolor: avatarColors[Math.floor(Math.random() * 3)],
       }}
@@ -77,8 +77,8 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button sx={{ fontSize: '0.8rem' }} onClick={() => handleWorkspaceSelect(workspaceItem.id)}>
-          {(workspaceItem.id === 71) ? 'Selected' : 'Select'}
+        <Button sx={{ fontSize: '0.8rem' }} onClick={() => handleWorkspaceSelect(workspaceItem)}>
+          {(workspaceItem.id === workspace.id) ? 'Selected' : 'Select'}
         </Button>
         <AvatarGroup
           max={3}
@@ -86,9 +86,9 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
             '& .MuiAvatar-root': { width: 22, height: 22, fontSize: '0.8rem' },
           }}
         >
-          <StyledAvatar>HI</StyledAvatar>
-          <StyledAvatar>KO</StyledAvatar>
-          <StyledAvatar>YX</StyledAvatar>
+          {workspaceItem.users?.map((collaborator) => (
+            <StyledAvatar key={collaborator.id}>{collaborator.firstName.charAt(0).toUpperCase() + collaborator.lastName.charAt(0).toUpperCase()}</StyledAvatar>
+          ))}
         </AvatarGroup>
       </CardActions>
     </>

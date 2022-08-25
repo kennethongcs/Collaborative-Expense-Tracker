@@ -1,3 +1,5 @@
+import { Op } from 'sequelize';
+
 export default function initWorkspacesController(db) {
   const create = async (req, res) => {
     const { name, purpose, userId } = req.body;
@@ -24,12 +26,17 @@ export default function initWorkspacesController(db) {
       };
 
       // add user to new workspace
-      const userWorkspace = await db.UserWorkspace.create(newUserWorkspace);
+      await db.UserWorkspace.create(newUserWorkspace);
 
-      res.send({
-        workspace: workspace.id,
-        userWorkspace: userWorkspace.id,
-      });
+      const selectedWorkspace = {
+        id: workspace.id,
+        name: workspace.name,
+        purpose: workspace.purpose,
+      };
+
+      res.cookie('workspace', JSON.stringify(selectedWorkspace));
+
+      res.send(selectedWorkspace);
     } catch (err) {
       console.log(`create workspace err: ${err}`);
     }
@@ -41,7 +48,8 @@ export default function initWorkspacesController(db) {
     const { userId, limit = NUM_OF_WORKSPACES } = req.query;
 
     try {
-      const workspaces = await db.Workspace.findAll({
+      // get workspaces for this user
+      const userWorkspaces = await db.Workspace.findAll({
         include: {
           model: db.User,
           where: {
@@ -49,6 +57,24 @@ export default function initWorkspacesController(db) {
           },
           attributes: [],
         },
+        attributes: ['id'],
+        order: [['id', 'DESC']],
+        limit,
+      });
+
+      // put workspace id into array
+      const workspaceIds = userWorkspaces.map((workspace) => workspace.id);
+
+      // add more details to workspaces for this user
+      const workspaces = await db.Workspace.findAll({
+        include: {
+          model: db.User,
+          attributes: ['id', 'firstName', 'lastName'],
+          through: {
+            attributes: ['workspaceAuthorityId'],
+          },
+        },
+        where: { id: { [Op.in]: workspaceIds } },
         attributes: ['id', 'name', 'purpose'],
         order: [['id', 'DESC']],
         limit,

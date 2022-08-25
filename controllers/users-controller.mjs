@@ -100,12 +100,16 @@ export default function initUsersController(db) {
       const hashedPassword = getHashSalted(password);
 
       if (hashedPassword === user.password) {
-        res.send({
+        const loggedInUser = {
           id: user.id,
-          user: user.email,
+          email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-        });
+        };
+
+        res.cookie('user', JSON.stringify(loggedInUser));
+
+        res.send(loggedInUser);
       } else {
         res.status(401).send({
           error: 'The login information is incorrect.',
@@ -113,6 +117,31 @@ export default function initUsersController(db) {
       }
     } catch (err) {
       console.log(`Login error: ${err}`);
+    }
+  };
+
+  const logout = async (req, res) => {
+    try {
+      const user = await db.User.findOne({
+        where: {
+          id: req.cookies.userId,
+        },
+      });
+      console.log('user', user);
+
+      if (user) {
+        res.clearCookie('user');
+        res.clearCookie('workspace');
+
+        res.send({ id: user.id });
+      } else {
+        res.status(404).send({
+          error: 'Logout failed.',
+        });
+      }
+    }
+    catch (error) {
+      console.log(error);
     }
   };
 
@@ -137,6 +166,6 @@ export default function initUsersController(db) {
   };
 
   return {
-    signup, save, login, retrieveusers,
+    signup, save, login, logout, retrieveusers,
   };
 }

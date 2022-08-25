@@ -12,6 +12,7 @@ export default function routes(app) {
   app.get('/signup', usersController.signup);
   app.post('/signup', usersController.signup);
   app.post('/login', usersController.login);
+  app.post('/logout', usersController.logout);
   app.post('/save', usersController.save);
   app.post('/retrieveusers', usersController.retrieveusers);
   app.post('/workspace', workspacesController.create);
