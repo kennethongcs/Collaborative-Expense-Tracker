@@ -14,9 +14,12 @@ export default function routes(app) {
   app.post('/login', usersController.login);
   app.post('/save', usersController.save);
   app.post('/retrieveusers', usersController.retrieveusers);
-  app.post('/workspace', workspacesController.create);
-  app.post('/add-category', categoriesController.addCategories);
   app.post('/verify', usersController.verify);
+
+  app.post('/add-category', categoriesController.addCategories);
+
+  app.post('/workspace', workspacesController.create);
+  app.post('/joinworkspace', workspacesController.joinWorkspace);
 
   app.get('*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));
