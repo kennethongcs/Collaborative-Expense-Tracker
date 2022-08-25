@@ -24,10 +24,8 @@ const Profile = ({ user, setUser }) => {
 
     if (firstName) {
       const updatedUser = { ...user };
-      console.log(updatedUser);
       updatedUser.firstName = firstName;
       updatedUser.lastName = lastName;
-      console.log(updatedUser);
 
       axios
         .post('/save', updatedUser)

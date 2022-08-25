@@ -47,7 +47,8 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
 
         // assign a color if user not yet assigned a color
         if (!(collaborator.id in userColorMap)) {
-          userColorMap[collaborator.id] = avatarColors[j];
+          const newColorIndex = Object.keys(userColorMap).length;
+          userColorMap[collaborator.id] = avatarColors[newColorIndex];
         }
 
         // store new color key in user object
