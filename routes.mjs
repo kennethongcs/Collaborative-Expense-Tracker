@@ -18,6 +18,7 @@ export default function routes(app) {
   app.post('/workspace', workspacesController.create);
   app.get('/workspace', workspacesController.retrieve);
   app.post('/add-category', categoriesController.addCategories);
+  app.post('/verify', usersController.verify);
 
   app.get('*', (request, response) => {
     response.sendFile(resolve('dist', 'main.html'));

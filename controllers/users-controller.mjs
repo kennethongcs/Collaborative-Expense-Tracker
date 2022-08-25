@@ -2,11 +2,11 @@ import jsSHA from 'jssha';
 import sequelizePackage from 'sequelize';
 
 const { Sequelize } = sequelizePackage;
+const SALT = process.env.SALT_PASSWORD;
 
 const getHashSalted = (input) => {
   // create new SHA object
   const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
-  const SALT = process.env.SALT_PASSWORD;
   // create an unhashed cookie string based on user ID and salt
   const unhashedString = `${input}-${SALT}`;
 
@@ -80,8 +80,7 @@ export default function initUsersController(db) {
           email,
         });
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -100,6 +99,10 @@ export default function initUsersController(db) {
       const hashedPassword = getHashSalted(password);
 
       if (hashedPassword === user.password) {
+        const unhashedCookieString = `${user.id}-${SALT}`;
+        const hashedCookieString = getHashSalted(unhashedCookieString);
+        res.cookie('loggedInHash', hashedCookieString);
+
         const loggedInUser = {
           id: user.id,
           email: user.email,
@@ -122,19 +125,22 @@ export default function initUsersController(db) {
 
   const logout = async (req, res) => {
     try {
+      // TODO: do we need to validate user or just logout anyways?
       const user = await db.User.findOne({
         where: {
-          id: req.cookies.userId,
+          id: req.cookies.user.id,
         },
       });
       console.log('user', user);
 
       if (user) {
+        res.clearCookie('loggedInHash');
         res.clearCookie('user');
         res.clearCookie('workspace');
 
         res.send({ id: user.id });
       } else {
+        // TODO: should logout be able to fail?
         res.status(404).send({
           error: 'Logout failed.',
         });
@@ -165,7 +171,24 @@ export default function initUsersController(db) {
     }
   };
 
+  const verify = async (req, res) => {
+    const { user } = req.cookies;
+    const { loggedInHash } = req.cookies;
+
+    const unhashedCookieString = `${user.id}-${SALT}`;
+    const hashedCookieString = getHashSalted(unhashedCookieString);
+
+    if (loggedInHash === hashedCookieString) {
+      res.json(user);
+    } else {
+      res.clearCookie('loggedInHash');
+      res.clearCookie('user');
+      res.clearCookie('workspace');
+      res.json({ redirect: '/' });
+    }
+  };
+
   return {
-    signup, save, login, logout, retrieveusers,
+    signup, save, login, logout, retrieveusers, verify,
   };
 }
