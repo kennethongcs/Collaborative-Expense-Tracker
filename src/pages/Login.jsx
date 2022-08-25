@@ -54,16 +54,16 @@ const Login = ({ setUser, setWorkspace }) => {
           password,
         })
         .then((response) => {
+          console.log('login');
           console.log(response.data);
-          const user = response.data;
-
-          const workspaceId = null;
+          const { user, workspace } = response.data;
 
           setUser(user);
-          setWorkspace({ id: workspaceId });
 
-          if (workspaceId > 0) navigate('/dashboard');
-          else navigate('/workspace');
+          if (workspace) {
+            setWorkspace(workspace);
+            navigate('/dashboard');
+          } else navigate('/workspace');
         })
         .catch((error) => console.log(error));
     } else {

@@ -86,8 +86,7 @@ export default function initUsersController(db) {
   };
 
   const login = async (req, res) => {
-    const { email } = req.body;
-    const { password } = req.body;
+    const { email, password } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -112,7 +111,29 @@ export default function initUsersController(db) {
 
         res.cookie('user', JSON.stringify(loggedInUser));
 
-        res.send(loggedInUser);
+        const userWorkspace = await db.Workspace.findOne({
+          include: {
+            model: db.User,
+            where: {
+              id: user.id,
+            },
+            attributes: [],
+          },
+          attributes: ['id', 'name', 'purpose'],
+          order: [['id', 'DESC']],
+        });
+
+        if (userWorkspace) {
+          res.cookie('workspace', JSON.stringify(userWorkspace));
+        }
+        // const userWorkspace = null;
+
+        const result = {
+          user: loggedInUser,
+          workspace: userWorkspace,
+        };
+
+        res.send(result);
       } else {
         res.status(401).send({
           error: 'The login information is incorrect.',
