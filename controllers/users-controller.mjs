@@ -2,11 +2,11 @@ import jsSHA from 'jssha';
 import sequelizePackage from 'sequelize';
 
 const { Sequelize } = sequelizePackage;
+const SALT = process.env.SALT_PASSWORD;
 
 const getHashSalted = (input) => {
   // create new SHA object
   const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
-  const SALT = process.env.SALT_PASSWORD;
   // create an unhashed cookie string based on user ID and salt
   const unhashedString = `${input}-${SALT}`;
 
@@ -18,9 +18,7 @@ const getHashSalted = (input) => {
 
 export default function initUsersController(db) {
   const signup = async (req, res) => {
-    const {
-      firstName, lastName, password, email,
-    } = req.body;
+    const { firstName, lastName, password, email } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -57,9 +55,7 @@ export default function initUsersController(db) {
   };
 
   const save = async (req, res) => {
-    const {
-      firstName, lastName, email, id,
-    } = req.body;
+    const { firstName, lastName, email, id } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -80,8 +76,7 @@ export default function initUsersController(db) {
           email,
         });
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -100,6 +95,10 @@ export default function initUsersController(db) {
       const hashedPassword = getHashSalted(password);
 
       if (hashedPassword === user.password) {
+        const unhashedCookieString = `${user.id}-${SALT}`;
+        const hashedCookieString = getHashSalted(unhashedCookieString);
+        res.cookie('loggedInHash', hashedCookieString);
+        res.cookie('userId', user.id);
         res.send({
           id: user.id,
           user: user.email,
@@ -136,5 +135,22 @@ export default function initUsersController(db) {
     }
   };
 
-  return { signup, save, login, retrieveusers };
+  const verify = async (req, res) => {
+    // TODO userId, workspaces
+    const { userId } = req.cookies;
+    const { loggedInHash } = req.cookies;
+
+    const unhashedCookieString = `${userId}-${SALT}`;
+    const hashedCookieString = getHashSalted(unhashedCookieString);
+
+    if (loggedInHash === hashedCookieString) {
+      res.json({ userId: userId });
+    } else {
+      res.clearCookie('loggedInHash');
+      res.clearCookie('userId');
+      res.json({ redirect: '/' });
+    }
+  };
+
+  return { signup, save, login, retrieveusers, verify };
 }
