@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import UserList from '../components/UserList.jsx';
 
-const CollaboratorForm = () => {
+const CollaboratorForm = ({ user, workspace }) => {
   const [collaborator, setCollaborator] = useState('');
 
   const [retrievedUsers, setRetrievedUsers] = useState([]);
@@ -49,7 +49,8 @@ const CollaboratorForm = () => {
         placeholder="enter collaborators email"
         ref={collaboratorName}
         onChange={getCollaboratorName}
-      ></input>
+      >
+      </input>
       <button onClick={submitEmail}>Collaborate!</button>
       <ul>
         {/* upon input, query db for users with that email / username */}
