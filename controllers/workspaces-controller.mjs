@@ -42,7 +42,7 @@ export default function initWorkspacesController(db) {
     }
   };
 
-  const NUM_OF_WORKSPACES = 6;
+  const NUM_OF_WORKSPACES = 8;
 
   const retrieve = async (req, res) => {
     const { userId, limit = NUM_OF_WORKSPACES } = req.query;
