@@ -18,7 +18,9 @@ const getHashSalted = (input) => {
 
 export default function initUsersController(db) {
   const signup = async (req, res) => {
-    const { firstName, lastName, password, email } = req.body;
+    const {
+      firstName, lastName, password, email,
+    } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -55,7 +57,9 @@ export default function initUsersController(db) {
   };
 
   const save = async (req, res) => {
-    const { firstName, lastName, email, id } = req.body;
+    const {
+      firstName, lastName, email, id,
+    } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -98,13 +102,17 @@ export default function initUsersController(db) {
         const unhashedCookieString = `${user.id}-${SALT}`;
         const hashedCookieString = getHashSalted(unhashedCookieString);
         res.cookie('loggedInHash', hashedCookieString);
-        res.cookie('userId', user.id);
-        res.send({
+
+        const loggedInUser = {
           id: user.id,
-          user: user.email,
+          email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-        });
+        };
+
+        res.cookie('user', JSON.stringify(loggedInUser));
+
+        res.send(loggedInUser);
       } else {
         res.status(401).send({
           error: 'The login information is incorrect.',
@@ -115,12 +123,25 @@ export default function initUsersController(db) {
     }
   };
 
+  const logout = async (req, res) => {
+    try {
+      res.clearCookie('loggedInHash');
+      res.clearCookie('user');
+      res.clearCookie('workspace');
+
+      res.json({ redirect: '/' });
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   const retrieveusers = async (req, res) => {
     const { user } = req.body;
     const input = user.toLowerCase();
     console.log(input);
     try {
-      const Op = Sequelize.Op;
+      const { Op } = Sequelize;
       const users = await db.User.findAll({
         where: {
           email: {
@@ -136,21 +157,23 @@ export default function initUsersController(db) {
   };
 
   const verify = async (req, res) => {
-    // TODO userId, workspaces
-    const { userId } = req.cookies;
+    const { user } = req.cookies;
     const { loggedInHash } = req.cookies;
 
-    const unhashedCookieString = `${userId}-${SALT}`;
+    const unhashedCookieString = `${user.id}-${SALT}`;
     const hashedCookieString = getHashSalted(unhashedCookieString);
 
     if (loggedInHash === hashedCookieString) {
-      res.json({ userId: userId });
+      res.json(user);
     } else {
       res.clearCookie('loggedInHash');
-      res.clearCookie('userId');
+      res.clearCookie('user');
+      res.clearCookie('workspace');
       res.json({ redirect: '/' });
     }
   };
 
-  return { signup, save, login, retrieveusers, verify };
+  return {
+    signup, save, login, logout, retrieveusers, verify,
+  };
 }
