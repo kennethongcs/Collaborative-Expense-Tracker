@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Cookies from 'js-cookie';
 
 const Settings = ({ user, setUser }) => {
   const [email, setEmail] = useState(user?.email);
@@ -23,6 +24,7 @@ const Settings = ({ user, setUser }) => {
         .then((response) => {
           console.log(response.data);
           setUser(updatedUser);
+          Cookies.set('user', JSON.stringify(updatedUser));
         })
         .catch((error) => console.log(error));
     } else {

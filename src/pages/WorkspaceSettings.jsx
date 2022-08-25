@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import AddIcon from '@mui/icons-material/Add';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -87,6 +88,10 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
     navigate(-1, { replace: true });
   };
 
+  const handleAddButton = () => {
+    navigate('/workspace');
+  };
+
   /**
    * MUI avatar but with custom style.
    * @param {string} color Background color.
@@ -143,10 +148,11 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
         <Box mt={4}>
           <ArrowBackIosNewIcon onClick={handleBackButton} />
         </Box>
-        <Box mt={3}>
+        <Box mt={3} sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography component="h1" variant="h5">
             Workspace Settings
           </Typography>
+          <AddIcon onClick={handleAddButton} />
         </Box>
         <Box mt={3}>
           <Grid container spacing={2}>
