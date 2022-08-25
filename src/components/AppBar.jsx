@@ -6,7 +6,8 @@ import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
-import Link from '@mui/material/Link';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const settings = [{
   name: 'Profile',
@@ -38,6 +39,17 @@ const AppBar = ({ user }) => {
     setAnchorElUser(null);
   };
 
+  const navigate = useNavigate();
+  const handleClickUserMenu = (setting) => {
+    if (setting.name === 'Logout') {
+      axios
+        .post('/logout')
+        .catch((error) => console.log(error));
+    }
+
+    navigate(setting.url);
+  };
+
   return (
     <Container maxWidth="xl">
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} mt={2}>
@@ -62,8 +74,8 @@ const AppBar = ({ user }) => {
         >
           {settings.map((setting) => (
             <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">
-                <Link href={setting.url} underline="none">{setting.name}</Link>
+              <Typography textAlign="center" color="primary" onClick={() => handleClickUserMenu(setting)}>
+                {setting.name}
               </Typography>
             </MenuItem>
           ))}

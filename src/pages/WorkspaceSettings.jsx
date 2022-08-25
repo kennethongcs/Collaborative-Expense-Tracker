@@ -156,7 +156,7 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
           <Typography component="h1" variant="h5">
             Workspace Settings
           </Typography>
-          <AddIcon onClick={handleAddButton} />
+          <AddIcon color="primary" onClick={handleAddButton} />
         </Box>
         <Box mt={3}>
           <Grid container spacing={2}>

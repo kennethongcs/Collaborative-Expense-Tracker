@@ -125,26 +125,11 @@ export default function initUsersController(db) {
 
   const logout = async (req, res) => {
     try {
-      // TODO: do we need to validate user or just logout anyways?
-      const user = await db.User.findOne({
-        where: {
-          id: req.cookies.user.id,
-        },
-      });
-      console.log('user', user);
+      res.clearCookie('loggedInHash');
+      res.clearCookie('user');
+      res.clearCookie('workspace');
 
-      if (user) {
-        res.clearCookie('loggedInHash');
-        res.clearCookie('user');
-        res.clearCookie('workspace');
-
-        res.send({ id: user.id });
-      } else {
-        // TODO: should logout be able to fail?
-        res.status(404).send({
-          error: 'Logout failed.',
-        });
-      }
+      res.json({ redirect: '/' });
     }
     catch (error) {
       console.log(error);
