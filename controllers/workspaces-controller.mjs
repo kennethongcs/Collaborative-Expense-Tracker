@@ -48,19 +48,33 @@ export default function initWorkspacesController(db) {
 
   // add inputted user into w/s as collaborator
   const joinWorkspace = async (req, res) => {
-    const { userId } = req.cookies;
-    // retrieve latest w/s from workspace table
-    const latestWS = db.Workspace.findOne({
-      include: {
-        model: db.User,
+    const { email, workspaceId } = req.body;
+    console.log(`email: ${email}, workspaceId: ${workspaceId}`);
+    // retrieve userId
+    try {
+      const userId = await db.User.findOne({
         where: {
-          id: userId,
-          order: [['createdAt', 'DESC']],
+          email,
         },
-      },
-    });
-    console.log(latestWS);
-    // add inputted user into M-M user_workspace table as viewing
+      });
+      console.log('userid: ', userId.id);
+      // get workspace authority
+      const workspaceAuth = await db.WorkspaceAuthority.findOne({
+        where: {
+          type: 'Viewing',
+        },
+      });
+      // add inputted user into M-M user_workspace table as viewing
+      await db.UserWorkspace.create({
+        userId: userId.id,
+        workspaceId,
+        workspaceAuthorityId: workspaceAuth.id,
+      });
+
+      res.send('User added successfully');
+    } catch (err) {
+      console.log(`Error adding user to existing w/s: ${err}`);
+    }
   };
 
   const NUM_OF_WORKSPACES = 8;
