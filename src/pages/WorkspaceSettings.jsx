@@ -162,7 +162,7 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
           <Grid container spacing={2}>
             {workspaceList?.map((workspaceItem) => (
               <Grid key={workspaceItem.id} item xs={6} sm={6}>
-                <Card variant="outlined">{card(workspaceItem)}</Card>
+                <Card elevation={1}>{card(workspaceItem)}</Card>
               </Grid>
             ))}
           </Grid>
