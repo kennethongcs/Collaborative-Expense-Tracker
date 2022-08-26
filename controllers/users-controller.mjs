@@ -111,22 +111,22 @@ export default function initUsersController(db) {
 
         res.cookie('user', JSON.stringify(loggedInUser));
 
-        const userWorkspace = await db.Workspace.findOne({
-          include: {
-            model: db.User,
-            where: {
-              id: user.id,
-            },
-            attributes: [],
-          },
-          attributes: ['id', 'name', 'purpose'],
-          order: [['id', 'DESC']],
-        });
+        // const userWorkspace = await db.Workspace.findOne({
+        //   include: {
+        //     model: db.User,
+        //     where: {
+        //       id: user.id,
+        //     },
+        //     attributes: [],
+        //   },
+        //   attributes: ['id', 'name', 'purpose'],
+        //   order: [['id', 'DESC']],
+        // });
 
-        if (userWorkspace) {
-          res.cookie('workspace', JSON.stringify(userWorkspace));
-        }
-        // const userWorkspace = null;
+        // if (userWorkspace) {
+        //   res.cookie('workspace', JSON.stringify(userWorkspace));
+        // }
+        const userWorkspace = null;
 
         const result = {
           user: loggedInUser,

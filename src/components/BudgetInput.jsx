@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import AddIcon from "@mui/icons-material/Add";
-import IconButton from "@mui/material/IconButton";
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
 
 const RenderBudgetInput = ({ budgetUpdate, categoryName }) => {
   const [addBudget, setaddBudget] = useState([]);
 
   const handleBudgetSubmit = () => {
     budgetUpdate(addBudget, categoryName);
-    setaddBudget("");
+    setaddBudget('');
   };
 
   return (
@@ -33,7 +33,7 @@ const RenderBudgetInput = ({ budgetUpdate, categoryName }) => {
         <AddIcon
           sx={{
             ml: 0.5,
-            color: "#1976D2",
+            color: '#1976D2',
           }}
         />
       </IconButton>

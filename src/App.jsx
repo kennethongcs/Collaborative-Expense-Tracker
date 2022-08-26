@@ -41,44 +41,42 @@ const App = () => {
 
   return (
     <Router>
-      <div className="app">
-        <Routes>
+      <Routes>
+        <Route
+          path="/"
+          element={<Login setUser={setUser} setWorkspace={setWorkspace} />}
+        />
+        <Route path="signup" element={<Signup />} />
+
+        <Route path="workspace/settings" element={<WorkspaceSettings user={user} workspace={workspace} setWorkspace={setWorkspace} />} />
+
+        <Route path="workspace" element={<WorkspaceLayout />}>
+          <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
+          <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
+          <Route path="2" element={<CategoryForm workspace={workspace} />} />
+          <Route path="3" element={<CollaboratorForm user={user} workspace={workspace} />} />
+          <Route path="4" element={<ExpenseForm workspace={workspace} />} />
+        </Route>
+
+        <Route path="dashboard" element={<DashboardLayout user={user} />}>
           <Route
-            path="/"
-            element={<Login setUser={setUser} setWorkspace={setWorkspace} />}
-          />
-          <Route path="signup" element={<Signup />} />
-
-          <Route path="workspace/settings" element={<WorkspaceSettings user={user} workspace={workspace} setWorkspace={setWorkspace} />} />
-
-          <Route path="workspace" element={<WorkspaceLayout />}>
-            <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
-            <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
-            <Route path="2" element={<CategoryForm workspace={workspace} />} />
-            <Route path="3" element={<CollaboratorForm user={user} workspace={workspace} />} />
-            <Route path="4" element={<ExpenseForm workspace={workspace} />} />
-          </Route>
-
-          <Route path="dashboard" element={<DashboardLayout user={user} />}>
-            <Route
-              index
-              element={
+            index
+            element={
                 // <ProtectedRoute user={user}>
-                <Dashboard user={user} workspace={workspace} />
+              <Dashboard user={user} workspace={workspace} />
                 // </ProtectedRoute>
               }
-            />
-            <Route path="stats" element={<Statistics workspace={workspace} />} />
-            <Route path="expense" element={<ExpenseForm />} />
-            <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
-            <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
-          </Route>
+          />
+          <Route path="stats" element={<Statistics workspace={workspace} />} />
+          <Route path="expense" element={<ExpenseForm />} />
+          <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
+          <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
+        </Route>
 
-          <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
+        <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
 
-          <Route path="*" element={<Error />} />
-        </Routes>
-      </div>
+        <Route path="*" element={<Error />} />
+      </Routes>
     </Router>
   );
 };

@@ -4,10 +4,8 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +22,6 @@ import {
 const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
   const [workspaceList, setWorkspaceList] = useState(null);
 
-  const theme = createTheme();
   const navigate = useNavigate();
 
   // eslint-disable-next-line max-len
@@ -146,29 +143,26 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box mt={4}>
-          <ArrowBackIosNewIcon onClick={handleBackButton} />
-        </Box>
-        <Box mt={3} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography component="h1" variant="h5">
-            Workspace Settings
-          </Typography>
-          <AddIcon color="primary" onClick={handleAddButton} />
-        </Box>
-        <Box mt={3}>
-          <Grid container spacing={2}>
-            {workspaceList?.map((workspaceItem) => (
-              <Grid key={workspaceItem.id} item xs={6} sm={6}>
-                <Card elevation={1}>{card(workspaceItem)}</Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <Container component="main" maxWidth="xs">
+      <Box mt={4}>
+        <ArrowBackIosNewIcon onClick={handleBackButton} />
+      </Box>
+      <Box mt={3} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography component="h1" variant="h5">
+          Workspace Settings
+        </Typography>
+        <AddIcon color="primary" onClick={handleAddButton} />
+      </Box>
+      <Box mt={3}>
+        <Grid container spacing={2}>
+          {workspaceList?.map((workspaceItem) => (
+            <Grid key={workspaceItem.id} item xs={6} sm={6}>
+              <Card elevation={1}>{card(workspaceItem)}</Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 

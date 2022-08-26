@@ -1,6 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.scss';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import App from './App.jsx';
 
@@ -13,5 +15,16 @@ document.body.appendChild(rootElement);
 // Create React root element to render other React elements into
 const root = createRoot(rootElement);
 
+const theme = createTheme({
+  palette: {
+    mode: 'dark', // light or dark
+  },
+});
+
 // Render React app in the React root element
-root.render(<App />);
+root.render(
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <App />
+  </ThemeProvider>,
+);
