@@ -7,6 +7,8 @@ import UserList from '../components/UserList.jsx';
 const CollaboratorForm = ({ user, workspace }) => {
   const [collaborator, setCollaborator] = useState('');
 
+  const workspaceId = workspace.id;
+
   const [retrievedUsers, setRetrievedUsers] = useState([]);
   const collaboratorName = useRef();
 
@@ -40,6 +42,17 @@ const CollaboratorForm = ({ user, workspace }) => {
   const submitEmail = () => {
     const input = collaboratorName.current.value;
     console.log(input);
+    console.log(workspaceId);
+    // use workspaceId and add an existing user into your user_workspace table
+
+    axios
+      .post('/joinworkspace', {
+        email: input,
+        workspaceId,
+      })
+      .then((res) => {
+        console.log(res);
+      });
   };
   return (
     <div>
@@ -49,8 +62,7 @@ const CollaboratorForm = ({ user, workspace }) => {
         placeholder="enter collaborators email"
         ref={collaboratorName}
         onChange={getCollaboratorName}
-      >
-      </input>
+      ></input>
       <button onClick={submitEmail}>Collaborate!</button>
       <ul>
         {/* upon input, query db for users with that email / username */}
