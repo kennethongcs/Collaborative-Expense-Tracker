@@ -1,16 +1,21 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable react/self-closing-comp */
 import React, { useState, useRef } from 'react';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+
 import axios from 'axios';
 
 import UserList from '../components/UserList.jsx';
 
 const CollaboratorForm = ({ user, workspace }) => {
-  const [collaborator, setCollaborator] = useState('');
+  const [retrievedUsers, setRetrievedUsers] = useState([]);
+  const [authority, setAuthority] = useState('');
 
   const workspaceId = workspace.id;
-
-  const [retrievedUsers, setRetrievedUsers] = useState([]);
-  const collaboratorName = useRef();
+  const collaboratorName = useRef('');
 
   // add user email into input box
   const whenUserIsClicked = (user) => {
@@ -19,11 +24,9 @@ const CollaboratorForm = ({ user, workspace }) => {
 
   // runs when any char is typed into "input box"
   const getCollaboratorName = () => {
-    // should set timeout on this to prevent many queries to server
     const input = collaboratorName.current.value;
     // console.log(input);
     if (input !== '') {
-      // TODO
       // axios to get user data from server
       axios
         .post('/retrieveusers', {
@@ -49,28 +52,63 @@ const CollaboratorForm = ({ user, workspace }) => {
       .post('/joinworkspace', {
         email: input,
         workspaceId,
+        authority,
       })
       .then((res) => {
         console.log(res);
       });
   };
+
+  const handleChangeAuthority = (e) => {
+    const input = e.target.value;
+    setAuthority(input);
+  };
+
+  const AuthoritySelect = () => {
+    return (
+      <FormControl fullWidth>
+        <InputLabel id="editing-authority-label">Authority</InputLabel>
+        <Select
+          labelId="editing-authority-label"
+          id="edit-authority-select"
+          label="Authority"
+          onChange={handleChangeAuthority}
+          value={authority}
+        >
+          <MenuItem value="Viewing">Viewing</MenuItem>
+          <MenuItem value="Editing">Editing</MenuItem>
+        </Select>
+      </FormControl>
+    );
+  };
+
   return (
     <div>
-      <div>Add collaborator page</div>
-      <input
-        type="text"
-        placeholder="enter collaborators email"
-        ref={collaboratorName}
-        onChange={getCollaboratorName}
-      ></input>
+      <div>Add collaborators here:</div>
+      <div>
+        <input
+          type="text"
+          placeholder="Email"
+          ref={collaboratorName}
+          onChange={getCollaboratorName}
+        ></input>
+      </div>
+      <div>
+        <ul>
+          {/* upon input, query db for users with that email / username */}
+          <UserList
+            retrievedUsers={retrievedUsers}
+            whenUserIsClicked={whenUserIsClicked}
+          />
+        </ul>
+      </div>
+      <div>
+        <div>Select collaborator authority:</div>
+        <div>
+          <AuthoritySelect />
+        </div>
+      </div>
       <button onClick={submitEmail}>Collaborate!</button>
-      <ul>
-        {/* upon input, query db for users with that email / username */}
-        <UserList
-          retrievedUsers={retrievedUsers}
-          whenUserIsClicked={whenUserIsClicked}
-        />
-      </ul>
     </div>
   );
 };
