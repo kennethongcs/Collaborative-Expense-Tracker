@@ -52,6 +52,7 @@ const CollaboratorForm = ({ user, workspace }) => {
       .post('/joinworkspace', {
         email: input,
         workspaceId,
+        authority,
       })
       .then((res) => {
         console.log(res);
@@ -80,6 +81,9 @@ const CollaboratorForm = ({ user, workspace }) => {
       </FormControl>
     );
   };
+
+  // TODO
+  // send authority to backend
 
   return (
     <div>
