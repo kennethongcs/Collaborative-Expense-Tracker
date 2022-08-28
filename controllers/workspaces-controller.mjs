@@ -1,4 +1,7 @@
+import sequelizePackage from 'sequelize';
 import { Op } from 'sequelize';
+
+const { Sequelize } = sequelizePackage;
 
 export default function initWorkspacesController(db) {
   const create = async (req, res) => {
@@ -6,7 +9,8 @@ export default function initWorkspacesController(db) {
 
     try {
       const newWorkspace = {
-        name, purpose,
+        name,
+        purpose,
       };
 
       // create new workspace
@@ -39,6 +43,37 @@ export default function initWorkspacesController(db) {
       res.send(selectedWorkspace);
     } catch (err) {
       console.log(`create workspace err: ${err}`);
+    }
+  };
+
+  // add inputted user into w/s as collaborator
+  const joinWorkspace = async (req, res) => {
+    const { email, workspaceId } = req.body;
+    console.log(`email: ${email}, workspaceId: ${workspaceId}`);
+    // retrieve userId
+    try {
+      const userId = await db.User.findOne({
+        where: {
+          email,
+        },
+      });
+      console.log('userid: ', userId.id);
+      // get workspace authority
+      const workspaceAuth = await db.WorkspaceAuthority.findOne({
+        where: {
+          type: 'Viewing',
+        },
+      });
+      // add inputted user into M-M user_workspace table as viewing
+      await db.UserWorkspace.create({
+        userId: userId.id,
+        workspaceId,
+        workspaceAuthorityId: workspaceAuth.id,
+      });
+
+      res.send('User added successfully');
+    } catch (err) {
+      console.log(`Error adding user to existing w/s: ${err}`);
     }
   };
 
@@ -86,5 +121,5 @@ export default function initWorkspacesController(db) {
     }
   };
 
-  return { create, retrieve };
+  return { create, retrieve, joinWorkspace };
 }
