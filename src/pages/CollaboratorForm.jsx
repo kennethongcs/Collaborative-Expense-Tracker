@@ -82,9 +82,6 @@ const CollaboratorForm = ({ user, workspace }) => {
     );
   };
 
-  // TODO
-  // send authority to backend
-
   return (
     <div>
       <div>Add collaborators here:</div>
@@ -92,7 +89,7 @@ const CollaboratorForm = ({ user, workspace }) => {
         <input
           type="text"
           placeholder="Email"
-          // ref={collaboratorName}
+          ref={collaboratorName}
           onChange={getCollaboratorName}
         ></input>
       </div>
