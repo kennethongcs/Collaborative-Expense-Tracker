@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
 const WorkspaceForm = ({ user, setWorkspace }) => {
@@ -42,12 +43,13 @@ const WorkspaceForm = ({ user, setWorkspace }) => {
         <Box
           sx={{
             my: 8,
-            mx: 4,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
           }}
         >
+          <Typography component="h1" variant="h5">
+            Create a New Workspace
+          </Typography>
           <Box
             component="form"
             noValidate

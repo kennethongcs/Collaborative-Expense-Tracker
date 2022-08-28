@@ -9,7 +9,7 @@ const DashboardLayout = ({ user }) => (
   <>
     <AppBar user={user} />
     <Container component="main" maxWidth="xs">
-      <Box mt={4}>
+      <Box mt={4} mx={1}>
         <Outlet />
       </Box>
     </Container>

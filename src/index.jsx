@@ -17,7 +17,7 @@ const root = createRoot(rootElement);
 
 const theme = createTheme({
   palette: {
-    mode: 'dark', // light or dark
+    mode: 'light', // light or dark
   },
 });
 
