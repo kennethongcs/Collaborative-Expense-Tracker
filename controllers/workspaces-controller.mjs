@@ -48,7 +48,7 @@ export default function initWorkspacesController(db) {
 
   // add inputted user into w/s as collaborator
   const joinWorkspace = async (req, res) => {
-    const { email, workspaceId } = req.body;
+    const { email, workspaceId, authority } = req.body; // BUG
     console.log(`email: ${email}, workspaceId: ${workspaceId}`);
     // retrieve userId
     try {
@@ -61,7 +61,7 @@ export default function initWorkspacesController(db) {
       // get workspace authority
       const workspaceAuth = await db.WorkspaceAuthority.findOne({
         where: {
-          type: 'Viewing',
+          type: authority,
         },
       });
       // add inputted user into M-M user_workspace table as viewing
