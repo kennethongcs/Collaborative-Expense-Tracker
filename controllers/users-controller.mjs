@@ -18,9 +18,7 @@ const getHashSalted = (input) => {
 
 export default function initUsersController(db) {
   const signup = async (req, res) => {
-    const {
-      firstName, lastName, password, email,
-    } = req.body;
+    const { firstName, lastName, password, email } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -57,9 +55,7 @@ export default function initUsersController(db) {
   };
 
   const save = async (req, res) => {
-    const {
-      firstName, lastName, email, id,
-    } = req.body;
+    const { firstName, lastName, email, id } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -151,8 +147,7 @@ export default function initUsersController(db) {
       res.clearCookie('workspace');
 
       res.json({ redirect: '/' });
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -195,6 +190,11 @@ export default function initUsersController(db) {
   };
 
   return {
-    signup, save, login, logout, retrieveusers, verify,
+    signup,
+    save,
+    login,
+    logout,
+    retrieveusers,
+    verify,
   };
 }
