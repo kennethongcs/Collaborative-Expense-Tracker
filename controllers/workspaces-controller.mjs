@@ -1,7 +1,4 @@
-import sequelizePackage from 'sequelize';
 import { Op } from 'sequelize';
-
-const { Sequelize } = sequelizePackage;
 
 export default function initWorkspacesController(db) {
   const create = async (req, res) => {

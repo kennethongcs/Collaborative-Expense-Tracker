@@ -5,9 +5,13 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
 import axios from 'axios';
-
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 import UserList from '../components/UserList.jsx';
 
 const CollaboratorForm = ({ user, workspace }) => {
@@ -23,9 +27,8 @@ const CollaboratorForm = ({ user, workspace }) => {
   };
 
   // runs when any char is typed into "input box"
-  const getCollaboratorName = () => {
-    const input = collaboratorName.current.value;
-    // console.log(input);
+  const getCollaboratorName = (input) => {
+    console.log(input);
     if (input !== '') {
       // axios to get user data from server
       axios
@@ -82,35 +85,122 @@ const CollaboratorForm = ({ user, workspace }) => {
     );
   };
 
+  const navigate = useNavigate();
+  const handleNext = () => {
+    navigate('/workspace/4');
+  };
+
   return (
-    <div>
-      <div>Add collaborators here:</div>
-      <div>
-        <input
-          type="text"
-          placeholder="Email"
-          ref={collaboratorName}
-          onChange={getCollaboratorName}
-        ></input>
-      </div>
-      <div>
-        <ul>
-          {/* upon input, query db for users with that email / username */}
-          <UserList
-            retrievedUsers={retrievedUsers}
-            whenUserIsClicked={whenUserIsClicked}
-          />
-        </ul>
-      </div>
-      <div>
-        <div>Select collaborator authority:</div>
-        <div>
-          <AuthoritySelect />
-        </div>
-      </div>
-      <button onClick={submitEmail}>Collaborate!</button>
-    </div>
+    <>
+      <Grid container>
+        <Grid item xs={12} sm={8} md={5}>
+          <Box
+            sx={{
+              mt: 8,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Typography variant="h5">
+              Add Collaborators
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="collaboratorName"
+                label="Collaborator Name"
+                name="collaboratorName"
+                autoComplete="off"
+                ref={collaboratorName}
+                autoFocus
+                onChange={(event) => {
+                  getCollaboratorName(event.target.value);
+                }}
+              />
+              <div>
+                <ul>
+                  {/* upon input, query db for users with that email / username */}
+                  <UserList
+                    retrievedUsers={retrievedUsers}
+                    whenUserIsClicked={whenUserIsClicked}
+                  />
+                </ul>
+              </div>
+              <AuthoritySelect />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={submitEmail}
+              >
+                Collaborate
+              </Button>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container spacing={1}>
+        <Grid item xs={6} sm={8} md={5}>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleNext}
+          >
+            Skip
+          </Button>
+        </Grid>
+        <Grid item xs={6} sm={8} md={5}>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+        </Grid>
+      </Grid>
+    </>
   );
+
+  // return (
+  //   <div>
+  //     <div>Add collaborators here:</div>
+  //     <div>
+  //       <input
+  //         type="text"
+  //         placeholder="Email"
+  //         ref={collaboratorName}
+  //         onChange={getCollaboratorName}
+  //       >
+  //       </input>
+  //     </div>
+  //     <div>
+  //       <ul>
+  //         {/* upon input, query db for users with that email / username */}
+  //         <UserList
+  //           retrievedUsers={retrievedUsers}
+  //           whenUserIsClicked={whenUserIsClicked}
+  //         />
+  //       </ul>
+  //     </div>
+  //     <div>
+  //       <div>Select collaborator authority:</div>
+  //       <div>
+  //         <AuthoritySelect />
+  //       </div>
+  //     </div>
+  //     <button onClick={submitEmail}>Collaborate!</button>
+  //   </div>
+  // );
 };
 
 export default CollaboratorForm;

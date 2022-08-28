@@ -38,16 +38,16 @@ const WorkspaceForm = ({ user, setWorkspace }) => {
   };
 
   return (
-    <Grid container component="main">
+    <Grid container>
       <Grid item xs={12} sm={8} md={5}>
         <Box
           sx={{
-            my: 8,
+            mt: 8,
             display: 'flex',
             flexDirection: 'column',
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography variant="h5">
             Create a New Workspace
           </Typography>
           <Box

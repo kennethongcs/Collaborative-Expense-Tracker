@@ -1,7 +1,6 @@
 import jsSHA from 'jssha';
-import sequelizePackage from 'sequelize';
+import { Op } from 'sequelize';
 
-const { Sequelize } = sequelizePackage;
 const SALT = process.env.SALT_PASSWORD;
 
 const getHashSalted = (input) => {
@@ -18,7 +17,9 @@ const getHashSalted = (input) => {
 
 export default function initUsersController(db) {
   const signup = async (req, res) => {
-    const { firstName, lastName, password, email } = req.body;
+    const {
+      firstName, lastName, password, email,
+    } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -55,7 +56,9 @@ export default function initUsersController(db) {
   };
 
   const save = async (req, res) => {
-    const { firstName, lastName, email, id } = req.body;
+    const {
+      firstName, lastName, email, id,
+    } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -156,8 +159,8 @@ export default function initUsersController(db) {
     const { user } = req.body;
     const input = user.toLowerCase();
     console.log(input);
+
     try {
-      const { Op } = Sequelize;
       const users = await db.User.findAll({
         where: {
           email: {
@@ -166,6 +169,7 @@ export default function initUsersController(db) {
         },
       });
       console.log(users);
+
       res.send(users);
     } catch (err) {
       console.log(`Error retrieving users: ${err}`);

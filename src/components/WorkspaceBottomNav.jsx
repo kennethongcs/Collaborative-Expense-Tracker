@@ -19,7 +19,7 @@ const WorkspaceBottomNav = () => {
 
   return (
     <>
-      <NavLink
+      {/* <NavLink
         style={({ isActive }) => ({
           display: 'inline',
           margin: '0 1rem',
@@ -58,7 +58,7 @@ const WorkspaceBottomNav = () => {
         to="/workspace/4"
       >
         4
-      </NavLink>
+      </NavLink> */}
       <MobileStepper
         variant="dots"
         steps={4}

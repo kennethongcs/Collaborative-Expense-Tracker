@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import './styles.scss';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-
 import App from './App.jsx';
 
 // Create element for React to render into
@@ -17,7 +16,11 @@ const root = createRoot(rootElement);
 
 const theme = createTheme({
   palette: {
-    mode: 'light', // light or dark
+    mode: 'dark', // light or dark
+    background: {
+      default: '#32333d',
+      paper: '#32333d',
+    },
   },
 });
 

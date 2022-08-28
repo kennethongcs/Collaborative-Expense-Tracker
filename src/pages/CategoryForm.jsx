@@ -14,7 +14,7 @@ import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import RenderBudgetInput from '../components/BudgetInput.jsx';
 
-const CategoryForm = () => {
+const CategoryForm = ({ workspace }) => {
   const [addCategory, setaddCategory] = useState([]);
   const [categoryBudgetList, setCategoryBudgetList] = useState([
     { category: 'Transport', budget: 0 },
@@ -73,8 +73,7 @@ const CategoryForm = () => {
     axios
       .post('/add-category', {
         categoryBudgetList,
-        // hardcoded as 3 first
-        workspaceId: 3,
+        workspaceId: workspace.id,
       })
       .then((response) => {
         console.log(response);
@@ -87,140 +86,131 @@ const CategoryForm = () => {
 
   return (
     <>
-      <Container>
-        {/* 'Create a New Expense Category' Title */}
+      {/* 'Create a New Expense Category' Title */}
+      <Grid container>
+        <Grid item xs={12} sm={8} md={5}>
+          <Typography variant="h5">
+            Create a New Expense Category
+          </Typography>
+        </Grid>
+      </Grid>
+      {/* Category Input Field */}
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        minHeight="80px"
+      >
+        <TextField
+          id="category-input"
+          label="New Category"
+          value={addCategory}
+          onChange={(event) => {
+            if (event.target.value.match(/^[a-zA-Z\s]*$/)) {
+              setaddCategory(event.target.value);
+            }
+          }}
+        />
+      </Grid>
+      {/* Add Category Button */}
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        minHeight="70px"
+      >
+        <Button
+          minWidth="140px"
+          minHeight="40px"
+          onClick={handleAddCategory}
+          variant="contained"
+        >
+          Add Category
+        </Button>
+      </Grid>
+      {/* Categories shown */}
+      <Box
+        container
+        minHeight="500px"
+        border={1}
+        borderRadius={1}
+        borderColor="lightGrey"
+      >
+        {/* 'Added Expense Category' Title */}
         <Grid container alignItems="center" justifyContent="center">
-          <Grid item>
-            <Typography
-              className="paragraph"
-              variant="h6"
+          <Typography
+            className="paragraph"
+            variant="h6"
               // color="textSecondary"
-              component="h2"
-              gutterBottom
-            >
-              Create a New Expense Category
-            </Typography>
-          </Grid>
-        </Grid>
-        {/* Category Input Field */}
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="center"
-          minHeight="80px"
-        >
-          <TextField
-            id="category-input"
-            label="Input Category"
-            value={addCategory}
-            onChange={(event) => {
-              if (event.target.value.match(/^[a-zA-Z\s]*$/)) {
-                setaddCategory(event.target.value);
-              }
-            }}
-          />
-        </Grid>
-        {/* Add Category Button */}
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="center"
-          minHeight="70px"
-        >
-          <Button
-            minWidth="140px"
-            minHeight="40px"
-            onClick={handleAddCategory}
-            variant="contained"
+            component="h2"
+            marginTop={3}
+            marginBottom={3}
           >
-            Add Category
-          </Button>
+            Added Expense Categories
+          </Typography>
         </Grid>
-        {/* Categories shown */}
-        <Box
-          container
-          minHeight="500px"
-          border={1}
-          borderRadius={1}
-          borderColor="lightGrey"
-        >
-          {/* 'Added Expense Category' Title */}
-          <Grid container alignItems="center" justifyContent="center">
-            <Typography
-              className="paragraph"
-              variant="h6"
-              // color="textSecondary"
-              component="h2"
-              marginTop={3}
-              marginBottom={3}
-            >
-              Added Expense Categories
-            </Typography>
-          </Grid>
-          {/* Selected Categories, needs its separate component, as we need to render addBudget
+        {/* Selected Categories, needs its separate component, as we need to render addBudget
           field independently */}
-          <Grid
-            container
-            alignItems="center"
-            justifyContent="center"
-            spacing={1}
-            color="textSecondary"
-            marginBottom={5}
-          >
-            {categoryBudgetList.map((element, CatIndex) => (
-              <Grid key={CatIndex} item className="category-tiles">
-                <Card sx={{ minWidth: 300, minHeight: 140 }} elevation={3}>
-                  <CardHeaderNoPadding
-                    // <CardHeader
-                    action={(
-                      <IconButton onClick={() => handleCategoryDelete(element)}>
-                        <DeleteOutlinedIcon />
-                      </IconButton>
-                    )}
-                    title={element.category}
-                  />
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    paddingLeft={2}
-                    paddingBottom={2}
-                  >
-                    Budget: $
-                    {element.budget}
-                  </Typography>
-                  <Grid container alignItems="center" justifyContent="center">
-                    <Grid item>
-                      {/* Every selected category needs its own <ItemrenderSelectedCategories/>
-                      component as each category needs its own budget state */}
-                      <RenderBudgetInput
-                        budgetUpdate={budgetUpdate}
-                        categoryName={element.category}
-                      />
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-        {/* Submit Button */}
         <Grid
           container
           alignItems="center"
           justifyContent="center"
-          minHeight="70px"
+          spacing={1}
+          color="textSecondary"
+          marginBottom={5}
         >
-          <Button
-            minWidth="140px"
-            minHeight="40px"
-            onClick={handleCategoryListSubmit}
-            type="submit"
-            variant="contained"
-          >
-            Submit
-          </Button>
+          {categoryBudgetList.map((element, CatIndex) => (
+            <Grid key={CatIndex} item className="category-tiles">
+              <Card sx={{ minWidth: 300, minHeight: 140 }} elevation={3}>
+                <CardHeaderNoPadding
+                    // <CardHeader
+                  action={(
+                    <IconButton onClick={() => handleCategoryDelete(element)}>
+                      <DeleteOutlinedIcon />
+                    </IconButton>
+                    )}
+                  title={element.category}
+                />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  paddingLeft={2}
+                  paddingBottom={2}
+                >
+                  Budget: $
+                  {element.budget}
+                </Typography>
+                <Grid container alignItems="center" justifyContent="center">
+                  <Grid item>
+                    {/* Every selected category needs its own <ItemrenderSelectedCategories/>
+                      component as each category needs its own budget state */}
+                    <RenderBudgetInput
+                      budgetUpdate={budgetUpdate}
+                      categoryName={element.category}
+                    />
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
-      </Container>
+      </Box>
+      {/* Submit Button */}
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        minHeight="70px"
+      >
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={handleCategoryListSubmit}
+        >
+          Next
+        </Button>
+      </Grid>
     </>
   );
 };
