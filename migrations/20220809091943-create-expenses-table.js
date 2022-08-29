@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_ws_id: {
+      user_workspace_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'user_workspaces',
@@ -47,6 +47,9 @@ module.exports = {
       },
       notes: {
         type: Sequelize.STRING,
+      },
+      expense_date: {
+        type: Sequelize.DATEONLY,
       },
       created_at: {
         allowNull: false,
