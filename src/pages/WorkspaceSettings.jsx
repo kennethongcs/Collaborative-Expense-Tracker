@@ -15,17 +15,16 @@ import AddIcon from '@mui/icons-material/Add';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import {
-  red, deepPurple, blue, cyan, green, yellow, orange,
-} from '@mui/material/colors';
+import useTheme from '@mui/material/styles/useTheme';
 
 const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
   const [workspaceList, setWorkspaceList] = useState(null);
 
   const navigate = useNavigate();
 
+  const colors = useTheme().palette;
   // eslint-disable-next-line max-len
-  const avatarColors = [red[500], deepPurple[500], blue[500], cyan[500], green[500], yellow[500], orange[500]];
+  const avatarColors = [colors.warning.main, colors.success.main, colors.error.main, colors.secondary.main];
 
   /**
    * Hash map to store colors assigned to each collaborators
@@ -45,7 +44,7 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
         // assign a color if user not yet assigned a color
         if (!(collaborator.id in userColorMap)) {
           const newColorIndex = Object.keys(userColorMap).length;
-          userColorMap[collaborator.id] = avatarColors[newColorIndex];
+          userColorMap[collaborator.id] = avatarColors[newColorIndex % avatarColors.length];
         }
 
         // store new color key in user object
