@@ -62,9 +62,10 @@ const WorkspaceBottomNav = () => {
       <MobileStepper
         variant="dots"
         steps={4}
-        position="static"
         activeStep={activeStep}
-        sx={{ maxWidth: 400, flexGrow: 1 }}
+        sx={{
+          maxWidth: 400, flexGrow: 1, bottom: 0, position: 'static', pb: 4,
+        }}
         nextButton={(
           <Box />
         )}

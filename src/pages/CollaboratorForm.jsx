@@ -12,11 +12,22 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+
+import EditOffIcon from '@mui/icons-material/EditOff';
+import EditIcon from '@mui/icons-material/Edit';
 import UserList from '../components/UserList.jsx';
 
 const CollaboratorForm = ({ user, workspace }) => {
   const [retrievedUsers, setRetrievedUsers] = useState([]);
   const [authority, setAuthority] = useState('');
+  const [collaborators, setCollaborators] = useState([]);
 
   const workspaceId = workspace.id;
   const collaboratorName = useRef('');
@@ -37,15 +48,23 @@ const CollaboratorForm = ({ user, workspace }) => {
         })
         .then((res) => {
           const { data } = res;
-          // console.log(data);
+          console.log(data);
           // console.log(`retrieved users: ${emails}`);
           setRetrievedUsers(data);
         });
     }
   };
 
+  const addCollaborators = (newCollaborator) => {
+    const collaboratorList = [...collaborators];
+    collaboratorList.push(newCollaborator);
+    setCollaborators(collaboratorList);
+  };
+
   // sends invitation email to invite to collaborate on workspace
-  const submitEmail = () => {
+  const submitEmail = (event) => {
+    event.preventDefault();
+
     const input = collaboratorName.current.value;
     console.log(input);
     console.log(workspaceId);
@@ -59,12 +78,8 @@ const CollaboratorForm = ({ user, workspace }) => {
       })
       .then((res) => {
         console.log(res);
+        addCollaborators(input);
       });
-  };
-
-  const handleChangeAuthority = (e) => {
-    const input = e.target.value;
-    setAuthority(input);
   };
 
   const AuthoritySelect = () => {
@@ -75,7 +90,9 @@ const CollaboratorForm = ({ user, workspace }) => {
           labelId="editing-authority-label"
           id="edit-authority-select"
           label="Authority"
-          onChange={handleChangeAuthority}
+          onChange={(event) => {
+            setAuthority(event.target.value);
+          }}
           value={authority}
         >
           <MenuItem value="Viewing">Viewing</MenuItem>
@@ -142,6 +159,27 @@ const CollaboratorForm = ({ user, workspace }) => {
               >
                 Collaborate
               </Button>
+              <List dense sx={{ width: '100%', maxWidth: 360 }}>
+                {collaborators.map((value) => {
+                  const labelId = `checkbox-list-secondary-label-${value}`;
+                  return (
+                    <ListItem
+                      key={value}
+                      secondaryAction={(
+                        <EditOffIcon />
+                      )}
+                      disablePadding
+                    >
+                      <ListItemButton>
+                        <ListItemAvatar>
+                          <Avatar>{value.charAt(0).toUpperCase()}</Avatar>
+                        </ListItemAvatar>
+                        <ListItemText id={labelId} primary={value} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
+              </List>
             </Box>
           </Box>
         </Grid>
@@ -170,37 +208,6 @@ const CollaboratorForm = ({ user, workspace }) => {
       </Grid>
     </>
   );
-
-  // return (
-  //   <div>
-  //     <div>Add collaborators here:</div>
-  //     <div>
-  //       <input
-  //         type="text"
-  //         placeholder="Email"
-  //         ref={collaboratorName}
-  //         onChange={getCollaboratorName}
-  //       >
-  //       </input>
-  //     </div>
-  //     <div>
-  //       <ul>
-  //         {/* upon input, query db for users with that email / username */}
-  //         <UserList
-  //           retrievedUsers={retrievedUsers}
-  //           whenUserIsClicked={whenUserIsClicked}
-  //         />
-  //       </ul>
-  //     </div>
-  //     <div>
-  //       <div>Select collaborator authority:</div>
-  //       <div>
-  //         <AuthoritySelect />
-  //       </div>
-  //     </div>
-  //     <button onClick={submitEmail}>Collaborate!</button>
-  //   </div>
-  // );
 };
 
 export default CollaboratorForm;
