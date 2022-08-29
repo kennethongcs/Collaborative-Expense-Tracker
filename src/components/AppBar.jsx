@@ -8,6 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import useTheme from '@mui/material/styles/useTheme';
 
 const settings = [{
   name: 'Profile',
@@ -26,9 +27,18 @@ const settings = [{
 const AppBar = ({ user }) => {
   const [initials, setInitials] = useState();
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [avatarStyle, setAvatarStyle] = useState();
+
+  const colors = useTheme().palette;
+  // eslint-disable-next-line max-len
+  const avatarColors = [colors.warning.main, colors.success.main, colors.error.main, colors.secondary.main];
 
   useEffect(() => {
     setInitials(user?.firstName.charAt(0).toUpperCase() + user?.lastName.charAt(0).toUpperCase());
+
+    setAvatarStyle({
+      backgroundColor: avatarColors[Math.floor(Math.random() * avatarColors.length)],
+    });
   }, [user]);
 
   const handleOpenUserMenu = (event) => {
@@ -54,7 +64,7 @@ const AppBar = ({ user }) => {
     <Container maxWidth="xl">
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} mt={2}>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar>{initials}</Avatar>
+          <Avatar sx={avatarStyle}>{initials}</Avatar>
         </IconButton>
         <Menu
           sx={{ mt: '45px' }}
