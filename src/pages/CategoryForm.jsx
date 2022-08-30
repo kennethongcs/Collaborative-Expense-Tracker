@@ -99,7 +99,7 @@ const CategoryForm = ({ workspace }) => {
         container
         alignItems="center"
         justifyContent="center"
-        minHeight="80px"
+        sx={{ minHeight: 80 }}
       >
         <TextField
           id="category-input"
@@ -117,11 +117,10 @@ const CategoryForm = ({ workspace }) => {
         container
         alignItems="center"
         justifyContent="center"
-        minHeight="70px"
+        sx={{ minHeight: 70 }}
       >
         <Button
-          minWidth="140px"
-          minHeight="40px"
+          sx={{ minWidth: 140, minHeight: 40 }}
           onClick={handleAddCategory}
           variant="contained"
         >
@@ -131,7 +130,7 @@ const CategoryForm = ({ workspace }) => {
       {/* Categories shown */}
       <Box
         container
-        minHeight="500px"
+        sx={{ minHeight: 500 }}
         border={1}
         borderRadius={1}
         borderColor="lightGrey"
@@ -200,7 +199,7 @@ const CategoryForm = ({ workspace }) => {
         container
         alignItems="center"
         justifyContent="center"
-        minHeight="70px"
+        sx={{ minHeight: 70 }}
       >
         <Button
           fullWidth
