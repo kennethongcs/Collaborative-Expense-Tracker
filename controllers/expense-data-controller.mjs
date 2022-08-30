@@ -1,5 +1,3 @@
-import { Pause } from '@mui/icons-material';
-
 export default function initRetrieveExpenseDataController(db) {
   // retrieve the following data from db:
   // categories, payee, paymentmode
@@ -81,9 +79,10 @@ export default function initRetrieveExpenseDataController(db) {
         userWorkspaceId: expenseData.userWorkspaceId,
         categoryId: expenseData.categoryId,
         paymentModeId: expenseData.paymentModeId,
-        commentId: 0,
+        payee: expenseData.payee,
         amount: expenseData.amount,
         notes: expenseData.notes,
+        expenseDate: expenseData.expenseDate,
       });
       res.send(newExpense);
     }

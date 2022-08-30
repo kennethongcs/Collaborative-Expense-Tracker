@@ -41,13 +41,13 @@ module.exports = {
       payee: {
         type: Sequelize.STRING,
       },
-      comment_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'comments',
-          key: 'id',
-        },
-      },
+      // comment_id: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'comments',
+      //     key: 'id',
+      //   },
+      // },
       amount: {
         type: Sequelize.FLOAT,
       },

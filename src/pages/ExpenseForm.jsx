@@ -26,6 +26,7 @@ const ExpenseForm = ({ user, workspace }) => {
   const [storeDbData, setstoreDbData] = useState("");
   const [addNotes, setaddNotes] = useState([]);
 
+  const navigate = useNavigate();
   const fetchData = async () => {
     // fetch categories, and paymode
     axios
@@ -60,11 +61,11 @@ const ExpenseForm = ({ user, workspace }) => {
       categoryId: addExpenseCategory,
       paymentModeId: addExpensePaymentMode,
       payee: addExpensePayee,
-      commentId: null,
       amount: addExpenseAmount,
       notes: addNotes,
+      expenseDate: addExpenseDate,
     };
-    console.log("this is code", data);
+    console.log("expense data into db:", data);
     axios
       .post("/add-expense", {
         data,
@@ -72,7 +73,7 @@ const ExpenseForm = ({ user, workspace }) => {
       })
       .then((response) => {
         console.log(response);
-        navigate("/workspace/3");
+        navigate("/dashboard");
       })
       .catch((error) => {
         console.log(error);

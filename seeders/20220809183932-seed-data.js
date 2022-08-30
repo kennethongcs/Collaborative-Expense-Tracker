@@ -364,46 +364,6 @@ module.exports = {
       returning: true,
     });
 
-    // Define comment data
-    const commentData = [
-      {
-        user_id: johnUser.id,
-        comment: 'some comment',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_id: peterUser.id,
-        comment: 'some comment',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_id: maryUser.id,
-        comment: 'some comment',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_id: ruthUser.id,
-        comment: 'some comment',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_id: simonUser.id,
-        comment: 'some comment',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-    ];
-
-    // Bulk insert comments, returning=true,
-    // and destructure the returned results array, for use in expenseData
-    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] = await queryInterface.bulkInsert('comments', commentData, {
-      returning: true,
-    });
-
     // Define expense data
     const expenseData = [
       {
@@ -413,7 +373,7 @@ module.exports = {
         payment_mode_id: cashJohn.id,
         // payee_id: payeeJohn.id,
         payee: 'some payee',
-        comment_id: commentJohn.id,
+        // comment_id: commentJohn.id,
         amount: 1000,
         notes: 'some notes',
         expense_date: '2022-10-23',
@@ -427,7 +387,7 @@ module.exports = {
         payment_mode_id: creditJohn.id,
         // payee_id: payeeJohn.id,
         payee: 'some payee',
-        comment_id: null,
+        // comment_id: null,
         amount: 3000,
         notes: 'some notes',
         expense_date: '2022-11-23',
@@ -441,7 +401,7 @@ module.exports = {
         payment_mode_id: cashPeter.id,
         // payee_id: payeePeter.id,
         payee: 'some payee',
-        comment_id: commentPeter.id,
+        // comment_id: commentPeter.id,
         amount: 2000,
         notes: 'some notes',
         expense_date: '2022-12-23',
@@ -455,7 +415,7 @@ module.exports = {
         payment_mode_id: creditPeter.id,
         // payee_id: payeePeter.id,
         payee: 'some payee',
-        comment_id: null,
+        // comment_id: null,
         amount: 3000,
         notes: 'some notes',
         expense_date: '2022-01-23',
@@ -469,7 +429,7 @@ module.exports = {
         payment_mode_id: creditMary.id,
         // payee_id: payeeMary.id,
         payee: 'some payee',
-        comment_id: commentMary.id,
+        // comment_id: commentMary.id,
         amount: 3000,
         notes: 'some notes',
         expense_date: '2022-02-23',
@@ -483,7 +443,7 @@ module.exports = {
         payment_mode_id: cashMary.id,
         // payee_id: null,
         payee: 'some payee',
-        comment_id: null,
+        // comment_id: null,
         amount: 3000,
         notes: 'some notes',
         expense_date: '2022-03-23',
@@ -497,7 +457,7 @@ module.exports = {
         payment_mode_id: creditRuth.id,
         // payee_id: payeeRuth.id,
         payee: 'some payee',
-        comment_id: commentRuth.id,
+        // comment_id: commentRuth.id,
         amount: 2000,
         notes: 'some notes',
         expense_date: '2022-04-23',
@@ -511,7 +471,7 @@ module.exports = {
         payment_mode_id: cashRuth.id,
         // payee_id: payeeRuth.id,
         payee: 'some payee',
-        comment_id: null,
+        // comment_id: null,
         amount: 2000,
         notes: 'some notes',
         expense_date: '2022-05-23',
@@ -525,7 +485,7 @@ module.exports = {
         payment_mode_id: cashSimon.id,
         // payee_id: payeeSimonBiz.id,
         payee: 'some payee',
-        comment_id: commentSimon.id,
+        // comment_id: commentSimon.id,
         amount: 4000,
         notes: 'some notes',
         expense_date: '2022-06-23',
@@ -539,7 +499,7 @@ module.exports = {
         payment_mode_id: creditSimon.id,
         // payee_id: payeeSimonWs.id,
         payee: 'some payee',
-        comment_id: null,
+        // comment_id: null,
         amount: 4000,
         notes: 'some notes',
         expense_date: '2022-07-23',
@@ -548,13 +508,58 @@ module.exports = {
       },
     ];
 
-    // Bulk insert category items
-    await queryInterface.bulkInsert('expenses', expenseData);
+    // Bulk insert expenses, returning=true,
+    // and destructure the returned results array, for use in commentData
+    const [johnExpenseOne, johnExpenseTwo, peterExpenseOne, peterExpenseTwo, maryExpenseOne, maryExpenseTwo, ruthExpenseOne, ruthExpenseTwo, simonExpenseOne, simonExpenseTwo] = await queryInterface.bulkInsert('expenses', expenseData, {
+      returning: true,
+    });
+
+    // Define comment data
+    const commentData = [
+      {
+        user_id: johnUser.id,
+        expense_id: johnExpenseOne.id,
+        comment: 'some comment',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        user_id: peterUser.id,
+        expense_id: peterExpenseTwo.id,
+        comment: 'some comment',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        user_id: maryUser.id,
+        expense_id: maryExpenseOne.id,
+        comment: 'some comment',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        user_id: ruthUser.id,
+        expense_id: ruthExpenseOne.id,
+        comment: 'some comment',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        user_id: simonUser.id,
+        expense_id: simonExpenseOne.id,
+        comment: 'some comment',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ];
+
+    // Bulk insert expenses items
+    await queryInterface.bulkInsert('comments', commentData);
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('expenses', null, {});
     await queryInterface.bulkDelete('comments', null, {});
+    await queryInterface.bulkDelete('expenses', null, {});
     await queryInterface.bulkDelete('payment_modes', null, {});
     await queryInterface.bulkDelete('categories', null, {});
     // await queryInterface.bulkDelete('payees', null, {});

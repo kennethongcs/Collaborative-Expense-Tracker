@@ -19,12 +19,7 @@ const CategoryForm = ({ user, workspace }) => {
   const [categoryBudgetList, setCategoryBudgetList] = useState([
     { category: "Transport", budget: 0 },
     { category: "Food", budget: 0 },
-    { category: "Groceries", budget: 0 },
-    { category: "Utilities", budget: 0 },
-    { category: "Clothes", budget: 0 },
     { category: "Healthcare", budget: 0 },
-    { category: "Insurance", budget: 0 },
-    { category: "Donations", budget: 0 },
     { category: "Entertainment", budget: 0 },
   ]);
 

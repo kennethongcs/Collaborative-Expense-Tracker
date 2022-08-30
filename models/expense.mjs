@@ -42,13 +42,13 @@ export default function initExpenseModel(sequelize, DataTypes) {
       payee: {
         type: DataTypes.STRING,
       },
-      commentId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'comments',
-          key: 'id',
-        },
-      },
+      // commentId: {
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     model: 'comments',
+      //     key: 'id',
+      //   },
+      // },
       amount: {
         type: DataTypes.FLOAT,
       },
