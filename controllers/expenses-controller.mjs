@@ -8,6 +8,14 @@ export default function initExpensesController(db) {
     try {
       const expenseList = await db.Expense.findAll({
         where: { userWorkspaceId: id },
+        include: [
+          {
+            model: db.Category,
+          },
+          {
+            model: db.Payee,
+          },
+        ],
       });
       // console.log(expenseList);
       res.send(expenseList);
