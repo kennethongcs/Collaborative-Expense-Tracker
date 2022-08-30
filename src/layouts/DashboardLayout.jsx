@@ -8,11 +8,7 @@ import AppBar from '../components/AppBar.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
 const DashboardLayout = ({ user }) => {
-  const theme = createTheme({
-    palette: {
-      mode: 'light',
-    },
-  });
+  const theme = createTheme();
 
   return (
     <>
@@ -20,7 +16,15 @@ const DashboardLayout = ({ user }) => {
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box mt={4}>
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            {' '}
             <Outlet />
           </Box>
         </Container>

@@ -14,6 +14,13 @@ module.exports = {
           key: 'id',
         },
       },
+      expense_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'expenses',
+          key: 'id',
+        },
+      },
       comment: {
         type: Sequelize.STRING,
       },
@@ -29,7 +36,9 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Drop category_items first because it references items and categories.
+    // Drop comments table last because it references expenses table.
     await queryInterface.dropTable('comments');
   },
 };
+
+// 20220809091926-create-comments-table.js

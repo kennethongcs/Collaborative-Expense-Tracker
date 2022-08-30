@@ -15,6 +15,13 @@ export default function initCommentModel(sequelize, DataTypes) {
           key: 'id',
         },
       },
+      expenseId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'expenses',
+          key: 'id',
+        },
+      },
       comment: {
         type: DataTypes.STRING,
       },

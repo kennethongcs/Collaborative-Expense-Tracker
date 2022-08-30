@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const WorkspaceForm = ({ user, setWorkspace }) => {
-  const [workspaceName, setWorkspaceName] = useState('');
-  const [purpose, setPurpose] = useState('');
+  const [workspaceName, setWorkspaceName] = useState("");
+  const [purpose, setPurpose] = useState("");
 
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const WorkspaceForm = ({ user, setWorkspace }) => {
 
     if (workspaceName) {
       axios
-        .post('/workspace', {
+        .post("/workspace", {
           name: workspaceName,
           purpose,
           userId: user.id,
@@ -33,13 +33,16 @@ const WorkspaceForm = ({ user, setWorkspace }) => {
           console.log(response.data);
           const workspace = response.data;
 
-          setWorkspace(workspace);
+          setWorkspace({
+            id: workspace.workspace,
+            userId: workspace.userWorkspace,
+          });
 
-          navigate('/workspace/2');
+          navigate("/workspace/2");
         })
         .catch((error) => console.log(error));
     } else {
-      console.log('nothing entered');
+      console.log("nothing entered");
     }
   };
 
@@ -51,9 +54,9 @@ const WorkspaceForm = ({ user, setWorkspace }) => {
           sx={{
             my: 8,
             mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <Box
