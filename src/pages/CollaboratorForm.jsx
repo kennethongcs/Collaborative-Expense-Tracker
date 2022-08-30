@@ -22,20 +22,15 @@ import Avatar from '@mui/material/Avatar';
 
 import EditOffIcon from '@mui/icons-material/EditOff';
 import EditIcon from '@mui/icons-material/Edit';
-import UserList from '../components/UserList.jsx';
+import Autocomplete from '@mui/material/Autocomplete';
 
-const CollaboratorForm = ({ user, workspace }) => {
+const CollaboratorForm = ({ workspace }) => {
   const [retrievedUsers, setRetrievedUsers] = useState([]);
+  const [collaborator, setCollaborator] = useState('');
   const [authority, setAuthority] = useState('');
   const [collaborators, setCollaborators] = useState([]);
 
   const workspaceId = workspace.id;
-  const collaboratorName = useRef('');
-
-  // add user email into input box
-  const whenUserIsClicked = (user) => {
-    collaboratorName.current.value = user.email;
-  };
 
   // runs when any char is typed into "input box"
   const getCollaboratorName = (input) => {
@@ -48,9 +43,11 @@ const CollaboratorForm = ({ user, workspace }) => {
         })
         .then((res) => {
           const { data } = res;
-          console.log(data);
-          // console.log(`retrieved users: ${emails}`);
-          setRetrievedUsers(data);
+
+          const retUsers = data.map((user) => {
+            return { label: user.email, id: user.id };
+          });
+          setRetrievedUsers(retUsers);
         });
     }
   };
@@ -65,26 +62,27 @@ const CollaboratorForm = ({ user, workspace }) => {
   const submitEmail = (event) => {
     event.preventDefault();
 
-    const input = collaboratorName.current.value;
-    console.log(input);
-    console.log(workspaceId);
+    // console.log(`collaborator: ${collaborator.label}`);
+    // console.log(`authority: ${authority}`);
+    // console.log(`workspace id: ${workspaceId}`);
     // use workspaceId and add an existing user into your user_workspace table
 
     axios
       .post('/joinworkspace', {
-        email: input,
+        email: collaborator.label,
         workspaceId,
         authority,
       })
       .then((res) => {
         console.log(res);
-        addCollaborators(input);
+        collaborator.auth = authority;
+        addCollaborators({ user: collaborator });
       });
   };
 
   const AuthoritySelect = () => {
     return (
-      <FormControl fullWidth>
+      <FormControl fullWidth margin="normal" required>
         <InputLabel id="editing-authority-label">Authority</InputLabel>
         <Select
           labelId="editing-authority-label"
@@ -100,6 +98,11 @@ const CollaboratorForm = ({ user, workspace }) => {
         </Select>
       </FormControl>
     );
+  };
+
+  const getAuthorityIcon = (auth) => {
+    if (auth === 'Viewing') return (<EditOffIcon />);
+    return (<EditIcon />);
   };
 
   const navigate = useNavigate();
@@ -126,55 +129,53 @@ const CollaboratorForm = ({ user, workspace }) => {
               noValidate
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
+              <Autocomplete
+                disablePortal
                 fullWidth
                 id="collaboratorName"
-                label="Collaborator Name"
-                name="collaboratorName"
-                autoComplete="off"
-                ref={collaboratorName}
-                autoFocus
-                onChange={(event) => {
-                  getCollaboratorName(event.target.value);
-                }}
-              />
-              <div>
-                <ul>
-                  {/* upon input, query db for users with that email / username */}
-                  <UserList
-                    retrievedUsers={retrievedUsers}
-                    whenUserIsClicked={whenUserIsClicked}
+                options={retrievedUsers}
+                selectOnFocus
+                clearOnBlur
+                onChange={(event, value) => setCollaborator(value)}
+                noOptionsText=""
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    autoFocus
+                    margin="normal"
+                    label="Collaborator Name"
+                    onChange={(event) => {
+                      getCollaboratorName(event.target.value);
+                    }}
                   />
-                </ul>
-              </div>
+                )}
+              />
               <AuthoritySelect />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 2, mb: 2 }}
                 onClick={submitEmail}
               >
                 Collaborate
               </Button>
               <List dense sx={{ width: '100%', maxWidth: 360 }}>
-                {collaborators.map((value) => {
-                  const labelId = `checkbox-list-secondary-label-${value}`;
+                {collaborators.map(({ user }) => {
+                  const labelId = `checkbox-list-secondary-label-${user.id}`;
                   return (
                     <ListItem
-                      key={value}
-                      secondaryAction={(
-                        <EditOffIcon />
-                      )}
+                      key={user.id}
+                      secondaryAction={getAuthorityIcon(user.auth)}
                       disablePadding
                     >
                       <ListItemButton>
                         <ListItemAvatar>
-                          <Avatar>{value.charAt(0).toUpperCase()}</Avatar>
+                          <Avatar>{user.label.charAt(0).toUpperCase()}</Avatar>
                         </ListItemAvatar>
-                        <ListItemText id={labelId} primary={value} />
+                        <ListItemText id={labelId} primary={user.label} />
                       </ListItemButton>
                     </ListItem>
                   );

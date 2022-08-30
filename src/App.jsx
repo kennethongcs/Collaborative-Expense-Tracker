@@ -54,7 +54,7 @@ const App = () => {
           <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
           <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
           <Route path="2" element={<CategoryForm workspace={workspace} />} />
-          <Route path="3" element={<CollaboratorForm user={user} workspace={workspace} />} />
+          <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
           <Route path="4" element={<ExpenseForm workspace={workspace} />} />
         </Route>
 
