@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_ws_id: {
+      user_workspace_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'user_workspaces',
