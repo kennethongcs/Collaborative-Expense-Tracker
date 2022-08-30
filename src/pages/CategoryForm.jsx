@@ -14,7 +14,7 @@ import RenderBudgetInput from "../components/BudgetInput.jsx";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
-const CategoryForm = () => {
+const CategoryForm = ({ user, workspace }) => {
   const [addCategory, setaddCategory] = useState([]);
   const [categoryBudgetList, setCategoryBudgetList] = useState([
     { category: "Transport", budget: 0 },
@@ -69,12 +69,12 @@ const CategoryForm = () => {
   const navigate = useNavigate();
   const handleCategoryListSubmit = () => {
     // add user Id
-
+    console.log("this is workspace id", workspace);
     axios
       .post("/add-category", {
         categoryBudgetList,
-        // hardcoded as 3 first
-        workspaceId: 3,
+        workspaceId: workspace.id,
+        userId: user.id,
       })
       .then((response) => {
         console.log(response);

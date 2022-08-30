@@ -171,58 +171,58 @@ module.exports = {
       returning: true,
     });
 
-    // Define payee data
-    const payeeData = [
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsJohn.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsPeter.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsMary.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsRuth.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsSimonBiz.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsSimonWs.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-    ];
+    // // Define payee data
+    // const payeeData = [
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsJohn.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsPeter.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsMary.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsRuth.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsSimonBiz.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsSimonWs.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    // ];
 
-    // Bulk insert payees, returning=true,
-    // and destructure the returned results array, for use in expenseData
-    const [
-      payeeJohn,
-      payeePeter,
-      payeeMary,
-      payeeRuth,
-      payeeSimonBiz,
-      payeeSimonWs,
-    ] = await queryInterface.bulkInsert('payees', payeeData, {
-      returning: true,
-    });
+    // // Bulk insert payees, returning=true,
+    // // and destructure the returned results array, for use in expenseData
+    // const [
+    //   payeeJohn,
+    //   payeePeter,
+    //   payeeMary,
+    //   payeeRuth,
+    //   payeeSimonBiz,
+    //   payeeSimonWs,
+    // ] = await queryInterface.bulkInsert('payees', payeeData, {
+    //   returning: true,
+    // });
 
     // Define category data
     const categoryData = [
@@ -407,10 +407,12 @@ module.exports = {
     // Define expense data
     const expenseData = [
       {
+        name: 'Some expense name',
         user_workspace_id: userWsJohn.id,
         category_id: catOneJohnSimon.id,
         payment_mode_id: cashJohn.id,
-        payee_id: payeeJohn.id,
+        // payee_id: payeeJohn.id,
+        payee: 'some payee',
         comment_id: commentJohn.id,
         amount: 1000,
         notes: 'some notes',
@@ -419,10 +421,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsJohn.id,
         category_id: catTwoJohnSimon.id,
         payment_mode_id: creditJohn.id,
-        payee_id: payeeJohn.id,
+        // payee_id: payeeJohn.id,
+        payee: 'some payee',
         comment_id: null,
         amount: 3000,
         notes: 'some notes',
@@ -431,10 +435,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsPeter.id,
         category_id: catOnePeterMary.id,
         payment_mode_id: cashPeter.id,
-        payee_id: payeePeter.id,
+        // payee_id: payeePeter.id,
+        payee: 'some payee',
         comment_id: commentPeter.id,
         amount: 2000,
         notes: 'some notes',
@@ -443,10 +449,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsPeter.id,
         category_id: catTwoPeterMary.id,
         payment_mode_id: creditPeter.id,
-        payee_id: payeePeter.id,
+        // payee_id: payeePeter.id,
+        payee: 'some payee',
         comment_id: null,
         amount: 3000,
         notes: 'some notes',
@@ -455,10 +463,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsMary.id,
         category_id: catTwoPeterMary.id,
         payment_mode_id: creditMary.id,
-        payee_id: payeeMary.id,
+        // payee_id: payeeMary.id,
+        payee: 'some payee',
         comment_id: commentMary.id,
         amount: 3000,
         notes: 'some notes',
@@ -467,10 +477,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsMary.id,
         category_id: catOnePeterMary.id,
         payment_mode_id: cashMary.id,
-        payee_id: null,
+        // payee_id: null,
+        payee: 'some payee',
         comment_id: null,
         amount: 3000,
         notes: 'some notes',
@@ -479,10 +491,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsRuth.id,
         category_id: catOneRuthSimon.id,
         payment_mode_id: creditRuth.id,
-        payee_id: payeeRuth.id,
+        // payee_id: payeeRuth.id,
+        payee: 'some payee',
         comment_id: commentRuth.id,
         amount: 2000,
         notes: 'some notes',
@@ -491,10 +505,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsRuth.id,
         category_id: catTwoRuthSimon.id,
         payment_mode_id: cashRuth.id,
-        payee_id: payeeRuth.id,
+        // payee_id: payeeRuth.id,
+        payee: 'some payee',
         comment_id: null,
         amount: 2000,
         notes: 'some notes',
@@ -503,10 +519,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsSimonBiz.id,
         category_id: catTwoRuthSimon.id,
         payment_mode_id: cashSimon.id,
-        payee_id: payeeSimonBiz.id,
+        // payee_id: payeeSimonBiz.id,
+        payee: 'some payee',
         comment_id: commentSimon.id,
         amount: 4000,
         notes: 'some notes',
@@ -515,10 +533,12 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        name: 'Some expense name',
         user_workspace_id: userWsSimonWs.id,
         category_id: catTwoJohnSimon.id,
         payment_mode_id: creditSimon.id,
-        payee_id: payeeSimonWs.id,
+        // payee_id: payeeSimonWs.id,
+        payee: 'some payee',
         comment_id: null,
         amount: 4000,
         notes: 'some notes',
@@ -537,7 +557,7 @@ module.exports = {
     await queryInterface.bulkDelete('comments', null, {});
     await queryInterface.bulkDelete('payment_modes', null, {});
     await queryInterface.bulkDelete('categories', null, {});
-    await queryInterface.bulkDelete('payees', null, {});
+    // await queryInterface.bulkDelete('payees', null, {});
     await queryInterface.bulkDelete('user_workspaces', null, {});
     await queryInterface.bulkDelete('workspace_authorities', null, {});
     await queryInterface.bulkDelete('workspaces', null, {});

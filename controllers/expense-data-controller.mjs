@@ -1,3 +1,5 @@
+import { Pause } from '@mui/icons-material';
+
 export default function initRetrieveExpenseDataController(db) {
   // retrieve the following data from db:
   // categories, payee, paymentmode
@@ -6,7 +8,7 @@ export default function initRetrieveExpenseDataController(db) {
       const { userId } = req.body;
       const { workspaceId } = req.body;
       // expenseData is the data we will send back to output options for the expense form
-      const expenseData = { category: [], payee: [], paymentMode: [] };
+      const expenseData = { category: [], paymentMode: [], userWorkspaceId: [] };
       // store user_workspace.id for retrieval of data
       let userWorkspaceId;
       // retrieve categories
@@ -17,10 +19,9 @@ export default function initRetrieveExpenseDataController(db) {
       retrieveCategories.forEach((x) => {
         // store categories value
         if (x.dataValues.workspaceId === workspaceId) {
-          expenseData.category.push(x.dataValues.name);
+          expenseData.category.push({ categoryId: x.dataValues.id, categoryName: x.dataValues.name });
         }
       });
-
       // retrieve relevant user_workspaces, to retrieve payee
       // if first time creating workspaces, naturally no payee would be found, because
       // payee is tagged to a specific workspace
@@ -32,23 +33,23 @@ export default function initRetrieveExpenseDataController(db) {
         // store user_workspaces value
         if (x.dataValues.workspaceId === workspaceId && x.dataValues.userId === userId) {
           userWorkspaceId = x.dataValues.id;
+          expenseData.userWorkspaceId.push({ userWorkspaceId: x.dataValues.id });
         }
       });
-      console.log('this is userWorkspaceId data', userWorkspaceId);
 
-      // find relevant payees if userWorkspaceId is not undefined
-      if (userWorkspaceId !== undefined) {
-        const retrievePayees = await db.Payee.findAll({
-          // eager loading
-        });
-        // find relevant payees
-        retrievePayees.forEach((x) => {
-        // store payees value
-          if (x.dataValues.userWorkspaceId === userWorkspaceId) {
-            expenseData.payee.push(x.dataValues.name);
-          }
-        });
-      }
+      // // find relevant payees if userWorkspaceId is not undefined
+      // if (userWorkspaceId !== undefined) {
+      //   const retrievePayees = await db.Payee.findAll({
+      //     // eager loading
+      //   });
+      //   // find relevant payees
+      //   retrievePayees.forEach((x) => {
+      //   // store payees value
+      //     if (x.dataValues.userWorkspaceId === userWorkspaceId) {
+      //       expenseData.payee.push({ payeeId: x.dataValues.id, payeeName: x.dataValues.name });
+      //     }
+      //   });
+      // }
 
       // retrieve paymentmode
       const retrievePaymentMode = await db.PaymentMode.findAll({
@@ -58,10 +59,10 @@ export default function initRetrieveExpenseDataController(db) {
       retrievePaymentMode.forEach((x) => {
         // store paymentmode value
         if (x.dataValues.userId === userId) {
-          expenseData.paymentMode.push(x.dataValues.name);
+          expenseData.paymentMode.push({ paymentModeId: x.dataValues.id, paymentModeName: x.dataValues.name });
         }
       });
-      console.log(expenseData);
+      console.log('this is EXPENSE DATA', expenseData);
       // send final data back to display options on the expense sheet
       res.send(expenseData);
     }
@@ -70,5 +71,26 @@ export default function initRetrieveExpenseDataController(db) {
     }
   };
 
-  return ({ retrieveExpenseData });
+  const addExpenseData = async (req, res) => {
+    try {
+      console.log('this is reqbody', req.body);
+      const expenseData = req.body.data;
+
+      const newExpense = await db.Expense.create({
+        name: expenseData.name,
+        userWorkspaceId: expenseData.userWorkspaceId,
+        categoryId: expenseData.categoryId,
+        paymentModeId: expenseData.paymentModeId,
+        commentId: 0,
+        amount: expenseData.amount,
+        notes: expenseData.notes,
+      });
+      res.send(newExpense);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  return ({ retrieveExpenseData, addExpenseData });
 }

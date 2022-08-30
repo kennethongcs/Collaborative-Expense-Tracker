@@ -7,6 +7,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      name: {
+        type: Sequelize.STRING,
+      },
       user_workspace_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -28,12 +31,15 @@ module.exports = {
           key: 'id',
         },
       },
-      payee_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'payees',
-          key: 'id',
-        },
+      // payee_id: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'payees',
+      //     key: 'id',
+      //   },
+      // },
+      payee: {
+        type: Sequelize.STRING,
       },
       comment_id: {
         type: Sequelize.INTEGER,

@@ -16,36 +16,24 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ user, workspace }) => {
   const [addExpenseName, setaddExpenseName] = useState([]);
   const [addExpenseAmount, setaddExpenseAmount] = useState([]);
   const [addExpenseDate, setaddExpenseDate] = useState(new Date());
+  const [addExpenseCategory, setaddExpenseCategory] = useState([]);
   const [addExpensePayee, setaddExpensePayee] = useState([]);
   const [addExpensePaymentMode, setaddExpensePaymentMode] = useState([]);
   const [storeDbData, setstoreDbData] = useState("");
   const [addNotes, setaddNotes] = useState([]);
-  const [addExpense, setaddExpense] = useState([
-    {
-      userWsId: "",
-      categoryId: 0,
-      paymentModeId: 0,
-      payeeId: 0,
-      commentId: 0,
-      amount: 0,
-      notes: 0,
-    },
-  ]);
 
   const fetchData = async () => {
-    // fetch categories, and paymode, payee
+    // fetch categories, and paymode
     axios
       .post("/get-data-expense-form", {
-        // require following data: userId and workspaceId to query DB, hardcoded as 3 & 1 first
-        // workspaceId will refer to the newest workspace being created
         // userId and workspaceId will allow us to retrieve:
         // categories(via ws_id), payee (via user_ws_id), payment mode (via user_id)
-        userId: 3,
-        workspaceId: 1,
+        userId: user.id,
+        workspaceId: workspace.id,
       })
       // update useState
       .then((response) => {
@@ -66,11 +54,21 @@ const ExpenseForm = () => {
 
   const handleSubmitExpense = () => {
     // add expense
+    const data = {
+      name: addExpenseName,
+      userWorkspaceId: storeDbData.data.userWorkspaceId[0].userWorkspaceId,
+      categoryId: addExpenseCategory,
+      paymentModeId: addExpensePaymentMode,
+      payee: addExpensePayee,
+      commentId: null,
+      amount: addExpenseAmount,
+      notes: addNotes,
+    };
+    console.log("this is code", data);
     axios
       .post("/add-expense", {
-        addExpense,
-        // hardcoded as 3 first
-        workspaceId: 3,
+        data,
+        workspaceId: workspace.id,
       })
       .then((response) => {
         console.log(response);
@@ -100,7 +98,7 @@ const ExpenseForm = () => {
           <Grid
             container
             maxWidth="600px"
-            minHeight="600px"
+            minHeight="700px"
             border={1}
             borderRadius={1}
             borderColor="lightGrey"
@@ -177,6 +175,38 @@ const ExpenseForm = () => {
                   />
                 </LocalizationProvider>
               </Grid>
+              {/* Expense payment category Input Field */}
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="center"
+                minHeight="80px"
+              >
+                <FormControl fullWidth>
+                  <InputLabel>Category</InputLabel>
+                  <Select
+                    labelId="expense-category"
+                    id="expense-payment-mode-input"
+                    value={addExpenseCategory}
+                    label="Payment Mode"
+                    onChange={(event) => {
+                      setaddExpenseCategory(event.target.value);
+                    }}
+                  >
+                    {/* Get Category */}
+                    {/* {storeDbData.data.category.map((x) => (
+                      <MenuItem value={x.categoryId}>{x.categoryName}</MenuItem>
+                    ))} */}
+                    {storeDbData.data !== undefined
+                      ? storeDbData.data.category.map((x) => (
+                          <MenuItem value={x.categoryId}>
+                            {x.categoryName}
+                          </MenuItem>
+                        ))
+                      : console.log("No category data")}
+                  </Select>
+                </FormControl>
+              </Grid>
               {/* Expense payee Input Field */}
               <Grid
                 container
@@ -206,7 +236,7 @@ const ExpenseForm = () => {
                 <FormControl fullWidth>
                   <InputLabel>Payment Mode</InputLabel>
                   <Select
-                    labelId="Test"
+                    labelId="payment-mode"
                     id="expense-payment-mode-input"
                     value={addExpensePaymentMode}
                     label="Payment Mode"
@@ -215,16 +245,14 @@ const ExpenseForm = () => {
                     }}
                   >
                     {/* Get PaymentMode */}
-                    {storeDbData !== "" ? (
-                      storeDbData.data.paymentMode.map((x) => (
-                        <MenuItem value={x}>{x}</MenuItem>
-                      ))
-                    ) : (
-                      <>
-                        <MenuItem value={"Cash"}>Cash</MenuItem>
-                        <MenuItem value={"Credit"}>Credit Card</MenuItem>
-                      </>
-                    )}
+                    {storeDbData.data !== undefined &&
+                    storeDbData.data.paymentMode[0] !== undefined
+                      ? storeDbData.data.paymentMode.map((x) => (
+                          <MenuItem value={x.paymentModeId}>
+                            {x.paymentModeName}
+                          </MenuItem>
+                        ))
+                      : console.log("No payment mode data")}
                   </Select>
                 </FormControl>
               </Grid>

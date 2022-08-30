@@ -7,7 +7,7 @@ import initWorkspaceAuthorityModel from './workspace_authority.mjs';
 import initUserWorkspaceModel from './user_workspace.mjs';
 import initCategoryModel from './category.mjs';
 import initPaymentModeModel from './payment_mode.mjs';
-import initPayeeModel from './payee.mjs';
+// import initPayeeModel from './payee.mjs';
 import initCommentModel from './comment.mjs';
 import initExpenseModel from './expense.mjs';
 
@@ -45,15 +45,15 @@ db.WorkspaceAuthority = initWorkspaceAuthorityModel(sequelize, Sequelize.DataTyp
 db.UserWorkspace = initUserWorkspaceModel(sequelize, Sequelize.DataTypes);
 db.Category = initCategoryModel(sequelize, Sequelize.DataTypes);
 db.PaymentMode = initPaymentModeModel(sequelize, Sequelize.DataTypes);
-db.Payee = initPayeeModel(sequelize, Sequelize.DataTypes);
+// db.Payee = initPayeeModel(sequelize, Sequelize.DataTypes);
 db.Comment = initCommentModel(sequelize, Sequelize.DataTypes);
 db.Expense = initExpenseModel(sequelize, Sequelize.DataTypes);
 
 // Specify relationship of the tables
 // One to Many
-// 1. Payee (One) - expense (Many)
-db.Expense.belongsTo(db.Payee);
-db.Payee.hasMany(db.Expense);
+// // 1. Payee (One) - expense (Many)
+// db.Expense.belongsTo(db.Payee);
+// db.Payee.hasMany(db.Expense);
 // 2. Category (One) - expense (Many)
 db.Expense.belongsTo(db.Category);
 db.Category.hasMany(db.Expense);
@@ -69,9 +69,9 @@ db.Expense.hasMany(db.Comment);
 // 6. User (One) - comments (Many)
 db.Comment.belongsTo(db.User);
 db.User.hasMany(db.Comment);
-// 7. User_workspace (One) - payee (Many)
-db.Payee.belongsTo(db.UserWorkspace);
-db.UserWorkspace.hasMany(db.Payee);
+// // 7. User_workspace (One) - payee (Many)
+// db.Payee.belongsTo(db.UserWorkspace);
+// db.UserWorkspace.hasMany(db.Payee);
 // 8. Workspace (One) - categories (Many)
 db.Category.belongsTo(db.Workspace);
 db.Workspace.hasMany(db.Category);

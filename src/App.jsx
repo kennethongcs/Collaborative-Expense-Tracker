@@ -29,11 +29,28 @@ const App = () => {
           />
           <Route path="signup" element={<Signup />} />
           <Route path="workspace" element={<WorkspaceLayout />}>
-            <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
-            <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
-            <Route path="2" element={<CategoryForm workspace={workspace} />} />
-            <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
-            <Route path="4" element={<ExpenseForm />} />
+            <Route
+              index
+              element={
+                <WorkspaceForm user={user} setWorkspace={setWorkspace} />
+              }
+            />
+            <Route
+              path="1"
+              element={<WorkspaceForm setWorkspace={setWorkspace} />}
+            />
+            <Route
+              path="2"
+              element={<CategoryForm user={user} workspace={workspace} />}
+            />
+            <Route
+              path="3"
+              element={<CollaboratorForm workspace={workspace} />}
+            />
+            <Route
+              path="4"
+              element={<ExpenseForm user={user} workspace={workspace} />}
+            />
           </Route>
           <Route path="dashboard" element={<DashboardLayout user={user} />}>
             <Route
@@ -44,10 +61,17 @@ const App = () => {
                 // </ProtectedRoute>
               }
             />
-            <Route path="stats" element={<Statistics />} workspace={workspace} />
+            <Route
+              path="stats"
+              element={<Statistics />}
+              workspace={workspace}
+            />
             <Route path="expense" element={<ExpenseForm />} />
             <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
-            <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
+            <Route
+              path="settings"
+              element={<Settings user={user} setUser={setUser} />}
+            />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
