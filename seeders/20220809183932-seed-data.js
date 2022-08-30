@@ -6,7 +6,8 @@ module.exports = {
         first_name: 'John',
         last_name: 'Doe',
         email: 'john@gmail.com',
-        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password:
+          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -14,7 +15,8 @@ module.exports = {
         first_name: 'Mary',
         last_name: 'Jane',
         email: 'mary@gmail.com',
-        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password:
+          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -22,7 +24,8 @@ module.exports = {
         first_name: 'Peter',
         last_name: 'Griffin',
         email: 'peter@gmail.com',
-        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password:
+          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -30,7 +33,8 @@ module.exports = {
         first_name: 'Ruth',
         last_name: 'Boaz',
         email: 'ruth@gmail.com',
-        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password:
+          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -38,7 +42,8 @@ module.exports = {
         first_name: 'Simon',
         last_name: 'Says',
         email: 'simon@gmail.com',
-        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password:
+          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -46,9 +51,10 @@ module.exports = {
 
     // Bulk insert users, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [johnUser, maryUser, peterUser, ruthUser, simonUser] = await queryInterface.bulkInsert('users', userData, {
-      returning: true,
-    });
+    const [johnUser, maryUser, peterUser, ruthUser, simonUser] =
+      await queryInterface.bulkInsert('users', userData, {
+        returning: true,
+      });
 
     // Define workspace data
     const workspaceData = [
@@ -74,9 +80,10 @@ module.exports = {
 
     // Bulk insert workspaces, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] = await queryInterface.bulkInsert('workspaces', workspaceData, {
-      returning: true,
-    });
+    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] =
+      await queryInterface.bulkInsert('workspaces', workspaceData, {
+        returning: true,
+      });
 
     // Define user data
     const authorityData = [
@@ -99,7 +106,7 @@ module.exports = {
       authorityData,
       {
         returning: true,
-      },
+      }
     );
 
     // Define user workspace data based on generated users and workspaces and authorities
@@ -175,37 +182,37 @@ module.exports = {
     const payeeData = [
       {
         name: 'Some retail',
-        user_ws_id: userWsJohn.id,
+        user_workspace_id: userWsJohn.id,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         name: 'Some retail',
-        user_ws_id: userWsPeter.id,
+        user_workspace_id: userWsPeter.id,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         name: 'Some retail',
-        user_ws_id: userWsMary.id,
+        user_workspace_id: userWsMary.id,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         name: 'Some retail',
-        user_ws_id: userWsRuth.id,
+        user_workspace_id: userWsRuth.id,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         name: 'Some retail',
-        user_ws_id: userWsSimonBiz.id,
+        user_workspace_id: userWsSimonBiz.id,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         name: 'Some retail',
-        user_ws_id: userWsSimonWs.id,
+        user_workspace_id: userWsSimonWs.id,
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -400,14 +407,15 @@ module.exports = {
 
     // Bulk insert comments, returning=true,
     // and destructure the returned results array, for use in expenseData
-    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] = await queryInterface.bulkInsert('comments', commentData, {
-      returning: true,
-    });
+    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] =
+      await queryInterface.bulkInsert('comments', commentData, {
+        returning: true,
+      });
 
     // Define expense data
     const expenseData = [
       {
-        user_ws_id: userWsJohn.id,
+        user_workspace_id: userWsJohn.id,
         category_id: catOneJohnSimon.id,
         payment_mode_id: cashJohn.id,
         payee_id: payeeJohn.id,
@@ -418,7 +426,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsJohn.id,
+        user_workspace_id: userWsJohn.id,
         category_id: catTwoJohnSimon.id,
         payment_mode_id: creditJohn.id,
         payee_id: payeeJohn.id,
@@ -429,7 +437,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsPeter.id,
+        user_workspace_id: userWsPeter.id,
         category_id: catOnePeterMary.id,
         payment_mode_id: cashPeter.id,
         payee_id: payeePeter.id,
@@ -440,7 +448,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsPeter.id,
+        user_workspace_id: userWsPeter.id,
         category_id: catTwoPeterMary.id,
         payment_mode_id: creditPeter.id,
         payee_id: payeePeter.id,
@@ -451,7 +459,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsMary.id,
+        user_workspace_id: userWsMary.id,
         category_id: catTwoPeterMary.id,
         payment_mode_id: creditMary.id,
         payee_id: payeeMary.id,
@@ -462,7 +470,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsMary.id,
+        user_workspace_id: userWsMary.id,
         category_id: catOnePeterMary.id,
         payment_mode_id: cashMary.id,
         payee_id: null,
@@ -473,7 +481,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsRuth.id,
+        user_workspace_id: userWsRuth.id,
         category_id: catOneRuthSimon.id,
         payment_mode_id: creditRuth.id,
         payee_id: payeeRuth.id,
@@ -484,7 +492,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsRuth.id,
+        user_workspace_id: userWsRuth.id,
         category_id: catTwoRuthSimon.id,
         payment_mode_id: cashRuth.id,
         payee_id: payeeRuth.id,
@@ -495,7 +503,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsSimonBiz.id,
+        user_workspace_id: userWsSimonBiz.id,
         category_id: catTwoRuthSimon.id,
         payment_mode_id: cashSimon.id,
         payee_id: payeeSimonBiz.id,
@@ -506,7 +514,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        user_ws_id: userWsSimonWs.id,
+        user_workspace_id: userWsSimonWs.id,
         category_id: catTwoJohnSimon.id,
         payment_mode_id: creditSimon.id,
         payee_id: payeeSimonWs.id,
