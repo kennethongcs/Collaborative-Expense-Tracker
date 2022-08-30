@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
@@ -10,21 +10,12 @@ const Dashboard = ({ user, workspace }) => (
     </Typography>
     <Box sx={{ mt: 3 }}>
       <div>
-        <h4>
-          Hello,
-          {' '}
-          {user?.firstName}
-        </h4>
         <div>Menu to change workspace if more than 1</div>
         <div>Chart for the current workspace</div>
         <div>Some info about collaborators in this workspace</div>
         <div>Recent expenses for this workspace</div>
         <br />
-        <div>
-          Currently looking at workspace
-          {' '}
-          { workspace?.name}
-        </div>
+        <div>Currently looking at workspace {workspace?.name}</div>
         <br />
         <div>
           Today
