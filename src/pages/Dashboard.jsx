@@ -14,7 +14,6 @@ const Dashboard = ({ user, workspace }) => {
         workspace,
       })
       .then((res) => {
-        // console.log(res.data);
         setExpenses(res.data);
       });
   }, []);
