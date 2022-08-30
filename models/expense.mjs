@@ -8,7 +8,7 @@ export default function initExpenseModel(sequelize, DataTypes) {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      userWsId: {
+      userWorkspaceId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'user_workspaces',
@@ -61,6 +61,6 @@ export default function initExpenseModel(sequelize, DataTypes) {
     {
       // The underscored option makes Sequelize reference snake_case names in the DB.
       underscored: true,
-    },
+    }
   );
 }
