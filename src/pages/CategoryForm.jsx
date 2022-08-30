@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
@@ -17,15 +16,15 @@ import RenderBudgetInput from '../components/BudgetInput.jsx';
 const CategoryForm = ({ workspace }) => {
   const [addCategory, setaddCategory] = useState([]);
   const [categoryBudgetList, setCategoryBudgetList] = useState([
-    { category: 'Transport', budget: 0 },
-    { category: 'Food', budget: 0 },
-    { category: 'Groceries', budget: 0 },
-    { category: 'Utilities', budget: 0 },
-    { category: 'Clothes', budget: 0 },
-    { category: 'Healthcare', budget: 0 },
-    { category: 'Insurance', budget: 0 },
-    { category: 'Donations', budget: 0 },
-    { category: 'Entertainment', budget: 0 },
+    { id: 1, category: 'Transport', budget: 0 },
+    { id: 2, category: 'Food', budget: 0 },
+    { id: 3, category: 'Groceries', budget: 0 },
+    { id: 4, category: 'Utilities', budget: 0 },
+    { id: 5, category: 'Clothes', budget: 0 },
+    { id: 6, category: 'Healthcare', budget: 0 },
+    { id: 7, category: 'Insurance', budget: 0 },
+    { id: 8, category: 'Donations', budget: 0 },
+    { id: 9, category: 'Entertainment', budget: 0 },
   ]);
 
   const CardHeaderNoPadding = styled(CardHeader)(`
@@ -47,10 +46,13 @@ const CategoryForm = ({ workspace }) => {
   };
 
   const handleAddCategory = () => {
+    // get last id
+    const lastId = categoryBudgetList.at(-1).id;
+
     // add new category to categoryBudgetList
     const updatedCategoryList = [
       ...categoryBudgetList,
-      { category: addCategory, budget: 0 },
+      { id: (lastId + 1), category: addCategory, budget: 0 },
     ];
     // updates categoryBudgetList
     setCategoryBudgetList(updatedCategoryList);
@@ -158,8 +160,8 @@ const CategoryForm = ({ workspace }) => {
           color="textSecondary"
           marginBottom={5}
         >
-          {categoryBudgetList.map((element, CatIndex) => (
-            <Grid key={CatIndex} item className="category-tiles">
+          {categoryBudgetList.map((element) => (
+            <Grid key={element.id} item className="category-tiles">
               <Card sx={{ minWidth: 300, minHeight: 140 }} elevation={3}>
                 <CardHeaderNoPadding
                     // <CardHeader
