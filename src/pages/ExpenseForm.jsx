@@ -80,7 +80,7 @@ const ExpenseForm = ({ user, workspace }) => {
       .then((response) => {
         console.log(response);
 
-        if (marginTop > 0) navigate('/dashboard');
+        navigate('/dashboard');
       })
       .catch((error) => {
         console.log(error);
