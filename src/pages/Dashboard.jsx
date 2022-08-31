@@ -24,12 +24,10 @@ const Dashboard = ({ user, workspace }) => {
       </Typography>
       <Box sx={{ mt: 3 }}>
         <div>
-          <div>Menu to change workspace if more than 1</div>
           <div>Chart for the current workspace</div>
           <div>Some info about collaborators in this workspace</div>
           <div>Recent expenses for this workspace</div>
           <br />
-          <div>Currently looking at workspace {workspace?.name}</div>
           <ul>
             <ExpenseList expenses={expenses} />
           </ul>
