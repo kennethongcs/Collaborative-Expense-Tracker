@@ -3,6 +3,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import axios from 'axios';
+import Link from '@mui/material/Link';
+
 import ExpenseList from '../components/ExpenseList.jsx';
 
 const Dashboard = ({ user, workspace }) => {
@@ -25,9 +27,19 @@ const Dashboard = ({ user, workspace }) => {
       <Box sx={{ mt: 3 }}>
         <div>
           <div>Some info about collaborators in this workspace</div>
-          <div>Recent expenses for this workspace</div>
           <br />
           <div>
+            <Link
+              href="/all-expenses"
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                fontSize: 14,
+              }}
+              color="primary"
+            >
+              Show all
+            </Link>
             <ExpenseList expenses={expenses} />
           </div>
         </div>
