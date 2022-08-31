@@ -30,8 +30,6 @@ const CollaboratorForm = ({ workspace }) => {
   const [authority, setAuthority] = useState('');
   const [collaborators, setCollaborators] = useState([]);
 
-  console.log(`workspace in collab: ${workspace?.id}`);
-
   // runs when any char is typed into "input box"
   const getCollaboratorName = (input) => {
     console.log(input);

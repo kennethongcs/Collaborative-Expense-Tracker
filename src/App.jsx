@@ -39,9 +39,6 @@ const App = () => {
     return {};
   });
 
-  console.log(`user in app: ${user?.id}`);
-  console.log(`workspace in app: ${workspace?.id}`);
-
   return (
     <Router>
       <Routes>

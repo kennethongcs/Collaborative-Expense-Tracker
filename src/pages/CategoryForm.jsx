@@ -22,8 +22,6 @@ const CategoryForm = ({ workspace }) => {
     { id: 4, category: 'Healthcare', budget: 0 },
   ]);
 
-  console.log(`workspace in category: ${workspace?.id}`);
-
   const budgetUpdate = (newBudget, categoryName) => {
     // update budget in categoryBudgetList
     const index = categoryBudgetList.findIndex(

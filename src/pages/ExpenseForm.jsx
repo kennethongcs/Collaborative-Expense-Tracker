@@ -80,7 +80,17 @@ const ExpenseForm = ({ user, workspace }) => {
       .then((response) => {
         console.log(response);
 
-        navigate('/dashboard');
+        if (marginTop > 0) navigate('/dashboard');
+        else {
+          // reset input boxes
+          setaddExpenseName('');
+          setaddExpenseAmount('');
+          setaddExpenseDate(new Date());
+          setaddExpenseCategory(null);
+          setaddExpensePayee('');
+          setaddExpensePaymentMode(null);
+          setaddNotes('');
+        }
       })
       .catch((error) => {
         console.log(error);
