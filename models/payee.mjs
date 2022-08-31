@@ -11,7 +11,7 @@ export default function initPayeeModel(sequelize, DataTypes) {
       name: {
         type: DataTypes.STRING,
       },
-      userWsId: {
+      userWorkspaceId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'user_workspaces',

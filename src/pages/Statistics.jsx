@@ -1,8 +1,8 @@
 import React from 'react';
 import { Typography, Box, Grid } from '@mui/material';
 import {
-  BarChart, Bar, Legend, PieChart, Pie,
-  CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis,
+  BarChart, Bar, PieChart, Pie,
+  ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts';
 import useTheme from '@mui/material/styles/useTheme';
 

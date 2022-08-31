@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/self-closing-comp */
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';

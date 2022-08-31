@@ -27,7 +27,10 @@ const WorkspaceForm = ({ user, setWorkspace }) => {
           console.log(response.data);
           const workspace = response.data;
 
-          setWorkspace(workspace);
+          setWorkspace({
+            id: workspace.workspace,
+            userId: workspace.userWorkspace,
+          });
 
           navigate('/workspace/2');
         })

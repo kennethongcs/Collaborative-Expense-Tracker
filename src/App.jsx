@@ -55,7 +55,7 @@ const App = () => {
           <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
           <Route path="2" element={<CategoryForm workspace={workspace} />} />
           <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
-          <Route path="4" element={<ExpenseForm workspace={workspace} />} />
+          <Route path="4" element={<ExpenseForm user={user} workspace={workspace} />} />
         </Route>
 
         <Route path="dashboard" element={<DashboardLayout user={user} />}>
@@ -68,7 +68,7 @@ const App = () => {
               }
           />
           <Route path="stats" element={<Statistics workspace={workspace} />} />
-          <Route path="expense" element={<ExpenseForm />} />
+          <Route path="expense" element={<ExpenseForm user={user} workspace={workspace} />} />
           <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
           <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
         </Route>
