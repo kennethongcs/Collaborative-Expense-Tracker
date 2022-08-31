@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router, Routes, Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
@@ -49,17 +47,40 @@ const App = () => {
           />
           <Route path="signup" element={<Signup />} />
 
-          <Route path="workspace/settings" element={<WorkspaceSettings user={user} workspace={workspace} setWorkspace={setWorkspace} />} />
+          <Route
+            path="workspace/settings"
+            element={
+              <WorkspaceSettings
+                user={user}
+                workspace={workspace}
+                setWorkspace={setWorkspace}
+              />
+            }
+          />
 
           <Route path="workspace" element={<WorkspaceLayout />}>
-            <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
-            <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
+            <Route
+              index
+              element={
+                <WorkspaceForm user={user} setWorkspace={setWorkspace} />
+              }
+            />
+            <Route
+              path="1"
+              element={<WorkspaceForm setWorkspace={setWorkspace} />}
+            />
             <Route path="2" element={<CategoryForm workspace={workspace} />} />
-            <Route path="3" element={<CollaboratorForm user={user} workspace={workspace} />} />
+            <Route
+              path="3"
+              element={<CollaboratorForm user={user} workspace={workspace} />}
+            />
             <Route path="4" element={<ExpenseForm workspace={workspace} />} />
           </Route>
 
-          <Route path="dashboard" element={<DashboardLayout user={user} />}>
+          <Route
+            path="dashboard"
+            element={<DashboardLayout user={user} workspace={workspace} />}
+          >
             <Route
               index
               element={
@@ -68,13 +89,22 @@ const App = () => {
                 // </ProtectedRoute>
               }
             />
-            <Route path="stats" element={<Statistics workspace={workspace} />} />
+            <Route
+              path="stats"
+              element={<Statistics workspace={workspace} />}
+            />
             <Route path="expense" element={<ExpenseForm />} />
             <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
-            <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
+            <Route
+              path="settings"
+              element={<Settings user={user} setUser={setUser} />}
+            />
           </Route>
 
-          <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
+          <Route
+            path="profile"
+            element={<Profile user={user} setUser={setUser} />}
+          />
 
           <Route path="*" element={<Error />} />
         </Routes>
