@@ -1,15 +1,38 @@
 import React from 'react';
+import { groupBy } from 'lodash';
 import moment from 'moment';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
-const expenseList = ({ expenses }) =>
-  expenses.map((expense) => (
-    <li key={expense.id}>
-      {moment().format('DD MMM YYYY', expense.createdAt)}
-      <br />
-      {expense.category.name}
-      <br />
-      {expense.payee.name}
-    </li>
+const expenseList = ({ expenses }) => {
+  const groupedResults = groupBy(
+    expenses,
+    (result) =>
+      // moment(result['Date'], 'DD/MM/YYYY').startOf('isoWeek')
+      moment(result['Date']),
+    'DD/MM/YYYY'
+  );
+  // console.log(groupedResults);
+  return expenses.map((expense) => (
+    <Container key={expense.id}>
+      <Box>
+        {moment().format('DD MMM YYYY', expense.createdAt)}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box>{expense.payee.name}</Box>
+          <Typography style={{ color: 'red' }} component="span">
+            <Box>{expense.amount}</Box>
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Typography style={{ color: 'grey' }}>
+            {expense.category.name}
+          </Typography>
+        </Box>
+      </Box>
+      <hr />
+    </Container>
   ));
+};
 
 export default expenseList;
