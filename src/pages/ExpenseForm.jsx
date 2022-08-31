@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Typography from '@mui/material/Typography';
@@ -19,11 +19,14 @@ const ExpenseForm = ({ user, workspace }) => {
   const [addExpenseName, setaddExpenseName] = useState('');
   const [addExpenseAmount, setaddExpenseAmount] = useState('');
   const [addExpenseDate, setaddExpenseDate] = useState(new Date());
-  const [addExpenseCategory, setaddExpenseCategory] = useState('');
+  const [addExpenseCategory, setaddExpenseCategory] = useState(null);
   const [addExpensePayee, setaddExpensePayee] = useState('');
   const [addExpensePaymentMode, setaddExpensePaymentMode] = useState(null);
   const [storeDbData, setstoreDbData] = useState('');
   const [addNotes, setaddNotes] = useState('');
+
+  const location = useLocation();
+  const marginTop = location.pathname.endsWith('/dashboard/expense') ? 0 : 8;
 
   const navigate = useNavigate();
   const fetchData = async () => {
@@ -64,7 +67,7 @@ const ExpenseForm = ({ user, workspace }) => {
       categoryId: addExpenseCategory,
       paymentModeId: addExpensePaymentMode,
       payee: addExpensePayee,
-      amount: addExpenseAmount,
+      amount: parseFloat(addExpenseAmount),
       notes: addNotes,
       expenseDate: addExpenseDate,
     };
@@ -76,11 +79,51 @@ const ExpenseForm = ({ user, workspace }) => {
       })
       .then((response) => {
         console.log(response);
-        navigate('/dashboard');
+
+        if (marginTop > 0) navigate('/dashboard');
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const ExpenseButtons = () => {
+    if (marginTop > 0) {
+      return (
+        <Grid container spacing={1}>
+          <Grid item xs={6} sm={8} md={5}>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleNext}
+            >
+              Skip
+            </Button>
+          </Grid>
+          <Grid item xs={6} sm={8} md={5}>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmitExpense}
+            >
+              Next
+            </Button>
+          </Grid>
+        </Grid>
+      );
+    }
+    return (
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3, mb: 2 }}
+        onClick={handleSubmitExpense}
+      >
+        Save
+      </Button>
+    );
   };
 
   return (
@@ -89,7 +132,7 @@ const ExpenseForm = ({ user, workspace }) => {
         <Grid item xs={12} sm={8} md={5}>
           <Box
             sx={{
-              mt: 8,
+              mt: marginTop,
               display: 'flex',
               flexDirection: 'column',
             }}
@@ -247,38 +290,11 @@ const ExpenseForm = ({ user, workspace }) => {
             </Grid>
           </Box>
         </Grid>
+        <ExpenseButtons />
       </Grid>
-      <Grid container spacing={1}>
-        <Grid item xs={6} sm={8} md={5}>
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleNext}
-          >
-            Skip
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={8} md={5}>
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmitExpense}
-          >
-            Next
-          </Button>
-        </Grid>
-      </Grid>
+
     </>
   );
 };
 
 export default ExpenseForm;
-
-// <div>
-//   <div>Add expense</div>
-//   <NavLink to="/dashboard">Submit</NavLink>
-//   <br />
-//   <NavLink to="/dashboard">Skip</NavLink>
-// </div>

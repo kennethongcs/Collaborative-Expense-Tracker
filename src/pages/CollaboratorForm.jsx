@@ -30,7 +30,7 @@ const CollaboratorForm = ({ workspace }) => {
   const [authority, setAuthority] = useState('');
   const [collaborators, setCollaborators] = useState([]);
 
-  const workspaceId = workspace.id;
+  console.log(`workspace in collab: ${workspace?.id}`);
 
   // runs when any char is typed into "input box"
   const getCollaboratorName = (input) => {
@@ -64,13 +64,12 @@ const CollaboratorForm = ({ workspace }) => {
 
     // console.log(`collaborator: ${collaborator.label}`);
     // console.log(`authority: ${authority}`);
-    // console.log(`workspace id: ${workspaceId}`);
-    // use workspaceId and add an existing user into your user_workspace table
+    // console.log(`workspace id: ${workspace.id}`);
 
     axios
       .post('/joinworkspace', {
         email: collaborator.label,
-        workspaceId,
+        workspaceId: workspace.id,
         authority,
       })
       .then((res) => {

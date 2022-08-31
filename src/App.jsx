@@ -23,7 +23,7 @@ import Profile from './pages/Profile.jsx';
 const App = () => {
   const [user, setUser] = useState(() => {
     const loggedInUser = Cookies.get('user');
-    console.log(loggedInUser);
+    console.log(`user: ${loggedInUser}`);
     if (loggedInUser) {
       return JSON.parse(loggedInUser);
     }
@@ -32,12 +32,15 @@ const App = () => {
 
   const [workspace, setWorkspace] = useState(() => {
     const selectedWorkspace = Cookies.get('workspace');
-    console.log(selectedWorkspace);
+    console.log(`workspace: ${selectedWorkspace}`);
     if (selectedWorkspace) {
       return JSON.parse(selectedWorkspace);
     }
     return {};
   });
+
+  console.log(`user in app: ${user?.id}`);
+  console.log(`workspace in app: ${workspace?.id}`);
 
   return (
     <Router>
@@ -52,7 +55,7 @@ const App = () => {
 
         <Route path="workspace" element={<WorkspaceLayout />}>
           <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
-          <Route path="1" element={<WorkspaceForm setWorkspace={setWorkspace} />} />
+          <Route path="1" element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
           <Route path="2" element={<CategoryForm workspace={workspace} />} />
           <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
           <Route path="4" element={<ExpenseForm user={user} workspace={workspace} />} />
