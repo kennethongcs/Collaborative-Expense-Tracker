@@ -24,27 +24,11 @@ const Dashboard = ({ user, workspace }) => {
       </Typography>
       <Box sx={{ mt: 3 }}>
         <div>
-          <div>Chart for the current workspace</div>
           <div>Some info about collaborators in this workspace</div>
           <div>Recent expenses for this workspace</div>
           <br />
-          <ul>
+          <div>
             <ExpenseList expenses={expenses} />
-          </ul>
-          <div>
-            Today
-            <div>
-              <NavLink to="expenses/123">Nike Store (clothing)</NavLink>
-              -$100
-            </div>
-          </div>
-          <br />
-          <div>
-            31 July 2022
-            <div>
-              <NavLink to="expenses/789">Apple Store (electronics)</NavLink>
-              -$500
-            </div>
           </div>
         </div>
       </Box>
