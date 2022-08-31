@@ -24,7 +24,7 @@ const settings = [
   },
 ];
 
-const AppBar = ({ user }) => {
+const AppBar = ({ user, workspace }) => {
   const location = useLocation();
   let index = location.pathname.split('/').at(-1);
 
@@ -64,6 +64,7 @@ const AppBar = ({ user }) => {
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar>{initials}</Avatar>
           </IconButton>
+
           <Menu
             sx={{ mt: '45px' }}
             id="menu-appbar"
@@ -92,6 +93,9 @@ const AppBar = ({ user }) => {
               </MenuItem>
             ))}
           </Menu>
+        </Box>
+        <Box>
+          <div>{workspace?.name}</div>
         </Box>
       </Container>
     );
