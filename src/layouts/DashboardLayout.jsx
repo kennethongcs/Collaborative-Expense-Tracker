@@ -7,7 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '../components/AppBar.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
-const DashboardLayout = ({ user }) => {
+const DashboardLayout = ({ user, workspace }) => {
   const theme = createTheme({
     palette: {
       mode: 'light',
@@ -16,7 +16,7 @@ const DashboardLayout = ({ user }) => {
 
   return (
     <>
-      <AppBar user={user} />
+      <AppBar user={user} workspace={workspace}/>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
