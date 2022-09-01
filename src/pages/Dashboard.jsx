@@ -1,48 +1,55 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import axios from 'axios';
+import Link from '@mui/material/Link';
 
-const Dashboard = ({ user, workspace }) => (
-  <div>
-    <div>Chart for the current workspace</div>
-    <div>Some info about collaborators in this workspace</div>
-    <div>Recent expenses for this workspace</div>
-    <br />
-    <div>
-      Currently looking at workspace
-      {' '}
-      {workspace?.id}
-    </div>
-    <br />
-    <div>
-      <div>
+import ExpenseList from '../components/ExpenseList.jsx';
+
+const Dashboard = ({ user, workspace }) => {
+  const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+    axios
+      .post('/getExpenses', {
+        workspace,
+      })
+      .then((res) => {
+        setExpenses(res.data);
+      });
+  }, []);
+  return (
+    <>
+      <Typography component="h1" variant="h5">
+        Chart here
+      </Typography>
+      <Box sx={{ mt: 3 }}>
         <div>
-          Today
+          <div>Some info about collaborators in this workspace</div>
+          <br />
           <div>
-            <NavLink to="expenses/123">Nike Store (clothing)</NavLink>
-            -$100
+            <Link
+              href="/all-expenses"
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                fontSize: 14,
+              }}
+              color="primary"
+            >
+              Show all
+            </Link>
+            <ExpenseList
+              expenses={expenses}
+              workspace={workspace}
+              user={user}
+            />
           </div>
         </div>
-        <br />
-        <div>
-          31 July 2022
-          <div>
-            <NavLink to="expenses/789">Apple Store (electronics)</NavLink>
-            -$500
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div>
-      31 July 2022
-      <div>
-        <NavLink to="expenses/789">Apple Store (electronics)</NavLink>
-        -$500
-      </div>
-    </div>
-  </div>
-);
+      </Box>
+    </>
+  );
+};
 
 export default Dashboard;
