@@ -1,7 +1,7 @@
 import { Sequelize, Op } from 'sequelize';
 
 export default function initStatisticsController(db) {
-  const totalExpenses = async (workspaceId, period) => {
+  const totalExpenses = async (workspaceId, period, startDate, endDate) => {
     let dateFormat = 'MON';
     if (period === 'year') dateFormat = 'YYYY';
     else if (period === 'week') dateFormat = 'WW';
@@ -14,6 +14,7 @@ export default function initStatisticsController(db) {
         },
         attributes: [],
       },
+      where: { expense_date: { [Op.gte]: startDate, [Op.lte]: endDate } },
       attributes: [
         [Sequelize.fn('date_trunc', period, Sequelize.col('expense_date')), 'createdOn'],
         [Sequelize.fn('to_char', Sequelize.col('expense_date'), dateFormat), 'period'],
@@ -105,7 +106,7 @@ export default function initStatisticsController(db) {
 
       switch (report) {
         case 'totalExpenses':
-          result = await totalExpenses(workspaceId, period);
+          result = await totalExpenses(workspaceId, period, startDate, endDate);
           break;
         case 'totalExpensesByCategory':
           result = await totalExpensesByCategory(workspaceId, startDate, endDate);

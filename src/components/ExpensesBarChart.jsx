@@ -5,10 +5,13 @@ import {
 } from 'recharts';
 import axios from 'axios';
 import useTheme from '@mui/material/styles/useTheme';
+import moment from 'moment';
 
 const ExpensesBarChart = ({ workspace, setSelectedData }) => {
   const [barChartData, setBarChartData] = useState(null);
   const [dataKeys, setDataKeys] = useState([]);
+
+  const NUMBER_OF_MONTHS = 6;
 
   const colors = useTheme().palette;
   // eslint-disable-next-line max-len
@@ -16,7 +19,9 @@ const ExpensesBarChart = ({ workspace, setSelectedData }) => {
 
   useEffect(() => {
     axios
-      .get('/stats', { params: { report: 'totalExpenses', workspaceId: workspace?.id } })
+      .get('/stats', {
+        params: { report: 'totalExpenses', workspaceId: workspace?.id, startDate: moment().subtract(NUMBER_OF_MONTHS - 1, 'months').format('YYYY-MM-DD hh:mm') },
+      })
       .then((response) => {
         const chartData = response.data;
 
