@@ -17,7 +17,7 @@ import Statistics from './pages/Statistics.jsx';
 import Settings from './pages/Settings.jsx';
 import WorkspaceSettings from './pages/WorkspaceSettings.jsx';
 import Profile from './pages/Profile.jsx';
-import AllExpenses from './pages/AllExpenses.jsx';
+import ExpensesAll from './pages/ExpensesAll.jsx';
 
 const App = () => {
   const [user, setUser] = useState(() => {
@@ -106,7 +106,10 @@ const App = () => {
             path="profile"
             element={<Profile user={user} setUser={setUser} />}
           />
-          <Route path="all-expenses" element={<AllExpenses />} />
+          <Route
+            path="all-expenses"
+            element={<ExpensesAll workspace={workspace} />}
+          />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
