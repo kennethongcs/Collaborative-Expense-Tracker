@@ -20,7 +20,7 @@ function Copyright(props) {
       mt={props.sx.mt}
     >
       {'Copyright © '}
-      Your Website
+      Colete
       {' '}
       {new Date().getFullYear()}
       .
@@ -40,9 +40,8 @@ const Signup = () => {
     event.preventDefault();
     console.log(email);
     if (email) {
-      console.log('email exists!!');
       axios
-        .post('/signup', {
+        .post('/register', {
           email,
           password,
           firstName,

@@ -13,7 +13,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { useNavigate } from "react-router-dom";
 import RenderBudgetInput from "../components/BudgetInput.jsx";
 
-const CategoryForm = ({ workspace }) => {
+const CategoryForm = ({ user, workspace }) => {
   const [addCategory, setaddCategory] = useState([]);
   const [categoryBudgetList, setCategoryBudgetList] = useState([
     { id: 1, category: "Transport", budget: 0 },
@@ -60,6 +60,7 @@ const CategoryForm = ({ workspace }) => {
     axios
       .post("/add-category", {
         categoryBudgetList,
+        userId: user.id,
         workspaceId: workspace.id,
       })
       .then((response) => {
