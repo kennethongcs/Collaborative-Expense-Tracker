@@ -61,54 +61,13 @@ const AppBar = ({ user }) => {
 
     navigate(setting.url);
   };
-  if (index === 'dashboard') {
-    return (
-      <Container maxWidth="xl">
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }} mt={2}>
-          <Box sx={{ typography: { fontSize: 30 } }}>
-            Hello,
-            {' '}
-            {user.firstName}
-          </Box>
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar>{initials}</Avatar>
-          </IconButton>
-          <Menu
-            sx={{ mt: '45px' }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            {settings.map((setting) => (
-              <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                <Typography
-                  textAlign="center"
-                  color="primary"
-                  onClick={() => handleClickUserMenu(setting)}
-                >
-                  {setting.name}
-                </Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
-      </Container>
-    );
-  }
 
   return (
     <Container maxWidth="xl">
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} mt={2}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }} mt={2}>
+        <Box sx={{ typography: { fontSize: 27 }, ml: 1 }}>
+          { (index === 'dashboard') ? `Hello, ${user.firstName}` : ''}
+        </Box>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar sx={avatarStyle}>{initials}</Avatar>
         </IconButton>
