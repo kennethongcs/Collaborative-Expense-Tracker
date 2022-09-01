@@ -1,7 +1,6 @@
 import jsSHA from 'jssha';
-import sequelizePackage from 'sequelize';
+import { Op } from 'sequelize';
 
-const { Sequelize } = sequelizePackage;
 const SALT = process.env.SALT_PASSWORD;
 
 const getHashSalted = (input) => {
@@ -18,7 +17,9 @@ const getHashSalted = (input) => {
 
 export default function initUsersController(db) {
   const signup = async (req, res) => {
-    const { firstName, lastName, password, email } = req.body;
+    const {
+      firstName, lastName, password, email,
+    } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -55,7 +56,9 @@ export default function initUsersController(db) {
   };
 
   const save = async (req, res) => {
-    const { firstName, lastName, email, id } = req.body;
+    const {
+      firstName, lastName, email, id,
+    } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -82,8 +85,7 @@ export default function initUsersController(db) {
   };
 
   const login = async (req, res) => {
-    const { email } = req.body;
-    const { password } = req.body;
+    const { email, password } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -108,7 +110,29 @@ export default function initUsersController(db) {
 
         res.cookie('user', JSON.stringify(loggedInUser));
 
-        res.send(loggedInUser);
+        const userWorkspace = await db.Workspace.findOne({
+          include: {
+            model: db.User,
+            where: {
+              id: user.id,
+            },
+            attributes: [],
+          },
+          attributes: ['id', 'name', 'purpose'],
+          order: [['id', 'DESC']],
+        });
+
+        if (userWorkspace) {
+          res.cookie('workspace', JSON.stringify(userWorkspace));
+        }
+        // const userWorkspace = null;
+
+        const result = {
+          user: loggedInUser,
+          workspace: userWorkspace,
+        };
+
+        res.send(result);
       } else {
         res.status(401).send({
           error: 'The login information is incorrect.',
@@ -135,8 +159,8 @@ export default function initUsersController(db) {
     const { user } = req.body;
     const input = user.toLowerCase();
     console.log(input);
+
     try {
-      const { Op } = Sequelize;
       const users = await db.User.findAll({
         where: {
           email: {
@@ -145,6 +169,7 @@ export default function initUsersController(db) {
         },
       });
       console.log(users);
+
       res.send(users);
     } catch (err) {
       console.log(`Error retrieving users: ${err}`);

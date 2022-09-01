@@ -6,8 +6,7 @@ module.exports = {
         first_name: 'John',
         last_name: 'Doe',
         email: 'john@gmail.com',
-        password:
-          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -15,8 +14,7 @@ module.exports = {
         first_name: 'Mary',
         last_name: 'Jane',
         email: 'mary@gmail.com',
-        password:
-          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -24,8 +22,7 @@ module.exports = {
         first_name: 'Peter',
         last_name: 'Griffin',
         email: 'peter@gmail.com',
-        password:
-          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -33,8 +30,7 @@ module.exports = {
         first_name: 'Ruth',
         last_name: 'Boaz',
         email: 'ruth@gmail.com',
-        password:
-          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -42,8 +38,7 @@ module.exports = {
         first_name: 'Simon',
         last_name: 'Says',
         email: 'simon@gmail.com',
-        password:
-          'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
+        password: 'cec96aa1b911244e1657b54aadb408d60dcc742b7b3eede48e2fd7708589b048c6f7ac3fa6667e002f9ec80ec4d8d43fe24982a87ffe7f9f72be33fae6e3590c',
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -51,10 +46,9 @@ module.exports = {
 
     // Bulk insert users, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [johnUser, maryUser, peterUser, ruthUser, simonUser] =
-      await queryInterface.bulkInsert('users', userData, {
-        returning: true,
-      });
+    const [johnUser, maryUser, peterUser, ruthUser, simonUser] = await queryInterface.bulkInsert('users', userData, {
+      returning: true,
+    });
 
     // Define workspace data
     const workspaceData = [
@@ -80,10 +74,9 @@ module.exports = {
 
     // Bulk insert workspaces, returning=true,
     // and destructure the returned results array, for use in userWorkspaceData
-    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] =
-      await queryInterface.bulkInsert('workspaces', workspaceData, {
-        returning: true,
-      });
+    const [workspacePeterMary, workspaceJohnSimon, workspaceRuthSimon] = await queryInterface.bulkInsert('workspaces', workspaceData, {
+      returning: true,
+    });
 
     // Define user data
     const authorityData = [
@@ -106,7 +99,7 @@ module.exports = {
       authorityData,
       {
         returning: true,
-      }
+      },
     );
 
     // Define user workspace data based on generated users and workspaces and authorities
@@ -178,58 +171,58 @@ module.exports = {
       returning: true,
     });
 
-    // Define payee data
-    const payeeData = [
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsJohn.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsPeter.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsMary.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsRuth.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsSimonBiz.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        name: 'Some retail',
-        user_workspace_id: userWsSimonWs.id,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-    ];
+    // // Define payee data
+    // const payeeData = [
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsJohn.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsPeter.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsMary.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsRuth.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsSimonBiz.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    //   {
+    //     name: 'Some retail',
+    //     user_workspace_id: userWsSimonWs.id,
+    //     created_at: new Date(),
+    //     updated_at: new Date(),
+    //   },
+    // ];
 
-    // Bulk insert payees, returning=true,
-    // and destructure the returned results array, for use in expenseData
-    const [
-      payeeJohn,
-      payeePeter,
-      payeeMary,
-      payeeRuth,
-      payeeSimonBiz,
-      payeeSimonWs,
-    ] = await queryInterface.bulkInsert('payees', payeeData, {
-      returning: true,
-    });
+    // // Bulk insert payees, returning=true,
+    // // and destructure the returned results array, for use in expenseData
+    // const [
+    //   payeeJohn,
+    //   payeePeter,
+    //   payeeMary,
+    //   payeeRuth,
+    //   payeeSimonBiz,
+    //   payeeSimonWs,
+    // ] = await queryInterface.bulkInsert('payees', payeeData, {
+    //   returning: true,
+    // });
 
     // Define category data
     const categoryData = [
@@ -371,171 +364,205 @@ module.exports = {
       returning: true,
     });
 
+    // Define expense data
+    const expenseData = [
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsJohn.id,
+        category_id: catOneJohnSimon.id,
+        payment_mode_id: cashJohn.id,
+        // payee_id: payeeJohn.id,
+        payee: 'some payee',
+        // comment_id: commentJohn.id,
+        amount: 1000,
+        notes: 'some notes',
+        expense_date: '2022-10-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsJohn.id,
+        category_id: catTwoJohnSimon.id,
+        payment_mode_id: creditJohn.id,
+        // payee_id: payeeJohn.id,
+        payee: 'some payee',
+        // comment_id: null,
+        amount: 3000,
+        notes: 'some notes',
+        expense_date: '2022-11-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsPeter.id,
+        category_id: catOnePeterMary.id,
+        payment_mode_id: cashPeter.id,
+        // payee_id: payeePeter.id,
+        payee: 'some payee',
+        // comment_id: commentPeter.id,
+        amount: 2000,
+        notes: 'some notes',
+        expense_date: '2022-12-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsPeter.id,
+        category_id: catTwoPeterMary.id,
+        payment_mode_id: creditPeter.id,
+        // payee_id: payeePeter.id,
+        payee: 'some payee',
+        // comment_id: null,
+        amount: 3000,
+        notes: 'some notes',
+        expense_date: '2022-01-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsMary.id,
+        category_id: catTwoPeterMary.id,
+        payment_mode_id: creditMary.id,
+        // payee_id: payeeMary.id,
+        payee: 'some payee',
+        // comment_id: commentMary.id,
+        amount: 3000,
+        notes: 'some notes',
+        expense_date: '2022-02-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsMary.id,
+        category_id: catOnePeterMary.id,
+        payment_mode_id: cashMary.id,
+        // payee_id: null,
+        payee: 'some payee',
+        // comment_id: null,
+        amount: 3000,
+        notes: 'some notes',
+        expense_date: '2022-03-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsRuth.id,
+        category_id: catOneRuthSimon.id,
+        payment_mode_id: creditRuth.id,
+        // payee_id: payeeRuth.id,
+        payee: 'some payee',
+        // comment_id: commentRuth.id,
+        amount: 2000,
+        notes: 'some notes',
+        expense_date: '2022-04-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsRuth.id,
+        category_id: catTwoRuthSimon.id,
+        payment_mode_id: cashRuth.id,
+        // payee_id: payeeRuth.id,
+        payee: 'some payee',
+        // comment_id: null,
+        amount: 2000,
+        notes: 'some notes',
+        expense_date: '2022-05-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsSimonBiz.id,
+        category_id: catTwoRuthSimon.id,
+        payment_mode_id: cashSimon.id,
+        // payee_id: payeeSimonBiz.id,
+        payee: 'some payee',
+        // comment_id: commentSimon.id,
+        amount: 4000,
+        notes: 'some notes',
+        expense_date: '2022-06-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: 'Some expense name',
+        user_workspace_id: userWsSimonWs.id,
+        category_id: catTwoJohnSimon.id,
+        payment_mode_id: creditSimon.id,
+        // payee_id: payeeSimonWs.id,
+        payee: 'some payee',
+        // comment_id: null,
+        amount: 4000,
+        notes: 'some notes',
+        expense_date: '2022-07-23',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ];
+
+    // Bulk insert expenses, returning=true,
+    // and destructure the returned results array, for use in commentData
+    const [johnExpenseOne, johnExpenseTwo, peterExpenseOne, peterExpenseTwo, maryExpenseOne, maryExpenseTwo, ruthExpenseOne, ruthExpenseTwo, simonExpenseOne, simonExpenseTwo] = await queryInterface.bulkInsert('expenses', expenseData, {
+      returning: true,
+    });
+
     // Define comment data
     const commentData = [
       {
         user_id: johnUser.id,
+        expense_id: johnExpenseOne.id,
         comment: 'some comment',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         user_id: peterUser.id,
+        expense_id: peterExpenseTwo.id,
         comment: 'some comment',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         user_id: maryUser.id,
+        expense_id: maryExpenseOne.id,
         comment: 'some comment',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         user_id: ruthUser.id,
+        expense_id: ruthExpenseOne.id,
         comment: 'some comment',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         user_id: simonUser.id,
+        expense_id: simonExpenseOne.id,
         comment: 'some comment',
         created_at: new Date(),
         updated_at: new Date(),
       },
     ];
 
-    // Bulk insert comments, returning=true,
-    // and destructure the returned results array, for use in expenseData
-    const [commentJohn, commentPeter, commentMary, commentRuth, commentSimon] =
-      await queryInterface.bulkInsert('comments', commentData, {
-        returning: true,
-      });
-
-    // Define expense data
-    const expenseData = [
-      {
-        user_workspace_id: userWsJohn.id,
-        category_id: catOneJohnSimon.id,
-        payment_mode_id: cashJohn.id,
-        payee_id: payeeJohn.id,
-        comment_id: commentJohn.id,
-        amount: 1000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsJohn.id,
-        category_id: catTwoJohnSimon.id,
-        payment_mode_id: creditJohn.id,
-        payee_id: payeeJohn.id,
-        comment_id: null,
-        amount: 3000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsPeter.id,
-        category_id: catOnePeterMary.id,
-        payment_mode_id: cashPeter.id,
-        payee_id: payeePeter.id,
-        comment_id: commentPeter.id,
-        amount: 2000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsPeter.id,
-        category_id: catTwoPeterMary.id,
-        payment_mode_id: creditPeter.id,
-        payee_id: payeePeter.id,
-        comment_id: null,
-        amount: 3000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsMary.id,
-        category_id: catTwoPeterMary.id,
-        payment_mode_id: creditMary.id,
-        payee_id: payeeMary.id,
-        comment_id: commentMary.id,
-        amount: 3000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsMary.id,
-        category_id: catOnePeterMary.id,
-        payment_mode_id: cashMary.id,
-        payee_id: null,
-        comment_id: null,
-        amount: 3000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsRuth.id,
-        category_id: catOneRuthSimon.id,
-        payment_mode_id: creditRuth.id,
-        payee_id: payeeRuth.id,
-        comment_id: commentRuth.id,
-        amount: 2000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsRuth.id,
-        category_id: catTwoRuthSimon.id,
-        payment_mode_id: cashRuth.id,
-        payee_id: payeeRuth.id,
-        comment_id: null,
-        amount: 2000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsSimonBiz.id,
-        category_id: catTwoRuthSimon.id,
-        payment_mode_id: cashSimon.id,
-        payee_id: payeeSimonBiz.id,
-        comment_id: commentSimon.id,
-        amount: 4000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        user_workspace_id: userWsSimonWs.id,
-        category_id: catTwoJohnSimon.id,
-        payment_mode_id: creditSimon.id,
-        payee_id: payeeSimonWs.id,
-        comment_id: null,
-        amount: 4000,
-        notes: 'some notes',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-    ];
-
-    // Bulk insert category items
-    await queryInterface.bulkInsert('expenses', expenseData);
+    // Bulk insert expenses items
+    await queryInterface.bulkInsert('comments', commentData);
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('expenses', null, {});
     await queryInterface.bulkDelete('comments', null, {});
+    await queryInterface.bulkDelete('expenses', null, {});
     await queryInterface.bulkDelete('payment_modes', null, {});
     await queryInterface.bulkDelete('categories', null, {});
-    await queryInterface.bulkDelete('payees', null, {});
+    // await queryInterface.bulkDelete('payees', null, {});
     await queryInterface.bulkDelete('user_workspaces', null, {});
     await queryInterface.bulkDelete('workspace_authorities', null, {});
     await queryInterface.bulkDelete('workspaces', null, {});

@@ -27,7 +27,13 @@ const BottomNav = () => {
   };
 
   return (
-    <BottomNavigation sx={{ width: '100%', bottom: 0, position: 'absolute' }} value={value} onChange={handleChange}>
+    <BottomNavigation
+      sx={{
+        width: '100%', bottom: 0, position: 'absolute',
+      }}
+      value={value}
+      onChange={handleChange}
+    >
       <BottomNavigationAction
         label="Home"
         value=""
@@ -39,7 +45,7 @@ const BottomNav = () => {
         icon={<AddIcon />}
       />
       <BottomNavigationAction
-        label="Stats"
+        label="Chart"
         value="stats"
         icon={<BarChartIcon />}
       />

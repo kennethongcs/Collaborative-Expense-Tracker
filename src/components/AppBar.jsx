@@ -7,7 +7,8 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
-import { useNavigate, NavLink, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import useTheme from '@mui/material/styles/useTheme';
 
 const settings = [
   {
@@ -24,18 +25,24 @@ const settings = [
   },
 ];
 
-const AppBar = ({ user, workspace }) => {
+const AppBar = ({ user }) => {
   const location = useLocation();
-  let index = location.pathname.split('/').at(-1);
+  const index = location.pathname.split('/').at(-1);
 
   const [initials, setInitials] = useState();
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [avatarStyle, setAvatarStyle] = useState();
+
+  const colors = useTheme().palette;
+  // eslint-disable-next-line max-len
+  const avatarColors = [colors.warning.main, colors.success.main, colors.error.main, colors.secondary.main];
 
   useEffect(() => {
-    setInitials(
-      user?.firstName.charAt(0).toUpperCase() +
-        user?.lastName.charAt(0).toUpperCase()
-    );
+    setInitials(user?.firstName.charAt(0).toUpperCase() + user?.lastName.charAt(0).toUpperCase());
+
+    setAvatarStyle({
+      backgroundColor: avatarColors[Math.floor(Math.random() * avatarColors.length)],
+    });
   }, [user]);
 
   const handleOpenUserMenu = (event) => {
@@ -54,57 +61,15 @@ const AppBar = ({ user, workspace }) => {
 
     navigate(setting.url);
   };
-  if (index === 'dashboard') {
-    return (
-      <Container maxWidth="xl">
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }} mt={2}>
-          <Box sx={{ typography: { fontSize: 30 } }}>
-            Hello, {user.firstName}
-          </Box>
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar>{initials}</Avatar>
-          </IconButton>
 
-          <Menu
-            sx={{ mt: '45px' }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            {settings.map((setting) => (
-              <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-                <Typography
-                  textAlign="center"
-                  color="primary"
-                  onClick={() => handleClickUserMenu(setting)}
-                >
-                  {setting.name}
-                </Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
-        <Box>
-          <div>{workspace?.name}</div>
-        </Box>
-      </Container>
-    );
-  }
   return (
     <Container maxWidth="xl">
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} mt={2}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }} mt={2}>
+        <Box sx={{ typography: { fontSize: 27 }, ml: 1 }}>
+          { (index === 'dashboard') ? `Hello, ${user.firstName}` : ''}
+        </Box>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar>{initials}</Avatar>
+          <Avatar sx={avatarStyle}>{initials}</Avatar>
         </IconButton>
         <Menu
           sx={{ mt: '45px' }}

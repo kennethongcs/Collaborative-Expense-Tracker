@@ -10,14 +10,13 @@ const IndividualUser = ({ user, whenUserIsClicked }) => {
 };
 
 export default function UserList({ retrievedUsers, whenUserIsClicked }) {
-  return retrievedUsers.map((user) => {
+  return retrievedUsers.map((user) =>
     // onclick to add that users email into input box
-    return (
+    (
       <IndividualUser
         key={user.id}
         user={user}
         whenUserIsClicked={whenUserIsClicked}
       />
-    );
-  });
+    ));
 }

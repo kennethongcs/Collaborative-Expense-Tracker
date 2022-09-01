@@ -8,6 +8,9 @@ export default function initExpenseModel(sequelize, DataTypes) {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      name: {
+        type: DataTypes.STRING,
+      },
       userWorkspaceId: {
         type: DataTypes.INTEGER,
         references: {
@@ -29,25 +32,31 @@ export default function initExpenseModel(sequelize, DataTypes) {
           key: 'id',
         },
       },
-      payeeId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'payees',
-          key: 'id',
-        },
+      // payeeId: {
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     model: 'payees',
+      //     key: 'id',
+      //   },
+      // },
+      payee: {
+        type: DataTypes.STRING,
       },
-      commentId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'comments',
-          key: 'id',
-        },
-      },
+      // commentId: {
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     model: 'comments',
+      //     key: 'id',
+      //   },
+      // },
       amount: {
         type: DataTypes.FLOAT,
       },
       notes: {
         type: DataTypes.STRING,
+      },
+      expenseDate: {
+        type: DataTypes.DATEONLY,
       },
       createdAt: {
         allowNull: false,

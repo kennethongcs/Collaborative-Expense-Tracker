@@ -7,6 +7,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      name: {
+        type: Sequelize.STRING,
+      },
       user_workspace_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -28,25 +31,31 @@ module.exports = {
           key: 'id',
         },
       },
-      payee_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'payees',
-          key: 'id',
-        },
+      // payee_id: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'payees',
+      //     key: 'id',
+      //   },
+      // },
+      payee: {
+        type: Sequelize.STRING,
       },
-      comment_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'comments',
-          key: 'id',
-        },
-      },
+      // comment_id: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'comments',
+      //     key: 'id',
+      //   },
+      // },
       amount: {
         type: Sequelize.FLOAT,
       },
       notes: {
         type: Sequelize.STRING,
+      },
+      expense_date: {
+        type: Sequelize.DATEONLY,
       },
       created_at: {
         allowNull: false,

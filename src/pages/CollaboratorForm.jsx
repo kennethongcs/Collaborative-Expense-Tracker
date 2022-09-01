@@ -1,31 +1,38 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/self-closing-comp */
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
-import UserList from '../components/UserList.jsx';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 
-const CollaboratorForm = ({ user, workspace }) => {
+import EditOffIcon from '@mui/icons-material/EditOff';
+import EditIcon from '@mui/icons-material/Edit';
+import Autocomplete from '@mui/material/Autocomplete';
+
+const CollaboratorForm = ({ workspace }) => {
   const [retrievedUsers, setRetrievedUsers] = useState([]);
+  const [collaborator, setCollaborator] = useState('');
   const [authority, setAuthority] = useState('');
-
-  const workspaceId = workspace.id;
-  const collaboratorName = useRef('');
-
-  // add user email into input box
-  const whenUserIsClicked = (user) => {
-    collaboratorName.current.value = user.email;
-  };
+  const [collaborators, setCollaborators] = useState([]);
 
   // runs when any char is typed into "input box"
-  const getCollaboratorName = () => {
-    const input = collaboratorName.current.value;
-    // console.log(input);
+  const getCollaboratorName = (input) => {
+    console.log(input);
     if (input !== '') {
       // axios to get user data from server
       axios
@@ -34,45 +41,53 @@ const CollaboratorForm = ({ user, workspace }) => {
         })
         .then((res) => {
           const { data } = res;
-          // console.log(data);
-          // console.log(`retrieved users: ${emails}`);
-          setRetrievedUsers(data);
+
+          const retUsers = data.map((user) => {
+            return { label: user.email, id: user.id };
+          });
+          setRetrievedUsers(retUsers);
         });
     }
   };
 
+  const addCollaborators = (newCollaborator) => {
+    const collaboratorList = [...collaborators];
+    collaboratorList.push(newCollaborator);
+    setCollaborators(collaboratorList);
+  };
+
   // sends invitation email to invite to collaborate on workspace
-  const submitEmail = () => {
-    const input = collaboratorName.current.value;
-    console.log(input);
-    console.log(workspaceId);
-    // use workspaceId and add an existing user into your user_workspace table
+  const submitEmail = (event) => {
+    event.preventDefault();
+
+    // console.log(`collaborator: ${collaborator.label}`);
+    // console.log(`authority: ${authority}`);
+    // console.log(`workspace id: ${workspace.id}`);
 
     axios
       .post('/joinworkspace', {
-        email: input,
-        workspaceId,
+        email: collaborator.label,
+        workspaceId: workspace.id,
         authority,
       })
       .then((res) => {
         console.log(res);
+        collaborator.auth = authority;
+        addCollaborators({ user: collaborator });
       });
-  };
-
-  const handleChangeAuthority = (e) => {
-    const input = e.target.value;
-    setAuthority(input);
   };
 
   const AuthoritySelect = () => {
     return (
-      <FormControl fullWidth>
+      <FormControl fullWidth margin="normal" required>
         <InputLabel id="editing-authority-label">Authority</InputLabel>
         <Select
           labelId="editing-authority-label"
           id="edit-authority-select"
           label="Authority"
-          onChange={handleChangeAuthority}
+          onChange={(event) => {
+            setAuthority(event.target.value);
+          }}
           value={authority}
         >
           <MenuItem value="Viewing">Viewing</MenuItem>
@@ -82,34 +97,114 @@ const CollaboratorForm = ({ user, workspace }) => {
     );
   };
 
+  const getAuthorityIcon = (auth) => {
+    if (auth === 'Viewing') return (<EditOffIcon />);
+    return (<EditIcon />);
+  };
+
+  const navigate = useNavigate();
+  const handleNext = () => {
+    navigate('/workspace/4');
+  };
+
   return (
-    <div>
-      <div>Add collaborators here:</div>
-      <div>
-        <input
-          type="text"
-          placeholder="Email"
-          ref={collaboratorName}
-          onChange={getCollaboratorName}
-        ></input>
-      </div>
-      <div>
-        <ul>
-          {/* upon input, query db for users with that email / username */}
-          <UserList
-            retrievedUsers={retrievedUsers}
-            whenUserIsClicked={whenUserIsClicked}
-          />
-        </ul>
-      </div>
-      <div>
-        <div>Select collaborator authority:</div>
-        <div>
-          <AuthoritySelect />
-        </div>
-      </div>
-      <button onClick={submitEmail}>Collaborate!</button>
-    </div>
+    <>
+      <Grid container>
+        <Grid item xs={12} sm={8} md={5}>
+          <Box
+            sx={{
+              mt: 8,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Typography variant="h5">
+              Add Collaborators
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              <Autocomplete
+                disablePortal
+                fullWidth
+                id="collaboratorName"
+                options={retrievedUsers}
+                selectOnFocus
+                clearOnBlur
+                onChange={(event, value) => setCollaborator(value)}
+                noOptionsText=""
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    autoFocus
+                    margin="normal"
+                    label="Collaborator Name"
+                    onChange={(event) => {
+                      getCollaboratorName(event.target.value);
+                    }}
+                  />
+                )}
+              />
+              <AuthoritySelect />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 2, mb: 2 }}
+                onClick={submitEmail}
+              >
+                Collaborate
+              </Button>
+              <List dense sx={{ width: '100%', maxWidth: 360 }}>
+                {collaborators.map(({ user }) => {
+                  const labelId = `checkbox-list-secondary-label-${user.id}`;
+                  return (
+                    <ListItem
+                      key={user.id}
+                      secondaryAction={getAuthorityIcon(user.auth)}
+                      disablePadding
+                    >
+                      <ListItemButton>
+                        <ListItemAvatar>
+                          <Avatar>{user.label.charAt(0).toUpperCase()}</Avatar>
+                        </ListItemAvatar>
+                        <ListItemText id={labelId} primary={user.label} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+      <Grid container spacing={1}>
+        <Grid item xs={6} sm={8} md={5}>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleNext}
+          >
+            Skip
+          </Button>
+        </Grid>
+        <Grid item xs={6} sm={8} md={5}>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 

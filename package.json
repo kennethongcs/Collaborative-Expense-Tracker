@@ -55,19 +55,28 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.15.0",
+    "@date-io/dayjs": "^2.15.0",
+    "@date-io/jalaali": "^2.15.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.1",
+    "@mui/x-date-pickers": "^5.0.0-beta.7",
     "cookie-parser": "^1.4.5",
+    "date-fns": "^2.29.2",
+    "dayjs": "^1.11.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "js-cookie": "^3.0.1",
     "jssha": "^3.2.0",
     "method-override": "^3.0.0",
+    "moment": "^2.29.4",
+    "moment-jalaali": "^0.9.6",
     "pg": "^8.7.3",
     "react-router-dom": "^6.3.0",
+    "recharts": "^2.1.13",
     "sequelize": "^6.21.3"
   }
 }
