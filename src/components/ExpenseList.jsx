@@ -19,7 +19,9 @@ const MapOfExpenses = ({ value, show }) =>
                 <Box>{expense.amount}</Box>
               </Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              {/* DOING */}
+              <Box>Expense creator here</Box>
               <Typography style={{ color: 'grey' }}>
                 {expense.category.name}
               </Typography>
@@ -31,8 +33,9 @@ const MapOfExpenses = ({ value, show }) =>
   );
 
 const ExpenseList = ({ expenses, all }) => {
+  console.log(expenses);
   const groupedResults = groupBy(expenses, (result) =>
-    moment(result).format('DD MMM YYYY')
+    moment(result).format('DD-MMM-YYYY')
   );
 
   if (all) {
@@ -40,7 +43,7 @@ const ExpenseList = ({ expenses, all }) => {
       const show = 50;
       return (
         <>
-          <Box mb={1} color="blue">
+          <Box mb={1} color="teal">
             {key}
           </Box>
           <Divider color="Lightblue" />
@@ -54,7 +57,7 @@ const ExpenseList = ({ expenses, all }) => {
     const show = 3;
     return (
       <>
-        <Box mb={1} color="blue">
+        <Box mb={1} color="teal">
           {key}
         </Box>
         <Divider color="Lightblue" />
