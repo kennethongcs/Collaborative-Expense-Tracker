@@ -46,6 +46,10 @@ const App = () => {
           path="/"
           element={<Login setUser={setUser} setWorkspace={setWorkspace} />}
         />
+        <Route
+          path="signin"
+          element={<Login setUser={setUser} setWorkspace={setWorkspace} />}
+        />
         <Route path="signup" element={<Signup />} />
 
         <Route path="workspace/settings" element={<WorkspaceSettings user={user} workspace={workspace} setWorkspace={setWorkspace} />} />
@@ -53,7 +57,7 @@ const App = () => {
         <Route path="workspace" element={<WorkspaceLayout />}>
           <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
           <Route path="1" element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
-          <Route path="2" element={<CategoryForm workspace={workspace} />} />
+          <Route path="2" element={<CategoryForm user={user} workspace={workspace} />} />
           <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
           <Route path="4" element={<ExpenseForm user={user} workspace={workspace} />} />
         </Route>
