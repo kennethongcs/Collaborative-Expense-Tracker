@@ -1,4 +1,4 @@
-export default function initRetrieveExpenseDataController(db) {
+export default function initExpenseDataController(db) {
   // retrieve the following data from db:
   // categories, payee, paymentmode
   const retrieveExpenseData = async (req, res) => {
@@ -91,5 +91,26 @@ export default function initRetrieveExpenseDataController(db) {
     }
   };
 
-  return ({ retrieveExpenseData, addExpenseData });
+  const retrieve = async (req, res) => {
+    const { workspaceId } = req.query;
+    try {
+      const expenseList = await db.Expense.findAll({
+        include: [
+          {
+            model: db.UserWorkspace,
+            where: { workspaceId },
+          },
+          {
+            model: db.Category,
+          },
+        ],
+      });
+      // console.log(expenseList);
+      res.send(expenseList);
+    } catch (err) {
+      console.log(`❌ Import expense error: ${err}`);
+    }
+  };
+
+  return ({ retrieveExpenseData, addExpenseData, retrieve });
 }

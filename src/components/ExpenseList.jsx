@@ -6,61 +6,53 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import useTheme from '@mui/material/styles/useTheme';
 
-const MapOfExpenses = ({ value, show }) =>
-  value.map(
-    (expense, index) =>
-      index < show && (
-        <Container key={expense.id}>
-          <Box mt={1}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Box>{expense.payee.name}</Box>
-              <Typography style={{ color: 'red' }} component="span">
-                <Box>{expense.amount}</Box>
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              {/* DOING */}
-              <Box>Expense creator here</Box>
-              <Typography style={{ color: 'grey' }}>
-                {expense.category.name}
-              </Typography>
-            </Box>
-          </Box>
-          <hr />
-        </Container>
-      )
-  );
+// Create our number formatter.
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+});
+
+const MapOfExpenses = ({ value, show }) => value.map(
+  (expense, index) => index < show && (
+    <Container key={expense.id}>
+      <Box mt={1}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box>{expense.payee}</Box>
+          <Typography style={{ color: 'red' }} component="span">
+            {formatter.format(expense.amount)}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography style={{ color: 'grey' }}>
+            {`User ${expense.user_workspace.userId}`}
+          </Typography>
+          <Typography style={{ color: 'grey' }}>
+            {expense.category.name}
+          </Typography>
+        </Box>
+      </Box>
+      <hr />
+    </Container>
+  ),
+);
 
 const ExpenseList = ({ expenses, all }) => {
   console.log(expenses);
-  const groupedResults = groupBy(expenses, (result) =>
-    moment(result).format('DD-MMM-YYYY')
-  );
+  const groupedResults = groupBy(expenses, (result) => moment(result).format('DD-MMM-YYYY'));
 
-  if (all) {
-    for (const [key, value] of Object.entries(groupedResults)) {
-      const show = 50;
-      return (
-        <>
-          <Box mb={1} color="teal">
-            {key}
-          </Box>
-          <Divider color="Lightblue" />
-          <MapOfExpenses show={show} value={value} />
-        </>
-      );
-    }
-  }
-
+  const colors = useTheme().palette;
+  console.log(groupedResults);
   for (const [key, value] of Object.entries(groupedResults)) {
-    const show = 3;
+    const show = (all) ? 50 : 3;
     return (
       <>
-        <Box mb={1} color="teal">
+        <Typography mb={1} variant="h6" color={colors.primary.main}>
           {key}
-        </Box>
-        <Divider color="Lightblue" />
+        </Typography>
+        <Divider />
         <MapOfExpenses show={show} value={value} />
       </>
     );
