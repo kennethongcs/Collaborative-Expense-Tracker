@@ -6,7 +6,7 @@ import {
 import axios from 'axios';
 import useTheme from '@mui/material/styles/useTheme';
 
-const ExpensesBarChart = ({ workspace }) => {
+const ExpensesBarChart = ({ workspace, setSelectedData, setLastExpenseMonth }) => {
   const [barChartData, setBarChartData] = useState(null);
   const [dataKeys, setDataKeys] = useState([]);
 
@@ -21,6 +21,8 @@ const ExpensesBarChart = ({ workspace }) => {
         console.log(response.data);
         const chartData = response.data;
         setBarChartData(chartData);
+
+        setLastExpenseMonth(chartData?.at(-1));
 
         // find index of chart data with most collaborators
         let indexWithMostCollaborators;
@@ -38,6 +40,10 @@ const ExpensesBarChart = ({ workspace }) => {
       .catch((error) => console.log(error));
   }, []);
 
+  const handleBarClick = (data) => {
+    setSelectedData(data);
+  };
+
   return (
     <>
       <ResponsiveContainer width="100%" height={150}>
@@ -52,10 +58,13 @@ const ExpensesBarChart = ({ workspace }) => {
         >
           <XAxis dataKey="period" />
           <YAxis />
-          <Tooltip />
+          <Tooltip
+            labelStyle={{ color: colors.primary.dark }}
+            formatter={(value, name) => `$${value}`}
+          />
           <Legend />
           {dataKeys.map((key, index) => (
-            <Bar key={key} dataKey={key} stackId="a" barSize={30} fill={chartColors[index % chartColors.length]} />
+            <Bar key={key} dataKey={key} stackId="a" barSize={30} fill={chartColors[index % chartColors.length]} onClick={handleBarClick} />
           ))}
         </BarChart>
       </ResponsiveContainer>

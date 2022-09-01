@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
 
 export default function initStatisticsController(db) {
   const totalExpenses = async (workspaceId, period) => {
@@ -86,6 +86,7 @@ export default function initStatisticsController(db) {
       model: db.Category,
       attributes: [],
     }],
+    where: { expense_date: { [Op.gte]: startDate, [Op.lte]: endDate } },
     attributes: [
       [Sequelize.col('category.name'), 'cat'],
       [Sequelize.fn('SUM', Sequelize.col('amount')), 'amount'],
@@ -99,13 +100,15 @@ export default function initStatisticsController(db) {
 
     try {
       let result = {};
+      const startDate = '1/1/2022';
+      const endDate = '1/1/2025';
 
       switch (report) {
         case 'totalExpenses':
           result = await totalExpenses(workspaceId, period);
           break;
         case 'totalExpensesByCategory':
-          result = await totalExpensesByCategory(workspaceId, '1/1/1900', '1/1/2023');
+          result = await totalExpensesByCategory(workspaceId, startDate, endDate);
           break;
         default:
           break;

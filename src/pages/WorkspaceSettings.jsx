@@ -152,7 +152,7 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
         </Typography>
         <AddIcon color="primary" onClick={handleAddButton} />
       </Box>
-      <Box mt={3}>
+      <Box mt={3} mb={3}>
         <Grid container spacing={2}>
           {workspaceList?.map((workspaceItem) => (
             <Grid key={workspaceItem.id} item xs={6} sm={6}>
