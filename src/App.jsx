@@ -67,7 +67,10 @@ const App = () => {
               workspace={workspace}
             />
             <Route path="expense" element={<ExpenseForm />} />
-            <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
+            <Route
+              path="expenses/:expenseId"
+              element={<ExpenseDetail user={user} workspace={workspace} />}
+            />
             <Route
               path="settings"
               element={<Settings user={user} setUser={setUser} />}

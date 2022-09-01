@@ -368,6 +368,7 @@ module.exports = {
     const expenseData = [
       {
         name: 'Some expense name',
+        user_id: johnUser.id,
         user_workspace_id: userWsJohn.id,
         category_id: catOneJohnSimon.id,
         payment_mode_id: cashJohn.id,
@@ -382,6 +383,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: johnUser.id,
         user_workspace_id: userWsJohn.id,
         category_id: catTwoJohnSimon.id,
         payment_mode_id: creditJohn.id,
@@ -396,6 +398,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: peterUser.id,
         user_workspace_id: userWsPeter.id,
         category_id: catOnePeterMary.id,
         payment_mode_id: cashPeter.id,
@@ -410,6 +413,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: peterUser.id,
         user_workspace_id: userWsPeter.id,
         category_id: catTwoPeterMary.id,
         payment_mode_id: creditPeter.id,
@@ -424,6 +428,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: maryUser.id,
         user_workspace_id: userWsMary.id,
         category_id: catTwoPeterMary.id,
         payment_mode_id: creditMary.id,
@@ -438,6 +443,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: maryUser.id,
         user_workspace_id: userWsMary.id,
         category_id: catOnePeterMary.id,
         payment_mode_id: cashMary.id,
@@ -452,6 +458,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: ruthUser.id,
         user_workspace_id: userWsRuth.id,
         category_id: catOneRuthSimon.id,
         payment_mode_id: creditRuth.id,
@@ -466,6 +473,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: ruthUser.id,
         user_workspace_id: userWsRuth.id,
         category_id: catTwoRuthSimon.id,
         payment_mode_id: cashRuth.id,
@@ -480,6 +488,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: simonUser.id,
         user_workspace_id: userWsSimonBiz.id,
         category_id: catTwoRuthSimon.id,
         payment_mode_id: cashSimon.id,
@@ -494,6 +503,7 @@ module.exports = {
       },
       {
         name: 'Some expense name',
+        user_id: simonUser.id,
         user_workspace_id: userWsSimonWs.id,
         category_id: catTwoJohnSimon.id,
         payment_mode_id: creditSimon.id,

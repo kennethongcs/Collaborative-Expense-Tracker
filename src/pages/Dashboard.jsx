@@ -27,7 +27,7 @@ const Dashboard = ({ user, workspace }) => (
         <div>
           Today
           <div>
-            <NavLink to="expenses/123">Nike Store (clothing)</NavLink>
+            <NavLink to="expenses/1">Nike Store (clothing)</NavLink>
             -$100
           </div>
         </div>
@@ -35,7 +35,7 @@ const Dashboard = ({ user, workspace }) => (
         <div>
           31 July 2022
           <div>
-            <NavLink to="expenses/789">Apple Store (electronics)</NavLink>
+            <NavLink to="expenses/2">Apple Store (electronics)</NavLink>
             -$500
           </div>
         </div>
@@ -45,7 +45,7 @@ const Dashboard = ({ user, workspace }) => (
     <div>
       31 July 2022
       <div>
-        <NavLink to="expenses/789">Apple Store (electronics)</NavLink>
+        <NavLink to="expenses/3">Apple Store (electronics)</NavLink>
         -$500
       </div>
     </div>

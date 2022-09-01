@@ -10,6 +10,13 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
       user_workspace_id: {
         type: Sequelize.INTEGER,
         references: {

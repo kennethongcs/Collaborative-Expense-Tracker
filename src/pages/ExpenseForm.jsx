@@ -195,9 +195,6 @@ const ExpenseForm = ({ user, workspace }) => {
                     }}
                   >
                     {/* Get Category */}
-                    {/* {storeDbData.data.category.map((x) => (
-                      <MenuItem value={x.categoryId}>{x.categoryName}</MenuItem>
-                    ))} */}
                     {storeDbData.data !== undefined
                       ? storeDbData.data.category.map((x) => (
                           <MenuItem value={x.categoryId}>
@@ -304,10 +301,3 @@ const ExpenseForm = ({ user, workspace }) => {
 };
 
 export default ExpenseForm;
-
-// <div>
-//   <div>Add expense</div>
-//   <NavLink to="/dashboard">Submit</NavLink>
-//   <br />
-//   <NavLink to="/dashboard">Skip</NavLink>
-// </div>
