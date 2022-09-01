@@ -40,7 +40,11 @@ const Dashboard = ({ user, workspace }) => {
             >
               Show all
             </Link>
-            <ExpenseList expenses={expenses} />
+            <ExpenseList
+              expenses={expenses}
+              workspace={workspace}
+              user={user}
+            />
           </div>
         </div>
       </Box>
