@@ -1,12 +1,11 @@
 import jsSHA from 'jssha';
-import sequelizePackage from 'sequelize';
+import { Op } from 'sequelize';
 
-const { Sequelize } = sequelizePackage;
+const SALT = process.env.SALT_PASSWORD;
 
 const getHashSalted = (input) => {
   // create new SHA object
   const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
-  const SALT = process.env.SALT_PASSWORD;
   // create an unhashed cookie string based on user ID and salt
   const unhashedString = `${input}-${SALT}`;
 
@@ -80,15 +79,13 @@ export default function initUsersController(db) {
           email,
         });
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
 
   const login = async (req, res) => {
-    const { email } = req.body;
-    const { password } = req.body;
+    const { email, password } = req.body;
 
     try {
       const user = await db.User.findOne({
@@ -100,12 +97,42 @@ export default function initUsersController(db) {
       const hashedPassword = getHashSalted(password);
 
       if (hashedPassword === user.password) {
-        res.send({
+        const unhashedCookieString = `${user.id}-${SALT}`;
+        const hashedCookieString = getHashSalted(unhashedCookieString);
+        res.cookie('loggedInHash', hashedCookieString);
+
+        const loggedInUser = {
           id: user.id,
-          user: user.email,
+          email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
+        };
+
+        res.cookie('user', JSON.stringify(loggedInUser));
+
+        const userWorkspace = await db.Workspace.findOne({
+          include: {
+            model: db.User,
+            where: {
+              id: user.id,
+            },
+            attributes: [],
+          },
+          attributes: ['id', 'name', 'purpose'],
+          order: [['id', 'DESC']],
         });
+
+        if (userWorkspace) {
+          res.cookie('workspace', JSON.stringify(userWorkspace));
+        }
+        // const userWorkspace = null;
+
+        const result = {
+          user: loggedInUser,
+          workspace: userWorkspace,
+        };
+
+        res.send(result);
       } else {
         res.status(401).send({
           error: 'The login information is incorrect.',
@@ -116,12 +143,24 @@ export default function initUsersController(db) {
     }
   };
 
+  const logout = async (req, res) => {
+    try {
+      res.clearCookie('loggedInHash');
+      res.clearCookie('user');
+      res.clearCookie('workspace');
+
+      res.json({ redirect: '/' });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const retrieveusers = async (req, res) => {
     const { user } = req.body;
     const input = user.toLowerCase();
     console.log(input);
+
     try {
-      const Op = Sequelize.Op;
       const users = await db.User.findAll({
         where: {
           email: {
@@ -130,11 +169,36 @@ export default function initUsersController(db) {
         },
       });
       console.log(users);
+
       res.send(users);
     } catch (err) {
       console.log(`Error retrieving users: ${err}`);
     }
   };
 
-  return { signup, save, login, retrieveusers };
+  const verify = async (req, res) => {
+    const { user } = req.cookies;
+    const { loggedInHash } = req.cookies;
+
+    const unhashedCookieString = `${user.id}-${SALT}`;
+    const hashedCookieString = getHashSalted(unhashedCookieString);
+
+    if (loggedInHash === hashedCookieString) {
+      res.json(user);
+    } else {
+      res.clearCookie('loggedInHash');
+      res.clearCookie('user');
+      res.clearCookie('workspace');
+      res.json({ redirect: '/' });
+    }
+  };
+
+  return {
+    signup,
+    save,
+    login,
+    logout,
+    retrieveusers,
+    verify,
+  };
 }

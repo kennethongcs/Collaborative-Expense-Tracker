@@ -11,7 +11,8 @@ export default function initCategoriesController(db) {
         });
       });
 
-      // Move this to its own controller function once segment is created for the specification of payment Mode
+      // Move this to its own controller function once segment
+      // is created for the specification of payment Mode
       const paymentMode = ['cash', 'credit', 'debit'];
       await paymentMode.forEach((paymentModeName) => {
         db.PaymentMode.create({
