@@ -18,19 +18,20 @@ const ExpensesBarChart = ({ workspace, setSelectedData }) => {
     axios
       .get('/stats', { params: { report: 'totalExpenses', workspaceId: workspace?.id } })
       .then((response) => {
-        console.log(response.data);
         const chartData = response.data;
-        setBarChartData(chartData);
 
+        setBarChartData(chartData);
         setSelectedData(chartData?.at(-1));
 
         // find index of chart data with most collaborators
         let indexWithMostCollaborators;
-        const mostCollaborators = 0;
+        let mostCollaborators = 0;
         chartData.forEach((data, index) => {
           const keysCount = Object.keys(data).length;
+
           if (keysCount > mostCollaborators) {
             indexWithMostCollaborators = index;
+            mostCollaborators = keysCount;
           }
         });
 
@@ -38,8 +39,14 @@ const ExpensesBarChart = ({ workspace, setSelectedData }) => {
         setDataKeys(Object.keys(chartData[indexWithMostCollaborators]).filter((key) => (key !== 'createdOn' && key !== 'period')));
       })
       .catch((error) => console.log(error));
+
+    console.log(dataKeys);
   }, []);
 
+  /**
+   * Save selected month on bar click.
+   * @param {Object} data
+   */
   const handleBarClick = (data) => {
     setSelectedData(data);
   };
@@ -52,7 +59,7 @@ const ExpensesBarChart = ({ workspace, setSelectedData }) => {
           margin={{
             top: 5,
             right: 30,
-            left: -20,
+            left: 0,
             bottom: 5,
           }}
         >

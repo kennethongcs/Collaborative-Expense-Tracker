@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  PieChart, Pie, ResponsiveContainer, Cell, Legend, Tooltip, LabelList,
+  PieChart, Pie, ResponsiveContainer, Cell, Legend, Tooltip, Label,
 } from 'recharts';
 import axios from 'axios';
 import useTheme from '@mui/material/styles/useTheme';
@@ -30,9 +30,26 @@ const ExpensesPieChart = ({ workspace, selectedData }) => {
       .catch((error) => console.log(error));
   }, [selectedData]);
 
+  // Create our number formatter.
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  });
+
+  const CustomLabel = (props) => (
+    <g>
+      <foreignObject x={props.viewBox.cx - 80} y={props.viewBox.cy - 15} width={160} height={100}>
+        <div style={{ textAlign: 'center', fontSize: '1.5rem' }}>
+          {formatter.format(pieChartData.reduce((prev, cur) => prev + cur.amount, 0))}
+        </div>
+      </foreignObject>
+    </g>
+  );
+
   return (
     <>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={320}>
         <PieChart>
           <Pie
             data={pieChartData}
@@ -42,10 +59,12 @@ const ExpensesPieChart = ({ workspace, selectedData }) => {
             innerRadius={80}
             outerRadius={100}
             paddingAngle={3}
+            label={(value) => `$${value.amount}`}
           >
             {pieChartData?.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
             ))}
+            <Label content={CustomLabel} />
           </Pie>
           <Tooltip
             formatter={(value, name, props) => [
