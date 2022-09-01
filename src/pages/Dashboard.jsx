@@ -1,29 +1,22 @@
-import React, { useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import React, { useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const Dashboard = ({ user, workspace }) => (
   <div>
-    <h2>This is the dashboard</h2>
-    <h4>Hello, {user?.firstName}</h4>
-    <div>Menu to change workspace if more than 1</div>
     <div>Chart for the current workspace</div>
     <div>Some info about collaborators in this workspace</div>
     <div>Recent expenses for this workspace</div>
     <br />
-    <div>Currently looking at workspace {workspace?.id}</div>
+    <div>
+      Currently looking at workspace
+      {' '}
+      {workspace?.id}
+    </div>
     <br />
     <div>
-      Today
       <div>
-        <div>Menu to change workspace if more than 1</div>
-        <div>Chart for the current workspace</div>
-        <div>Some info about collaborators in this workspace</div>
-        <div>Recent expenses for this workspace</div>
-        <br />
-        <div>Currently looking at workspace {workspace?.name}</div>
-        <br />
         <div>
           Today
           <div>

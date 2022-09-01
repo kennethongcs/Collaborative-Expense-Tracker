@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const BottomNav = () => {
   const [value, setValue] = useState('');
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  useEffect(() => {
+    const page = location.pathname.split('/').at(-1);
+    setValue((page === 'dashboard') ? '' : page);
+  }, [location]);
+
   const handleChange = (event, newValue) => {
-    setValue(newValue);
     if (newValue) {
       navigate(`/dashboard/${newValue}`);
     } else {
@@ -21,7 +27,13 @@ const BottomNav = () => {
   };
 
   return (
-    <BottomNavigation sx={{ width: '100%', bottom: 0, position: 'absolute' }} value={value} onChange={handleChange}>
+    <BottomNavigation
+      sx={{
+        width: '100%', bottom: 0, position: 'absolute',
+      }}
+      value={value}
+      onChange={handleChange}
+    >
       <BottomNavigationAction
         label="Home"
         value=""

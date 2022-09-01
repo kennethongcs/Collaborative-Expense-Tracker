@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import MobileStepper from '@mui/material/MobileStepper';
 import Box from '@mui/material/Box';
 
@@ -19,52 +19,13 @@ const WorkspaceBottomNav = () => {
 
   return (
     <>
-      <NavLink
-        style={({ isActive }) => ({
-          display: 'inline',
-          margin: '0 1rem',
-          color: isActive ? 'red' : '',
-        })}
-        to="/workspace/1"
-      >
-        1
-      </NavLink>
-      <NavLink
-        style={({ isActive }) => ({
-          display: 'inline',
-          margin: '0 1rem',
-          color: isActive ? 'red' : '',
-        })}
-        to="/workspace/2"
-      >
-        2
-      </NavLink>
-      <NavLink
-        style={({ isActive }) => ({
-          display: 'inline',
-          margin: '0 1rem',
-          color: isActive ? 'red' : '',
-        })}
-        to="/workspace/3"
-      >
-        3
-      </NavLink>
-      <NavLink
-        style={({ isActive }) => ({
-          display: 'inline',
-          margin: '0 1rem',
-          color: isActive ? 'red' : '',
-        })}
-        to="/workspace/4"
-      >
-        4
-      </NavLink>
       <MobileStepper
         variant="dots"
         steps={4}
-        position="static"
         activeStep={activeStep}
-        sx={{ maxWidth: 400, flexGrow: 1 }}
+        sx={{
+          flexGrow: 1, bottom: 0, position: 'static', pb: 4,
+        }}
         nextButton={(
           <Box />
         )}

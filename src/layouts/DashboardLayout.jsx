@@ -1,37 +1,20 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '../components/AppBar.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
-const DashboardLayout = ({ user }) => {
-  const theme = createTheme();
-
-  return (
-    <>
-      <AppBar user={user} />
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            {' '}
-            <Outlet />
-          </Box>
-        </Container>
-      </ThemeProvider>
-      <BottomNav />
-    </>
-  );
-};
+const DashboardLayout = ({ user }) => (
+  <>
+    <AppBar user={user} />
+    <Container component="main" maxWidth="xs">
+      <Box mt={4} mx={1}>
+        <Outlet />
+      </Box>
+    </Container>
+    <BottomNav />
+  </>
+);
 
 export default DashboardLayout;
