@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Container from '@mui/material/Container';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -16,6 +15,8 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import useTheme from '@mui/material/styles/useTheme';
+
+import StyledAvatar from '../components/StyledAvatar.jsx';
 
 const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
   const [workspaceList, setWorkspaceList] = useState(null);
@@ -91,22 +92,6 @@ const WorkspaceSettings = ({ user, workspace, setWorkspace }) => {
   const handleAddButton = () => {
     navigate('/workspace');
   };
-
-  /**
-   * MUI avatar but with custom style.
-   * @param {string} color Background color.
-   * @returns MUI avatar with custom style.
-   */
-  const StyledAvatar = ({ color, children, ...props }) => (
-    <Avatar
-      sx={{
-        height: 22, width: 22, fontSize: '0.8rem', bgcolor: color,
-      }}
-      {...props}
-    >
-      {children}
-    </Avatar>
-  );
 
   /**
    * Workspace cards.
