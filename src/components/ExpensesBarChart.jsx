@@ -6,7 +6,7 @@ import {
 import axios from 'axios';
 import useTheme from '@mui/material/styles/useTheme';
 
-const ExpensesBarChart = ({ workspace, setSelectedData, setLastExpenseMonth }) => {
+const ExpensesBarChart = ({ workspace, setSelectedData }) => {
   const [barChartData, setBarChartData] = useState(null);
   const [dataKeys, setDataKeys] = useState([]);
 
@@ -22,7 +22,7 @@ const ExpensesBarChart = ({ workspace, setSelectedData, setLastExpenseMonth }) =
         const chartData = response.data;
         setBarChartData(chartData);
 
-        setLastExpenseMonth(chartData?.at(-1));
+        setSelectedData(chartData?.at(-1));
 
         // find index of chart data with most collaborators
         let indexWithMostCollaborators;
@@ -46,7 +46,7 @@ const ExpensesBarChart = ({ workspace, setSelectedData, setLastExpenseMonth }) =
 
   return (
     <>
-      <ResponsiveContainer width="100%" height={150}>
+      <ResponsiveContainer width="100%" height={200}>
         <BarChart
           data={barChartData}
           margin={{
@@ -61,6 +61,8 @@ const ExpensesBarChart = ({ workspace, setSelectedData, setLastExpenseMonth }) =
           <Tooltip
             labelStyle={{ color: colors.primary.dark }}
             formatter={(value, name) => `$${value}`}
+            allowEscapeViewBox={{ y: true }}
+            position={{ x: 130, y: -50 }}
           />
           <Legend />
           {dataKeys.map((key, index) => (

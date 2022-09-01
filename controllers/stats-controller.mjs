@@ -96,12 +96,12 @@ export default function initStatisticsController(db) {
   });
 
   const retrieve = async (req, res) => {
-    const { report, workspaceId, period = 'month' } = req.query;
+    const {
+      report, workspaceId, period = 'month', startDate = '1/1/1970', endDate = Date.now(),
+    } = req.query;
 
     try {
       let result = {};
-      const startDate = '1/1/2022';
-      const endDate = '1/1/2025';
 
       switch (report) {
         case 'totalExpenses':
