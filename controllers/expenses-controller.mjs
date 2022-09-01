@@ -15,6 +15,7 @@ export default function initExpensesController(db) {
           {
             model: db.Payee,
           },
+          { model: db.UserWorkspace },
         ],
       });
       // console.log(expenseList);
