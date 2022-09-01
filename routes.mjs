@@ -13,8 +13,8 @@ export default function routes(app) {
   const statsController = initStatisticsController(db);
   const expenseDataController = initExpenseDataController(db);
 
-  app.get('/signup', usersController.signup);
-  app.post('/signup', usersController.signup);
+  app.get('/register', usersController.signup);
+  app.post('/register', usersController.signup);
   app.post('/login', usersController.login);
   app.post('/save', usersController.save);
   app.post('/retrieveusers', usersController.retrieveusers);
