@@ -157,9 +157,7 @@ const ExpenseDetail = ({ user, workspace }) => {
     // add expense
     const data = {
       expenseIdData: expenseId,
-      userId: user.id,
       name: addExpenseName,
-      userWorkspaceId: storeDbData.data.userWorkspaceId[0].userWorkspaceId,
       categoryId: addExpenseCategory,
       paymentModeId: addExpensePaymentMode,
       payee: addExpensePayee,

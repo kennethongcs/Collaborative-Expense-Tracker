@@ -154,8 +154,6 @@ export default function initExpenseDataController(db) {
       });
       await findExpense.update({
         name: expenseData.name,
-        userId: expenseData.userId,
-        userWorkspaceId: expenseData.userWorkspaceId,
         categoryId: expenseData.categoryId,
         paymentModeId: expenseData.paymentModeId,
         payee: expenseData.payee,
