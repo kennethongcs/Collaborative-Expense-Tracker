@@ -16,11 +16,14 @@ const formatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-const MapOfExpenses = ({ value, show }) =>
+const MapOfExpenses = ({ value, show, navigate }) =>
   value.map(
     (expense, index) =>
       index < show && (
-        <Container key={expense.id}>
+        <Container
+          key={expense.id}
+          onClick={() => navigate(`/expenses/${expense.id}`)}
+        >
           <Box mt={1}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>{expense.payee}</Box>

@@ -114,6 +114,7 @@ const ExpenseDetail = ({ user, workspace }) => {
       .then((response) => {
         console.log(response);
         fetchComments();
+        setaddNewComment("");
       })
       .catch((error) => {
         // handle error
@@ -417,7 +418,7 @@ const ExpenseDetail = ({ user, workspace }) => {
                     </Grid>
                     <Grid justifyContent="left" item xs zeroMinWidth>
                       <h4 style={{ margin: 0, textAlign: "left" }}>
-                        Michel Michel
+                        {user.firstName} {user.lastName}
                       </h4>
                       <p style={{ textAlign: "left" }}>{x.comment} </p>
                       <p style={{ textAlign: "left", color: "gray" }}>
@@ -425,7 +426,7 @@ const ExpenseDetail = ({ user, workspace }) => {
                       </p>
                     </Grid>
                     <IconButton onClick={() => handleDeleteComment(x.id)}>
-                      <DeleteOutlinedIcon />
+                      <DeleteOutlinedIcon style={{ marginTop: "-80px" }} />
                     </IconButton>
                   </Grid>
                   <Divider variant="fullWidth" style={{ margin: "0px 0" }} />
