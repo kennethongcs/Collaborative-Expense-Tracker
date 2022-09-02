@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router, Routes, Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
@@ -55,13 +53,13 @@ const App = () => {
 
         <Route
           path="workspace/settings"
-          element={(
+          element={
             <WorkspaceSettings
               user={user}
               workspace={workspace}
               setWorkspace={setWorkspace}
             />
-          )}
+          }
         />
 
         <Route path="workspace" element={<WorkspaceLayout />}>
@@ -87,7 +85,10 @@ const App = () => {
           />
         </Route>
 
-        <Route path="dashboard" element={<DashboardLayout user={user} />}>
+        <Route
+          path="dashboard"
+          element={<DashboardLayout user={user} workspace={workspace} />}
+        >
           <Route
             index
             element={
@@ -108,8 +109,14 @@ const App = () => {
           />
         </Route>
 
-        <Route path="expenses" element={<ExpensesAll workspace={workspace} />} />
-        <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
+        <Route
+          path="expenses"
+          element={<ExpensesAll workspace={workspace} />}
+        />
+        <Route
+          path="profile"
+          element={<Profile user={user} setUser={setUser} />}
+        />
 
         <Route path="*" element={<Error />} />
       </Routes>

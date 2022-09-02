@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 import AppBar from '../components/AppBar.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 
-const DashboardLayout = ({ user }) => (
+const DashboardLayout = ({ user, workspace }) => (
   <>
-    <AppBar user={user} />
+    <AppBar user={user} workspace={workspace} />
     <Container component="main" maxWidth="xs">
       <Box mt={4} mx={1}>
         <Outlet />
