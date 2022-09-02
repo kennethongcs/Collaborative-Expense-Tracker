@@ -21,7 +21,7 @@ const MapOfExpenses = ({ value, show, date, colors }) =>
       index < show && (
         <Container key={expense.id}>
           <Typography mb={1} variant="h6" color={colors.primary.main}>
-            {date}
+            {expense.expenseDate}
           </Typography>
           <Divider />
           <Box mt={1}>
@@ -46,24 +46,26 @@ const MapOfExpenses = ({ value, show, date, colors }) =>
   );
 
 const ExpenseList = ({ expenses, all }) => {
-  // console.log('😃 raw data ', expenses);
+  console.log('😃 raw data ', expenses);
   const groupedResults = groupBy(expenses, (result) =>
-    moment(result.expenseDate).format('DD-MMM-YYYY')
+    moment(result).format('DD-MMM-YYYY')
   );
   // const sortByDate = sortBy(groupedResults, 'date');
   // console.log('sort by date', sortByDate);
 
   console.log('grouped results ', groupedResults);
 
+  // for (let [i, y] of Object.entries(groupedResults)) {
+  //   y.map((data) => {
+  //     console.log(i, data.amount);
+  //   });
+  // }
+
   const colors = useTheme().palette;
-  for (const [date, value] of Object.entries(groupedResults)) {
+  for (let [date, value] of Object.entries(groupedResults)) {
     const show = all ? 50 : 3;
     return (
       <>
-        {/* <Typography mb={1} variant="h6" color={colors.primary.main}>
-          {date}
-        </Typography>
-        <Divider /> */}
         <MapOfExpenses show={show} value={value} date={date} colors={colors} />
       </>
     );
