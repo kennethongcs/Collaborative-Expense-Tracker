@@ -70,7 +70,7 @@ const ExpenseList = ({ expenses, all }) => {
           show={show}
           value={value}
           colors={colors}
-          avigate={navigate}
+          navigate={navigate}
         />
       </>
     );
