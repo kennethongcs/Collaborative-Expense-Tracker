@@ -20,13 +20,10 @@ const MapOfExpenses = ({ value, show, date, colors }) =>
     (expense, index) =>
       index < show && (
         <Container key={expense.id}>
-          <Typography
-            mb={1}
-            variant="h6"
-            color={colors.primary.main}
-            sx={{ fontSize: 18 }}
-          >
-            {expense.expenseDate}
+          <Typography mb={1} variant="h6" color={colors.primary.main}>
+            {moment(expense.expenseDate).isSame(moment().startOf('day'))
+              ? 'Today'
+              : moment(expense.expenseDate).format('DD MMM YYYY')}
           </Typography>
           <Divider />
           <Box mt={1}>
