@@ -106,11 +106,11 @@ const App = () => {
             path="expenses/:expenseId"
             element={<ExpenseDetail user={user} workspace={workspace} />}
           />
+          <Route
+            path="settings"
+            element={<Settings user={user} setUser={setUser} />}
+          />
         </Route>
-        <Route
-          path="settings"
-          element={<Settings user={user} setUser={setUser} />}
-        />
         <Route
           path="expenses"
           element={<ExpensesAll workspace={workspace} />}
