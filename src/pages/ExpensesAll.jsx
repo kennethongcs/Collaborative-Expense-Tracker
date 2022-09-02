@@ -39,7 +39,6 @@ const ExpensesAll = ({ workspace }) => {
         <Typography component="h1" variant="h5">
           Expenses
         </Typography>
-        <br />
         <ExpenseList expenses={expenses} all />
       </Box>
     </Container>

@@ -1,46 +1,45 @@
-import { NavLink } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { useNavigate } from "react-router-dom";
-import InputAdornment from "@mui/material/InputAdornment";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useParams } from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import Box from "@mui/material/Box";
-import { result } from "lodash";
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import Box from '@mui/material/Box';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import moment from 'moment';
 
 const ExpenseDetail = ({ user, workspace }) => {
-  const [addExpenseName, setaddExpenseName] = useState("");
-  const [addExpenseAmount, setaddExpenseAmount] = useState("");
+  const [addExpenseName, setaddExpenseName] = useState('');
+  const [addExpenseAmount, setaddExpenseAmount] = useState('');
   const [addExpenseDate, setaddExpenseDate] = useState(new Date());
   const [addExpenseCategory, setaddExpenseCategory] = useState(null);
-  const [addExpensePayee, setaddExpensePayee] = useState("");
+  const [addExpensePayee, setaddExpensePayee] = useState('');
   const [addExpensePaymentMode, setaddExpensePaymentMode] = useState(null);
-  const [addComments, setaddComments] = useState("");
-  const [addNewComment, setaddNewComment] = useState("");
-  const [storeDbData, setstoreDbData] = useState("");
-  const [addNotes, setaddNotes] = useState("");
+  const [addComments, setaddComments] = useState('');
+  const [addNewComment, setaddNewComment] = useState('');
+  const [storeDbData, setstoreDbData] = useState('');
+  const [addNotes, setaddNotes] = useState('');
 
   const { expenseId } = useParams();
   const fetchExpenseData = async () => {
     // fetch expense data via id
     axios
-      .post("/get-expense-detail", {
+      .post('/get-expense-detail', {
         // send expenseId to retrieve expense details relating to it
         expenseIdData: expenseId,
       })
@@ -67,7 +66,7 @@ const ExpenseDetail = ({ user, workspace }) => {
   const fetchDataOptions = async () => {
     // fetch categories via workspaceId, and payment mode via user
     axios
-      .post("/get-data-expense-form", {
+      .post('/get-data-expense-form', {
         // userId and workspaceId will allow us to retrieve:
         // categories(via ws_id), payee (via user_ws_id), payment mode (via user_id)
         userId: user.id,
@@ -76,7 +75,7 @@ const ExpenseDetail = ({ user, workspace }) => {
       // update useState
       .then((response) => {
         setstoreDbData(response);
-        console.log("this is data option", response);
+        console.log('this is data option', response);
       })
       .catch((error) => {
         // handle error
@@ -87,13 +86,13 @@ const ExpenseDetail = ({ user, workspace }) => {
   const fetchComments = async () => {
     // fetch comments via expense Id
     axios
-      .post("/get-comments", {
+      .post('/get-comments', {
         // send expenseId to retrieve all comments
         expenseIdData: expenseId,
       })
       // update useState
       .then((response) => {
-        console.log("these are comments", response.data);
+        console.log('these are comments', response.data);
         setaddComments(response.data);
       })
       .catch((error) => {
@@ -105,7 +104,7 @@ const ExpenseDetail = ({ user, workspace }) => {
   const handleAddComment = async () => {
     // fetch comments via expense Id
     axios
-      .post("/add-comment", {
+      .post('/add-comment', {
         // send userId, expenseId detail to update comments table
         userId: user.id,
         expenseIdData: expenseId,
@@ -115,7 +114,7 @@ const ExpenseDetail = ({ user, workspace }) => {
       .then((response) => {
         console.log(response);
         fetchComments();
-        setaddNewComment("");
+        setaddNewComment('');
       })
       .catch((error) => {
         // handle error
@@ -126,7 +125,7 @@ const ExpenseDetail = ({ user, workspace }) => {
   const handleDeleteComment = async (commentId) => {
     // fetch comments via expense Id
     axios
-      .post("/delete-comment", {
+      .post('/delete-comment', {
         // send commentId in order to delete it
         id: commentId,
       })
@@ -142,7 +141,7 @@ const ExpenseDetail = ({ user, workspace }) => {
   };
 
   useEffect(() => {
-    if (storeDbData === "") {
+    if (storeDbData === '') {
       // fetch workspace/user data to render correct options
       fetchDataOptions();
       // fetch expense data for the expense id
@@ -151,6 +150,8 @@ const ExpenseDetail = ({ user, workspace }) => {
       fetchComments();
     }
   });
+
+  const navigate = useNavigate();
 
   const handleUpdateExpense = () => {
     // add expense
@@ -167,44 +168,38 @@ const ExpenseDetail = ({ user, workspace }) => {
       expenseDate: addExpenseDate,
     };
 
-    console.log("updating data in db:", data);
+    console.log('updating data in db:', data);
     axios
-      .post("/update-expense", {
+      .post('/update-expense', {
         data,
         workspaceId: workspace.id,
       })
       .then((response) => {
         console.log(response);
-        navigate("/dashboard");
+        navigate('/dashboard');
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  const handleBackButton = () => {
+    navigate(-1, { replace: true });
+  };
+
   return (
-    <>
-      <Container>
-        {/* 'Create a New Expense Title */}
-        <Grid container alignItems="center" justifyContent="center">
-          <Typography
-            className="paragraph"
-            variant="h6"
-            // color="textSecondary"
-            component="h2"
-            gutterBottom
-          >
-            Expense Detail
-          </Typography>
-        </Grid>
-        <Grid container alignItems="center" justifyContent="center">
+    <Container component="main" maxWidth="xs">
+      <Box mt={4}>
+        <ArrowBackIosNewIcon onClick={handleBackButton} />
+      </Box>
+      <Box mt={3}>
+        <Typography component="h1" variant="h5">
+          Expense Detail
+        </Typography>
+        <Grid container alignItems="center" justifyContent="center" sx={{ mt: 3 }}>
           <Grid
             container
             maxWidth="600px"
-            minHeight="700px"
-            border={1}
-            borderRadius={1}
-            borderColor="lightGrey"
             alignItems="center"
             justifyContent="center"
           >
@@ -291,7 +286,7 @@ const ExpenseDetail = ({ user, workspace }) => {
                     labelId="expense-category"
                     id="expense-payment-mode-input"
                     // does it auto add the option if value tallies?
-                    value={addExpenseCategory || ""}
+                    value={addExpenseCategory || ''}
                     label="Category"
                     onChange={(event) => {
                       setaddExpenseCategory(event.target.value);
@@ -300,11 +295,11 @@ const ExpenseDetail = ({ user, workspace }) => {
                     {/* Get Category */}
                     {storeDbData.data !== undefined
                       ? storeDbData.data.category.map((x) => (
-                          <MenuItem value={x.categoryId}>
-                            {x.categoryName}
-                          </MenuItem>
-                        ))
-                      : console.log("No category data")}
+                        <MenuItem value={x.categoryId}>
+                          {x.categoryName}
+                        </MenuItem>
+                      ))
+                      : console.log('No category data')}
                   </Select>
                 </FormControl>
               </Grid>
@@ -339,21 +334,21 @@ const ExpenseDetail = ({ user, workspace }) => {
                   <Select
                     labelId="payment-mode"
                     id="expense-payment-mode-input"
-                    value={addExpensePaymentMode || ""}
+                    value={addExpensePaymentMode || ''}
                     label="Payment Mode"
                     onChange={(event) => {
                       setaddExpensePaymentMode(event.target.value);
                     }}
                   >
                     {/* Get PaymentMode */}
-                    {storeDbData.data !== undefined &&
-                    storeDbData.data.paymentMode[0] !== undefined
+                    {storeDbData.data !== undefined
+                    && storeDbData.data.paymentMode[0] !== undefined
                       ? storeDbData.data.paymentMode.map((x) => (
-                          <MenuItem value={x.paymentModeId}>
-                            {x.paymentModeName}
-                          </MenuItem>
-                        ))
-                      : console.log("No payment mode data")}
+                        <MenuItem value={x.paymentModeId}>
+                          {x.paymentModeName}
+                        </MenuItem>
+                      ))
+                      : console.log('No payment mode data')}
                   </Select>
                 </FormControl>
               </Grid>
@@ -389,89 +384,91 @@ const ExpenseDetail = ({ user, workspace }) => {
           minHeight="70px"
         >
           <Button
-            minWidth="140px"
-            minHeight="40px"
+            fullWidth
             onClick={handleUpdateExpense}
             variant="contained"
           >
             Update Expense
           </Button>
         </Grid>
-
-        <Box container>
-          {/* Get Comments */}
-          <Grid container alignItems="center" justifyContent="center">
-            <Typography
-              className="paragraph"
-              variant="h6"
+      </Box>
+      <Box container>
+        {/* Get Comments */}
+        <Grid container alignItems="center" justifyContent="center">
+          <Typography
+            className="paragraph"
+            variant="h6"
               // color="textSecondary"
-              component="h2"
-              gutterBottom
-            >
-              Comments
-            </Typography>
-          </Grid>
-          {addComments !== ""
-            ? addComments.map((x) => (
-                <Paper style={{ padding: "20px 20px" }}>
-                  <Grid container wrap="nowrap" spacing={2}>
-                    <Grid item>
-                      <Avatar alt="Remy Sharp" />
-                    </Grid>
-                    <Grid justifyContent="left" item xs zeroMinWidth>
-                      <h4 style={{ margin: 0, textAlign: "left" }}>
-                        {user.firstName} {user.lastName}
-                      </h4>
-                      <p style={{ textAlign: "left" }}>{x.comment} </p>
-                      <p style={{ textAlign: "left", color: "gray" }}>
-                        Created at: {x.createdAt}
-                      </p>
-                    </Grid>
-                    <IconButton onClick={() => handleDeleteComment(x.id)}>
-                      <DeleteOutlinedIcon style={{ marginTop: "-80px" }} />
-                    </IconButton>
-                  </Grid>
-                  <Divider variant="fullWidth" style={{ margin: "0px 0" }} />
-                </Paper>
-              ))
-            : console.log("No comments")}
+            component="h2"
+            gutterBottom
+          >
+            Comments
+          </Typography>
+        </Grid>
+        {addComments !== ''
+          ? addComments.map((x) => (
+            <Paper style={{ padding: '20px 20px' }}>
+              <Grid container wrap="nowrap" spacing={2}>
+                <Grid item>
+                  <Avatar alt="Remy Sharp" />
+                </Grid>
+                <Grid justifyContent="left" item xs zeroMinWidth>
+                  <h4 style={{ margin: 0, textAlign: 'left' }}>
+                    {user.firstName}
+                    {' '}
+                    {user.lastName}
+                  </h4>
+                  <p style={{ textAlign: 'left' }}>
+                    {x.comment}
+                    {' '}
+                  </p>
+                  <p style={{ textAlign: 'left', color: 'gray' }}>
+                    {moment(x.createdAt).format('DD MMM YYYY, h:mm:ss a')}
+                  </p>
+                </Grid>
+                <IconButton onClick={() => handleDeleteComment(x.id)}>
+                  <DeleteOutlinedIcon style={{ marginTop: '-80px' }} />
+                </IconButton>
+              </Grid>
+              <Divider variant="fullWidth" style={{ margin: '0px 0' }} />
+            </Paper>
+          ))
+          : console.log('No comments')}
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          minHeight="80px"
+          pt={3}
+        >
+          <TextField
+            id="comment-input"
+            label="Add Comments"
+            multiline
+            rows={4}
+            fullWidth
+            value={addNewComment}
+            onChange={(event) => {
+              setaddNewComment(event.target.value);
+            }}
+          />
           <Grid
-            padding="20px"
             container
             alignItems="center"
             justifyContent="center"
-            minHeight="80px"
+            minHeight="70px"
           >
-            <TextField
-              id="comment-input"
-              label="Add Comments"
-              multiline
-              rows={4}
+            <Button
               fullWidth
-              value={addNewComment}
-              onChange={(event) => {
-                setaddNewComment(event.target.value);
-              }}
-            />
-            <Grid
-              container
-              alignItems="center"
-              justifyContent="center"
-              minHeight="70px"
+              onClick={handleAddComment}
+              variant="contained"
             >
-              <Button
-                minWidth="140px"
-                minHeight="40px"
-                onClick={handleAddComment}
-                variant="contained"
-              >
-                Add Comment!
-              </Button>
-            </Grid>
+              Add Comment
+            </Button>
           </Grid>
-        </Box>
-      </Container>
-    </>
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 
