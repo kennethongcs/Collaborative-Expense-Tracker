@@ -51,7 +51,7 @@ const ExpenseList = ({ expenses, all }) => {
           { ((expense.expense_date !== prevDate) && (prevDate = expense.expense_date)) ? (
             <>
               <Typography mb={1} variant="h6" color={colors.primary.main}>
-                {expense.expense_date}
+                {moment(expense.expense_date).isSame(moment().startOf('day')) ? 'Today' : moment(expense.expense_date).format('DD MMM YYYY')}
               </Typography>
               <Divider />
             </>
