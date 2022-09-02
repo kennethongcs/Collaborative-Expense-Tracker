@@ -27,7 +27,7 @@ const settings = [
   },
 ];
 
-const AppBar = ({ user, workspace }) => {
+const AppBar = ({ user, workspace, setWorkspace }) => {
   const location = useLocation();
   const index = location.pathname.split('/').at(-1);
   const [initials, setInitials] = useState();
@@ -44,6 +44,31 @@ const AppBar = ({ user, workspace }) => {
     colors.secondary.main,
   ];
 
+  const userColorMap = {};
+  /**
+   * Assign a background color to collaborators
+   * @param {Object[]} workspaces Workspace list.
+   * @returns Workspace list with new color field for each user.
+   */
+  const assignColorsToCollaborators = (workspaces) => {
+    for (let i = 0; i < workspaces.length; i += 1) {
+      for (let j = 0; j < workspaces[i].users.length; j += 1) {
+        const collaborator = workspaces[i].users[j];
+
+        // assign a color if user not yet assigned a color
+        if (!(collaborator.id in userColorMap)) {
+          const newColorIndex = Object.keys(userColorMap).length;
+          userColorMap[collaborator.id] = avatarColors[newColorIndex % avatarColors.length];
+        }
+
+        // store new color key in user object
+        workspaces[i].users[j].color = userColorMap[collaborator.id];
+      }
+    }
+
+    return workspaces;
+  };
+
   useEffect(() => {
     setInitials(
       user?.firstName.charAt(0).toUpperCase()
@@ -54,6 +79,21 @@ const AppBar = ({ user, workspace }) => {
       backgroundColor:
         avatarColors[Math.floor(Math.random() * avatarColors.length)],
     });
+
+    // make sure collaborators info exist if missing
+    if (!workspace.users) {
+      axios
+        .get('/workspace/collaborators', {
+          params: {
+            workspaceId: workspace.id,
+          },
+        })
+        .then((res) => {
+          setWorkspace(assignColorsToCollaborators([res.data])[0]);
+        });
+    } else {
+      setWorkspace(assignColorsToCollaborators([workspace])[0]);
+    }
   }, [user]);
 
   const handleOpenUserMenu = (event) => {
@@ -72,6 +112,8 @@ const AppBar = ({ user, workspace }) => {
 
     navigate(setting.url);
   };
+
+  console.log(workspace);
 
   return (
     <Container maxWidth="xl">
@@ -128,9 +170,9 @@ const AppBar = ({ user, workspace }) => {
             },
           }}
         >
-          <StyledAvatar>JD</StyledAvatar>
-          <StyledAvatar>MJ</StyledAvatar>
-          <StyledAvatar>PG</StyledAvatar>
+          {workspace.users?.map((collaborator) => (
+            <StyledAvatar key={collaborator.id} color={collaborator.color}>{collaborator.firstName.charAt(0).toUpperCase() + collaborator.lastName.charAt(0).toUpperCase()}</StyledAvatar>
+          ))}
         </AvatarGroup>
       </Box>
     </Container>
