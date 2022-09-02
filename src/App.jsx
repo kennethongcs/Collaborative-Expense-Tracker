@@ -85,7 +85,10 @@ const App = () => {
           />
         </Route>
 
-        <Route path="dashboard" element={<DashboardLayout user={user} />}>
+        <Route
+          path="dashboard"
+          element={<DashboardLayout user={user} workspace={workspace} />}
+        >
           <Route
             index
             element={
@@ -108,6 +111,7 @@ const App = () => {
             element={<Settings user={user} setUser={setUser} />}
           />
         </Route>
+
         <Route
           path="expenses"
           element={<ExpensesAll workspace={workspace} />}

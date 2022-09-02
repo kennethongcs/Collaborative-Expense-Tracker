@@ -23,7 +23,7 @@ const Dashboard = ({ user, workspace }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setExpenses(res.data);
       });
   }, []);
@@ -32,9 +32,7 @@ const Dashboard = ({ user, workspace }) => {
 
   return (
     <>
-      <Typography component="h1" variant="h5">
-        Dashboard
-      </Typography>
+      <Typography component="h1" variant="h5" />
       <Box sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -43,28 +41,13 @@ const Dashboard = ({ user, workspace }) => {
               setSelectedData={setSelectedData}
             />
           </Grid>
-          <Grid item xs={12} mr={2}>
-            <AvatarGroup
-              max={3}
-              sx={{
-                "& .MuiAvatar-root": {
-                  width: 22,
-                  height: 22,
-                  fontSize: "0.8rem",
-                },
-              }}
-            >
-              <StyledAvatar>JD</StyledAvatar>
-              <StyledAvatar>MJ</StyledAvatar>
-              <StyledAvatar>PG</StyledAvatar>
-            </AvatarGroup>
-          </Grid>
-          <Grid item xs={12} mr={2}>
+          <Grid item xs={12} mr={2} mb={-2}>
             <Typography
               textAlign="right"
               color="primary"
               sx={{
                 fontSize: 14,
+
                 textDecoration: "underline",
               }}
               onClick={() => navigate("/expenses")}

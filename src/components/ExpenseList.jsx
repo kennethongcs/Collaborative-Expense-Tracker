@@ -16,14 +16,11 @@ const formatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-const MapOfExpenses = ({ value, show, navigate }) =>
+const MapOfExpenses = ({ value, show }) =>
   value.map(
     (expense, index) =>
       index < show && (
-        <Container
-          key={expense.id}
-          onClick={() => navigate(`/expenses/${expense.id}`)}
-        >
+        <Container key={expense.id}>
           <Box mt={1}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>{expense.payee}</Box>
@@ -33,7 +30,7 @@ const MapOfExpenses = ({ value, show, navigate }) =>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography style={{ color: "grey" }}>
-                {`User ${expense.user_workspace.userId}`}
+                {`${expense.user?.firstName} ${expense.user?.lastName}`}
               </Typography>
               <Typography style={{ color: "grey" }}>
                 {expense.category.name}

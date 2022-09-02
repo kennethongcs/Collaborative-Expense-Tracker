@@ -1,33 +1,35 @@
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import MenuItem from "@mui/material/MenuItem";
-import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
-import useTheme from "@mui/material/styles/useTheme";
+import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import MenuItem from '@mui/material/MenuItem';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import useTheme from '@mui/material/styles/useTheme';
+import StyledAvatar from '../components/StyledAvatar.jsx';
+import AvatarGroup from '@mui/material/AvatarGroup';
 
 const settings = [
   {
-    name: "Profile",
-    url: "/profile",
+    name: 'Profile',
+    url: '/profile',
   },
   {
-    name: "Workspace",
-    url: "/workspace/settings",
+    name: 'Workspace',
+    url: '/workspace/settings',
   },
   {
-    name: "Logout",
-    url: "/",
+    name: 'Logout',
+    url: '/',
   },
 ];
 
-const AppBar = ({ user }) => {
+const AppBar = ({ user, workspace }) => {
   const location = useLocation();
-  const index = location.pathname.split("/").at(-1);
+  const index = location.pathname.split('/').at(-1);
   const [initials, setInitials] = useState();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [avatarStyle, setAvatarStyle] = useState();
@@ -64,8 +66,8 @@ const AppBar = ({ user }) => {
 
   const navigate = useNavigate();
   const handleClickUserMenu = (setting) => {
-    if (setting.name === "Logout") {
-      axios.post("/logout").catch((error) => console.log(error));
+    if (setting.name === 'Logout') {
+      axios.post('/logout').catch((error) => console.log(error));
     }
 
     navigate(setting.url);
@@ -73,25 +75,25 @@ const AppBar = ({ user }) => {
 
   return (
     <Container maxWidth="xl">
-      <Box sx={{ display: "flex", justifyContent: "space-between" }} mt={2}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }} mt={2}>
         <Box sx={{ typography: { fontSize: 27 }, ml: 1 }}>
-          {index === "dashboard" ? `Hello, ${user.firstName}` : ""}
+          {index === 'dashboard' ? `Hello, ${user.firstName}` : ''}
         </Box>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar sx={avatarStyle}>{initials}</Avatar>
         </IconButton>
         <Menu
-          sx={{ mt: "45px" }}
+          sx={{ mt: '45px' }}
           id="menu-appbar"
           anchorEl={anchorElUser}
           anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'right',
           }}
           keepMounted
           transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'right',
           }}
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
@@ -108,6 +110,26 @@ const AppBar = ({ user }) => {
             </MenuItem>
           ))}
         </Menu>
+      </Box>
+      <Box
+        sx={{ ml: 1, mt: 1, display: 'flex', justifyContent: 'space-between' }}
+      >
+        {workspace.name}
+
+        <AvatarGroup
+          max={3}
+          sx={{
+            '& .MuiAvatar-root': {
+              width: 22,
+              height: 22,
+              fontSize: '0.8rem',
+            },
+          }}
+        >
+          <StyledAvatar>JD</StyledAvatar>
+          <StyledAvatar>MJ</StyledAvatar>
+          <StyledAvatar>PG</StyledAvatar>
+        </AvatarGroup>
       </Box>
     </Container>
   );
