@@ -33,31 +33,33 @@ const MapOfExpenses = ({
         </Typography>
       </Box>
     </Box>
-    <hr />
+    <Divider />
   </Container>
 );
 
 const ExpenseList = ({ expenses, all }) => {
-  console.log(expenses);
-
   const colors = useTheme().palette;
   const numOfResults = all ? 50 : 3;
   let prevDate;
 
+  const expenseList = expenses.slice(0, all ? 50 : 4);
+
   return (
     <Grid container spacing={1}>
-      {expenses.map((expense) => (
-        <Grid item xs={12}>
+      {expenseList.map((expense) => (
+        <>
           { ((expense.expense_date !== prevDate) && (prevDate = expense.expense_date)) ? (
-            <>
-              <Typography mb={1} variant="h6" color={colors.primary.main}>
+            <Grid item xs={12}>
+              <Typography ml={1} mt={1} variant="h6" color={colors.primary.main}>
                 {moment(expense.expense_date).isSame(moment().startOf('day')) ? 'Today' : moment(expense.expense_date).format('DD MMM YYYY')}
               </Typography>
               <Divider />
-            </>
+            </Grid>
           ) : ''}
-          <MapOfExpenses key={expense.id} show={numOfResults} expense={expense} date={expense.expense_date} colors={colors} />
-        </Grid>
+          <Grid item xs={12}>
+            <MapOfExpenses key={expense.id} show={numOfResults} expense={expense} date={expense.expense_date} colors={colors} />
+          </Grid>
+        </>
       ))}
     </Grid>
   );
