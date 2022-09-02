@@ -11,6 +11,13 @@ export default function initExpenseModel(sequelize, DataTypes) {
       name: {
         type: DataTypes.STRING,
       },
+      userId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
       userWorkspaceId: {
         type: DataTypes.INTEGER,
         references: {

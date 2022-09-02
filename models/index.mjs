@@ -78,6 +78,9 @@ db.Workspace.hasMany(db.Category);
 // 9. User (One) - payment_mode (Many)
 db.PaymentMode.belongsTo(db.User);
 db.User.hasMany(db.PaymentMode);
+// 10. User (One) - expense (Many)
+db.Expense.belongsTo(db.User);
+db.User.hasMany(db.Expense);
 
 // Many to Many
 // 1. user (Many) - workspace (Many) - workspace_authority (Many)

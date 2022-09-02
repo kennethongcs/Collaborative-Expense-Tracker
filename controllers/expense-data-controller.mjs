@@ -60,7 +60,7 @@ export default function initExpenseDataController(db) {
           expenseData.paymentMode.push({ paymentModeId: x.dataValues.id, paymentModeName: x.dataValues.name });
         }
       });
-      console.log('this is EXPENSE DATA', expenseData);
+
       // send final data back to display options on the expense sheet
       res.send(expenseData);
     }
@@ -112,5 +112,27 @@ export default function initExpenseDataController(db) {
     }
   };
 
-  return ({ retrieveExpenseData, addExpenseData, retrieve });
+  const retrieveExpenseDetail = async (req, res) => {
+    try {
+      console.log('this is reqbody', req.body);
+      const { expenseIdData } = req.body;
+
+      const newExpense = await db.Expense.findOne({
+        where: {
+          id: expenseIdData,
+        },
+        include: [{
+          model: db.PaymentMode,
+        }, { model: db.Category }],
+      });
+      res.send(newExpense);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  return ({
+    retrieveExpenseData, addExpenseData, retrieveExpenseDetail, retrieve,
+  });
 }

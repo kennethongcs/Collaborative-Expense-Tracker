@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import Box from '@mui/material/Box';
-import CardContent from '@mui/material/CardContent';
+import React, { useState } from "react";
+import axios from "axios";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import CardContent from "@mui/material/CardContent";
 
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { useNavigate } from 'react-router-dom';
-import RenderBudgetInput from '../components/BudgetInput.jsx';
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import { useNavigate } from "react-router-dom";
+import RenderBudgetInput from "../components/BudgetInput.jsx";
 
 const CategoryForm = ({ user, workspace }) => {
   const [addCategory, setaddCategory] = useState([]);
   const [categoryBudgetList, setCategoryBudgetList] = useState([
-    { id: 1, category: 'Transport', budget: 0 },
-    { id: 2, category: 'Food', budget: 0 },
-    { id: 3, category: 'Entertainment', budget: 0 },
-    { id: 4, category: 'Healthcare', budget: 0 },
+    { id: 1, category: "Transport", budget: 0 },
+    { id: 2, category: "Food", budget: 0 },
+    { id: 3, category: "Entertainment", budget: 0 },
+    { id: 4, category: "Healthcare", budget: 0 },
   ]);
 
   const budgetUpdate = (newBudget, categoryName) => {
     // update budget in categoryBudgetList
     const index = categoryBudgetList.findIndex(
-      (x) => x.category === categoryName,
+      (x) => x.category === categoryName
     );
     const tempCategoryList = [...categoryBudgetList];
     tempCategoryList[index] = { category: categoryName, budget: newBudget };
@@ -39,17 +39,17 @@ const CategoryForm = ({ user, workspace }) => {
     // add new category to categoryBudgetList
     const updatedCategoryList = [
       ...categoryBudgetList,
-      { id: (lastId + 1), category: addCategory, budget: 0 },
+      { id: lastId + 1, category: addCategory, budget: 0 },
     ];
     // updates categoryBudgetList
     setCategoryBudgetList(updatedCategoryList);
-    setaddCategory('');
+    setaddCategory("");
   };
 
   const handleCategoryDelete = (element) => {
     // finds and delete category from categoryBudgetList
     const newCategoryList = categoryBudgetList.filter(
-      (x) => x.category !== element.category,
+      (x) => x.category !== element.category
     );
     // updates categoryBudgetList
     setCategoryBudgetList(newCategoryList);
@@ -58,14 +58,14 @@ const CategoryForm = ({ user, workspace }) => {
   const navigate = useNavigate();
   const handleCategoryListSubmit = () => {
     axios
-      .post('/add-category', {
+      .post("/add-category", {
         categoryBudgetList,
         userId: user.id,
         workspaceId: workspace.id,
       })
       .then((response) => {
         console.log(response);
-        navigate('/workspace/3');
+        navigate("/workspace/3");
       })
       .catch((error) => {
         console.log(error);
@@ -80,13 +80,11 @@ const CategoryForm = ({ user, workspace }) => {
           <Box
             sx={{
               mt: 8,
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <Typography variant="h5">
-              Create a New Expense Category
-            </Typography>
+            <Typography variant="h5">Create a New Expense Category</Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={8} md={5}>
@@ -117,17 +115,10 @@ const CategoryForm = ({ user, workspace }) => {
         </Grid>
       </Grid>
       {/* Categories shown */}
-      <Box
-        container
-        sx={{ minHeight: 500 }}
-      >
+      <Box container sx={{ minHeight: 500 }}>
         {/* Selected Categories, needs its separate component, as we need to render addBudget
           field independently */}
-        <Grid
-          container
-          spacing={1}
-          color="textSecondary"
-        >
+        <Grid container spacing={1} color="textSecondary">
           {categoryBudgetList.map((element) => (
             <Grid key={element.id} item xs={6}>
               <Card elevation={1}>
@@ -159,10 +150,7 @@ const CategoryForm = ({ user, workspace }) => {
         </Grid>
       </Box>
       {/* Submit Button */}
-      <Grid
-        container
-        sx={{ minHeight: 70 }}
-      >
+      <Grid container sx={{ minHeight: 70 }}>
         <Button
           fullWidth
           variant="contained"
