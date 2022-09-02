@@ -1,7 +1,7 @@
 # Colete
 Collaborative Expense Tracker
 
-<img src="https://user-images.githubusercontent.com/17814490/188208559-3e3ab73f-485c-4415-9772-45568280361f.png" width="200"> <img src="https://user-images.githubusercontent.com/17814490/188208762-672703bd-b480-4b79-8e52-7ffddcb444e3.png" width="200"> <img src="https://user-images.githubusercontent.com/17814490/188208949-4ddd1a61-6858-42ca-bcc2-97e1224bf660.png" width="200"> <img src="https://user-images.githubusercontent.com/17814490/188209647-1bdff39f-1077-41b2-91a6-c98e98b66b13.png" width="200">
+<img src="https://user-images.githubusercontent.com/17814490/188208559-3e3ab73f-485c-4415-9772-45568280361f.png" width="200"> <img src="https://user-images.githubusercontent.com/17814490/188208762-672703bd-b480-4b79-8e52-7ffddcb444e3.png" width="200"> <img src="https://user-images.githubusercontent.com/17814490/188210467-4f4191a3-19d3-4252-af88-4e0e3c71ccdb.png" width="200"> <img src="https://user-images.githubusercontent.com/17814490/188209647-1bdff39f-1077-41b2-91a6-c98e98b66b13.png" width="200">
 
 ## Features
 - Multiple workspaces
