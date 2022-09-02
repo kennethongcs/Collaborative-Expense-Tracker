@@ -30,7 +30,7 @@ const MapOfExpenses = ({ value, show, colors }) => value.map(
             {`${expense.user?.firstName} ${expense.user?.lastName}`}
           </Typography>
           <Typography color={colors.text.disabled}>
-            {expense.category.name}
+            {expense.category?.name}
           </Typography>
         </Box>
       </Box>
