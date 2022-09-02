@@ -1,21 +1,19 @@
-import { NavLink } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { useNavigate } from "react-router-dom";
-import InputAdornment from "@mui/material/InputAdornment";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const ExpenseDetail = ({ user, workspace }) => {
   const [addExpenseName, setaddExpenseName] = useState([]);
@@ -24,14 +22,14 @@ const ExpenseDetail = ({ user, workspace }) => {
   const [addExpenseCategory, setaddExpenseCategory] = useState([]);
   const [addExpensePayee, setaddExpensePayee] = useState([]);
   const [addExpensePaymentMode, setaddExpensePaymentMode] = useState([]);
-  const [storeDbData, setstoreDbData] = useState("");
+  const [storeDbData, setstoreDbData] = useState('');
   const [addNotes, setaddNotes] = useState([]);
   const { expenseId } = useParams();
 
   const fetchExpenseData = async () => {
     // fetch categories, and paymode
     axios
-      .post("/get-expense-detail", {
+      .post('/get-expense-detail', {
         // send expenseId to retrieve expense details relating to it
         expenseIdData: expenseId,
       })
@@ -55,7 +53,7 @@ const ExpenseDetail = ({ user, workspace }) => {
   const fetchData = async () => {
     // fetch categories, and paymode
     axios
-      .post("/get-data-expense-form", {
+      .post('/get-data-expense-form', {
         // userId and workspaceId will allow us to retrieve:
         // categories(via ws_id), payee (via user_ws_id), payment mode (via user_id)
         userId: user.id,
@@ -84,15 +82,15 @@ const ExpenseDetail = ({ user, workspace }) => {
       notes: addNotes,
       expenseDate: addExpenseDate,
     };
-    console.log("expense data into db:", data);
+    console.log('expense data into db:', data);
     axios
-      .post("/add-expense", {
+      .post('/add-expense', {
         data,
         workspaceId: workspace.id,
       })
       .then((response) => {
         console.log(response);
-        navigate("/dashboard");
+        navigate('/dashboard');
       })
       .catch((error) => {
         console.log(error);
@@ -100,7 +98,7 @@ const ExpenseDetail = ({ user, workspace }) => {
   };
 
   useEffect(() => {
-    if (storeDbData === "") {
+    if (storeDbData === '') {
       fetchExpenseData();
       fetchData();
     }
@@ -223,11 +221,11 @@ const ExpenseDetail = ({ user, workspace }) => {
                     {/* Get Category */}
                     {storeDbData.data !== undefined
                       ? storeDbData.data.category.map((x) => (
-                          <MenuItem value={x.categoryId}>
-                            {x.categoryName}
-                          </MenuItem>
-                        ))
-                      : console.log("No category data")}
+                        <MenuItem value={x.categoryId}>
+                          {x.categoryName}
+                        </MenuItem>
+                      ))
+                      : console.log('No category data')}
                   </Select>
                 </FormControl>
               </Grid>
@@ -269,14 +267,14 @@ const ExpenseDetail = ({ user, workspace }) => {
                     }}
                   >
                     {/* Get PaymentMode */}
-                    {storeDbData.data !== undefined &&
-                    storeDbData.data.paymentMode[0] !== undefined
+                    {storeDbData.data !== undefined
+                    && storeDbData.data.paymentMode[0] !== undefined
                       ? storeDbData.data.paymentMode.map((x) => (
-                          <MenuItem value={x.paymentModeId}>
-                            {x.paymentModeName}
-                          </MenuItem>
-                        ))
-                      : console.log("No payment mode data")}
+                        <MenuItem value={x.paymentModeId}>
+                          {x.paymentModeName}
+                        </MenuItem>
+                      ))
+                      : console.log('No payment mode data')}
                   </Select>
                 </FormControl>
               </Grid>

@@ -46,11 +46,11 @@ const ExpenseList = ({ expenses, all }) => {
   const colors = useTheme().palette;
   console.log(groupedResults);
   for (const [key, value] of Object.entries(groupedResults)) {
-    const show = (all) ? 50 : 3;
+    const show = all ? 50 : 3;
     return (
       <>
         <Typography mb={1} variant="h6" color={colors.primary.main}>
-          {moment(key).isSame(moment().startOf('day')) ? 'Today' : key}
+          {moment(key).isSame(moment().startOf('day')) ? 'Today' : moment(key).format('DD MMM YYYY')}
         </Typography>
         <Divider />
         <MapOfExpenses show={show} value={value} colors={colors} />
