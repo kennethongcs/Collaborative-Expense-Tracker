@@ -15,37 +15,33 @@ const formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0,
 });
 
-const MapOfExpenses = ({ value, show }) =>
-  value.map(
-    (expense, index) =>
-      index < show && (
-        <Container key={expense.id}>
-          <Box mt={1}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Box>{expense.payee}</Box>
-              <Typography style={{ color: 'red' }} component="span">
-                {formatter.format(expense.amount)}
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography style={{ color: 'grey' }}>
-                {`${expense.user?.firstName} ${expense.user?.lastName}`}
-              </Typography>
-              <Typography style={{ color: 'grey' }}>
-                {expense.category.name}
-              </Typography>
-            </Box>
-          </Box>
-          <hr />
-        </Container>
-      )
-  );
+const MapOfExpenses = ({ value, show, colors }) => value.map(
+  (expense, index) => index < show && (
+    <Container key={expense.id}>
+      <Box mt={1}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box>{expense.payee}</Box>
+          <Typography color={colors.error.main} component="span">
+            {formatter.format(expense.amount)}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography color={colors.text.disabled}>
+            {`${expense.user?.firstName} ${expense.user?.lastName}`}
+          </Typography>
+          <Typography color={colors.text.disabled}>
+            {expense.category?.name}
+          </Typography>
+        </Box>
+      </Box>
+      <hr />
+    </Container>
+  ),
+);
 
 const ExpenseList = ({ expenses, all }) => {
   console.log(expenses);
-  const groupedResults = groupBy(expenses, (result) =>
-    moment(result).format('DD-MMM-YYYY')
-  );
+  const groupedResults = groupBy(expenses, (result) => moment(result).format('DD-MMM-YYYY'));
 
   const colors = useTheme().palette;
   console.log(groupedResults);
@@ -54,10 +50,10 @@ const ExpenseList = ({ expenses, all }) => {
     return (
       <>
         <Typography mb={1} variant="h6" color={colors.primary.main}>
-          {key}
+          {moment(key).isSame(moment().startOf('day')) ? 'Today' : moment(key).format('DD MMM YYYY')}
         </Typography>
         <Divider />
-        <MapOfExpenses show={show} value={value} />
+        <MapOfExpenses show={show} value={value} colors={colors} />
       </>
     );
   }

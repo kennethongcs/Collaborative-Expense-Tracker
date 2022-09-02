@@ -118,5 +118,30 @@ export default function initWorkspacesController(db) {
     }
   };
 
-  return { create, retrieve, joinWorkspace };
+  const getCollaborators = async (req, res) => {
+    const { workspaceId } = req.query;
+
+    try {
+      // get collaborators in same workspace
+      const workspaces = await db.Workspace.findOne({
+        include: {
+          model: db.User,
+          attributes: ['id', 'firstName', 'lastName'],
+          through: {
+            attributes: ['workspaceAuthorityId'],
+          },
+        },
+        where: { id: workspaceId },
+        attributes: ['id', 'name', 'purpose'],
+      });
+
+      res.send(workspaces);
+    } catch (err) {
+      console.log(`get collaborators err: ${err}`);
+    }
+  };
+
+  return {
+    create, retrieve, joinWorkspace, getCollaborators,
+  };
 }

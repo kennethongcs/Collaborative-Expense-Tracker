@@ -60,42 +60,46 @@ const ExpenseForm = ({ user, workspace }) => {
   });
 
   const handleSubmitExpense = () => {
-    // add expense
-    const data = {
-      name: addExpenseName,
-      userWorkspaceId: storeDbData.data.userWorkspaceId[0].userWorkspaceId,
-      categoryId: addExpenseCategory,
-      paymentModeId: addExpensePaymentMode,
-      payee: addExpensePayee,
-      amount: parseFloat(addExpenseAmount),
-      notes: addNotes,
-      expenseDate: addExpenseDate,
-      userId: user.id,
-    };
-    console.log('expense data into db:', data);
-    axios
-      .post('/add-expense', {
-        data,
-        workspaceId: workspace.id,
-      })
-      .then((response) => {
-        console.log(response);
+    if (addExpenseName && addExpenseAmount && addExpenseCategory) {
+      // add expense
+      const data = {
+        name: addExpenseName,
+        userWorkspaceId: storeDbData.data.userWorkspaceId[0].userWorkspaceId,
+        categoryId: addExpenseCategory,
+        paymentModeId: addExpensePaymentMode,
+        payee: addExpensePayee,
+        amount: parseFloat(addExpenseAmount),
+        notes: addNotes,
+        expenseDate: addExpenseDate,
+        userId: user.id,
+      };
+      console.log('expense data into db:', data);
+      axios
+        .post('/add-expense', {
+          data,
+          workspaceId: workspace.id,
+        })
+        .then((response) => {
+          console.log(response);
 
-        if (marginTop > 0) navigate('/dashboard');
-        else {
+          if (marginTop > 0) navigate('/dashboard');
+          else {
           // reset input boxes
-          setaddExpenseName('');
-          setaddExpenseAmount('');
-          setaddExpenseDate(new Date());
-          setaddExpenseCategory(null);
-          setaddExpensePayee('');
-          setaddExpensePaymentMode(null);
-          setaddNotes('');
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+            setaddExpenseName('');
+            setaddExpenseAmount('');
+            setaddExpenseDate(new Date());
+            setaddExpenseCategory(null);
+            setaddExpensePayee('');
+            setaddExpensePaymentMode(null);
+            setaddNotes('');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   const ExpenseButtons = () => {
@@ -156,6 +160,8 @@ const ExpenseForm = ({ user, workspace }) => {
               maxWidth="600px"
               alignItems="center"
               justifyContent="center"
+              spacing={2}
+              mt={0}
             >
               {/* Expense form Input Field */}
               {/* Expense name Input Field */}
@@ -165,7 +171,6 @@ const ExpenseForm = ({ user, workspace }) => {
                   label="Expense Name"
                   required
                   fullWidth
-                  margin="normal"
                   value={addExpenseName}
                   onChange={(event) => {
                     if (event.target.value.match(/^[a-zA-Z\s]*$/)) {
@@ -181,7 +186,6 @@ const ExpenseForm = ({ user, workspace }) => {
                   label="Input Expense Amount"
                   required
                   fullWidth
-                  margin="normal"
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">$</InputAdornment>
@@ -203,20 +207,19 @@ const ExpenseForm = ({ user, workspace }) => {
                   <DatePicker
                     id="expense-date-input"
                     label="Expense Date"
-                    margin="normal"
                     value={addExpenseDate}
                     onChange={(addExpenseDate) => {
                       setaddExpenseDate(addExpenseDate);
                     }}
                     renderInput={(params) => (
-                      <TextField required margin="normal" fullWidth {...params} />
+                      <TextField required fullWidth {...params} />
                     )}
                   />
                 </LocalizationProvider>
               </Grid>
               {/* Expense payment category Input Field */}
               <Grid item xs={12} sm={8} md={5}>
-                <FormControl fullWidth margin="normal" required>
+                <FormControl fullWidth required>
                   <InputLabel>Category</InputLabel>
                   <Select
                     labelId="expense-category"
@@ -244,7 +247,6 @@ const ExpenseForm = ({ user, workspace }) => {
                   id="expense-payee-input"
                   label="Expense Payee"
                   fullWidth
-                  margin="normal"
                   value={addExpensePayee}
                   onChange={(event) => {
                     if (event.target.value.match(/^[a-zA-Z\s]*$/)) {
@@ -255,7 +257,7 @@ const ExpenseForm = ({ user, workspace }) => {
               </Grid>
               {/* Expense payment mode Input Field */}
               <Grid item xs={12} sm={8} md={5}>
-                <FormControl fullWidth margin="normal">
+                <FormControl fullWidth>
                   <InputLabel>Payment Mode</InputLabel>
                   <Select
                     labelId="payment-mode"
@@ -284,7 +286,6 @@ const ExpenseForm = ({ user, workspace }) => {
                   id="expense-notes-input"
                   label="Notes"
                   multiline
-                  margin="normal"
                   rows={4}
                   fullWidth
                   value={addNotes}
