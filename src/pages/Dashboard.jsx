@@ -31,7 +31,7 @@ const Dashboard = ({ user, workspace }) => {
     <>
       <Typography component="h1" variant="h5" />
       <Box mt={5}>
-        <Grid container spacing={0}>
+        <Grid container spacing={1}>
           <Grid item xs={12}>
             <ExpensesBarChart
               workspace={workspace}
