@@ -18,18 +18,19 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useParams } from "react-router-dom";
 
 const ExpenseDetail = ({ user, workspace }) => {
-  const [addExpenseName, setaddExpenseName] = useState([]);
-  const [addExpenseAmount, setaddExpenseAmount] = useState([]);
+  const [addExpenseName, setaddExpenseName] = useState("");
+  const [addExpenseAmount, setaddExpenseAmount] = useState("");
   const [addExpenseDate, setaddExpenseDate] = useState(new Date());
-  const [addExpenseCategory, setaddExpenseCategory] = useState([]);
-  const [addExpensePayee, setaddExpensePayee] = useState([]);
-  const [addExpensePaymentMode, setaddExpensePaymentMode] = useState([]);
+  const [addExpenseCategory, setaddExpenseCategory] = useState(null);
+  const [addExpensePayee, setaddExpensePayee] = useState("");
+  const [addExpensePaymentMode, setaddExpensePaymentMode] = useState(null);
+  const [addComments, setaddComments] = useState([]);
   const [storeDbData, setstoreDbData] = useState("");
-  const [addNotes, setaddNotes] = useState([]);
+  const [addNotes, setaddNotes] = useState("");
   const { expenseId } = useParams();
 
   const fetchExpenseData = async () => {
-    // fetch categories, and paymode
+    // fetch expense data via id
     axios
       .post("/get-expense-detail", {
         // send expenseId to retrieve expense details relating to it
@@ -41,9 +42,19 @@ const ExpenseDetail = ({ user, workspace }) => {
         setaddExpenseName(response.data.name);
         setaddExpenseAmount(response.data.amount);
         setaddExpenseDate(response.data.expenseDate);
-        setaddExpenseCategory(response.data.category.name);
+        // add category id as well, need it as value,
+        // does it automatically selects the option if value tallies?
+        setaddExpenseCategory({
+          categoryName: response.data.category.name,
+          categoryId: response.data.category.id,
+        });
         setaddExpensePayee(response.data.payee);
-        setaddExpensePaymentMode(response.data.payment_mode.name);
+        // add paymentMode id as well, need it as value,
+        // does it automatically selects the option if value tallies?
+        setaddExpensePaymentMode({
+          paymentModeName: response.data.payment_mode.name,
+          paymentModeId: response.data.payment_mode.id,
+        });
         setaddNotes(response.data.notes);
       })
       .catch((error) => {
@@ -52,8 +63,8 @@ const ExpenseDetail = ({ user, workspace }) => {
       });
   };
 
-  const fetchData = async () => {
-    // fetch categories, and paymode
+  const fetchDataOptions = async () => {
+    // fetch categories via workspaceId, and payment mode via user
     axios
       .post("/get-data-expense-form", {
         // userId and workspaceId will allow us to retrieve:
@@ -65,6 +76,40 @@ const ExpenseDetail = ({ user, workspace }) => {
       .then((response) => {
         setstoreDbData(response);
         console.log(response);
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
+  };
+
+  const fetchComments = async () => {
+    // fetch comments via expense Id
+    axios
+      .post("/get-comments", {
+        // send expenseId to retrieve all comments
+        expenseIdData: expenseId,
+      })
+      // update useState
+      .then((response) => {
+        console.log(response);
+        setaddExpenseName(response.data.name);
+        setaddExpenseAmount(response.data.amount);
+        setaddExpenseDate(response.data.expenseDate);
+        // add category id as well, need it as value,
+        // does it automatically selects the option if value tallies?
+        setaddExpenseCategory({
+          categoryName: response.data.category.name,
+          categoryId: response.data.category.id,
+        });
+        setaddExpensePayee(response.data.payee);
+        // add paymentMode id as well, need it as value,
+        // does it automatically selects the option if value tallies?
+        setaddExpensePaymentMode({
+          paymentModeName: response.data.payment_mode.name,
+          paymentModeId: response.data.payment_mode.id,
+        });
+        setaddNotes(response.data.notes);
       })
       .catch((error) => {
         // handle error
@@ -101,8 +146,12 @@ const ExpenseDetail = ({ user, workspace }) => {
 
   useEffect(() => {
     if (storeDbData === "") {
+      // fetch expense detail
       fetchExpenseData();
-      fetchData();
+      // fetch workspace/user data to render correct options
+      fetchDataOptions();
+      // fetch comments relating to expense
+      fetchComments();
     }
   });
 
@@ -214,7 +263,8 @@ const ExpenseDetail = ({ user, workspace }) => {
                   <Select
                     labelId="expense-category"
                     id="expense-payment-mode-input"
-                    value={addExpenseCategory}
+                    // does it auto add the option if value tallies?
+                    value={addExpenseCategory.categoryId}
                     label="Payment Mode"
                     onChange={(event) => {
                       setaddExpenseCategory(event.target.value);
@@ -262,7 +312,7 @@ const ExpenseDetail = ({ user, workspace }) => {
                   <Select
                     labelId="payment-mode"
                     id="expense-payment-mode-input"
-                    value={addExpensePaymentMode}
+                    value={addExpensePaymentMode.paymentModeId}
                     label="Payment Mode"
                     onChange={(event) => {
                       setaddExpensePaymentMode(event.target.value);
