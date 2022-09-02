@@ -410,13 +410,13 @@ const ExpenseDetail = ({ user, workspace }) => {
             <Paper style={{ padding: '20px 20px' }}>
               <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
-                  <Avatar alt="Remy Sharp" />
+                  <Avatar />
                 </Grid>
                 <Grid justifyContent="left" item xs zeroMinWidth>
                   <h4 style={{ margin: 0, textAlign: 'left' }}>
-                    {user.firstName}
+                    {x.user.firstName}
                     {' '}
-                    {user.lastName}
+                    {x.user.lastName}
                   </h4>
                   <p style={{ textAlign: 'left' }}>
                     {x.comment}
