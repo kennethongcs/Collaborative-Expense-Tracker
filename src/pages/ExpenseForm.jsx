@@ -63,6 +63,7 @@ const ExpenseForm = ({ user, workspace }) => {
     // add expense
     const data = {
       name: addExpenseName,
+      userId: user.id,
       userWorkspaceId: storeDbData.data.userWorkspaceId[0].userWorkspaceId,
       categoryId: addExpenseCategory,
       paymentModeId: addExpensePaymentMode,
