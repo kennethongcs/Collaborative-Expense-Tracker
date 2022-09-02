@@ -101,15 +101,19 @@ export default function initExpenseDataController(db) {
           {
             model: db.UserWorkspace,
             where: { workspaceId },
+            attributes: [],
           },
           {
             model: db.Category,
+            attributes: ['name'],
           },
           {
             model: db.User,
+            attributes: ['firstName', 'lastName'],
           }],
+        attributes: ['id', 'payee', 'amount', 'expense_date'],
         where: { expense_date: { [Op.lte]: Date.now() } },
-        order: [[Sequelize.col('expense_date'), 'DESC']],
+        order: [['expense_date', 'DESC']],
       });
       // console.log(expenseList);
       res.send(expenseList);
