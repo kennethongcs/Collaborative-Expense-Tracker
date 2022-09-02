@@ -1693,6 +1693,20 @@ module.exports = {
         updated_at: new Date(),
       },
       {
+        user_id: johnUser.id,
+        expense_id: johnExpenseOne.id,
+        comment: 'some comment',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        user_id: simonUser.id,
+        expense_id: johnExpenseOne.id,
+        comment: 'some comment',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
         user_id: peterUser.id,
         expense_id: peterExpenseTwo.id,
         comment: 'some comment',

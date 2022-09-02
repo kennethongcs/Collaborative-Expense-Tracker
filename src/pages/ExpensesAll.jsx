@@ -26,7 +26,6 @@ const ExpensesAll = ({ workspace }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setExpenses(res.data);
       });
   }, []);

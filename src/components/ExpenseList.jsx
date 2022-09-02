@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax */
+
 import React from 'react';
 import { groupBy, sortBy } from 'lodash';
 import moment from 'moment';
@@ -8,12 +9,14 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import useTheme from '@mui/material/styles/useTheme';
 
+
 // Create our number formatter.
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
   maximumFractionDigits: 0,
 });
+
 
 const MapOfExpenses = ({ value, show, date, colors }) =>
   value.map(
@@ -26,19 +29,20 @@ const MapOfExpenses = ({ value, show, date, colors }) =>
               : moment(expense.expenseDate).format('DD MMM YYYY')}
           </Typography>
           <Divider />
+
           <Box mt={1}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>{expense.payee}</Box>
-              <Typography style={{ color: 'red' }} component="span">
+              <Typography color={colors.error.main} component="span">
                 {formatter.format(expense.amount)}
               </Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography style={{ color: 'grey' }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography color={colors.text.disabled}>
                 {`${expense.user?.firstName} ${expense.user?.lastName}`}
               </Typography>
-              <Typography style={{ color: 'grey' }}>
-                {expense.category.name}
+              <Typography color={colors.text.disabled}>
+                {expense.category?.name}
               </Typography>
             </Box>
           </Box>
@@ -48,9 +52,11 @@ const MapOfExpenses = ({ value, show, date, colors }) =>
   );
 
 const ExpenseList = ({ expenses, all }) => {
+
   console.log('😃 raw data ', expenses);
+
   const groupedResults = groupBy(expenses, (result) =>
-    moment(result).format('DD-MMM-YYYY')
+    moment(result).format("DD-MMM-YYYY")
   );
   // const sortByDate = sortBy(groupedResults, 'date');
   // console.log('sort by date', sortByDate);
@@ -72,7 +78,9 @@ const ExpenseList = ({ expenses, all }) => {
     const show = all ? 50 : 3;
     return (
       <>
+
         <MapOfExpenses show={show} value={value} date={date} colors={colors} />
+
       </>
     );
   }

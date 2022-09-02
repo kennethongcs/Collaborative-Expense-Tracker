@@ -36,7 +36,6 @@ export default function initExpenseDataController(db) {
           expenseData.userWorkspaceId.push({ userWorkspaceId: x.dataValues.id });
         }
       });
-
       // // find relevant payees if userWorkspaceId is not undefined
       // if (userWorkspaceId !== undefined) {
       //   const retrievePayees = await db.Payee.findAll({
@@ -62,7 +61,6 @@ export default function initExpenseDataController(db) {
           expenseData.paymentMode.push({ paymentModeId: x.dataValues.id, paymentModeName: x.dataValues.name });
         }
       });
-
       // send final data back to display options on the expense sheet
       res.send(expenseData);
     }
@@ -73,11 +71,12 @@ export default function initExpenseDataController(db) {
 
   const addExpenseData = async (req, res) => {
     try {
-      console.log('this is reqbody', req.body);
+      console.log('creating new expense', req.body);
       const expenseData = req.body.data;
 
       const newExpense = await db.Expense.create({
         name: expenseData.name,
+        userId: expenseData.userId,
         userWorkspaceId: expenseData.userWorkspaceId,
         categoryId: expenseData.categoryId,
         paymentModeId: expenseData.paymentModeId,
@@ -121,7 +120,7 @@ export default function initExpenseDataController(db) {
 
   const retrieveExpenseDetail = async (req, res) => {
     try {
-      console.log('this is reqbody', req.body);
+      console.log('retriving expense detail', req.body);
       const { expenseIdData } = req.body;
 
       const newExpense = await db.Expense.findOne({
@@ -139,7 +138,35 @@ export default function initExpenseDataController(db) {
     }
   };
 
+  const updateExpenseDetail = async (req, res) => {
+    try {
+      console.log('updating new expense', req.body);
+      const expenseData = req.body.data;
+
+      const findExpense = await db.Expense.findOne({
+        where: {
+          id: expenseData.expenseIdData,
+        },
+      });
+      await findExpense.update({
+        name: expenseData.name,
+        userId: expenseData.userId,
+        userWorkspaceId: expenseData.userWorkspaceId,
+        categoryId: expenseData.categoryId,
+        paymentModeId: expenseData.paymentModeId,
+        payee: expenseData.payee,
+        amount: expenseData.amount,
+        notes: expenseData.notes,
+        expenseDate: expenseData.expenseDate,
+      });
+      res.send(findExpense);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   return ({
-    retrieveExpenseData, addExpenseData, retrieveExpenseDetail, retrieve,
+    retrieveExpenseData, addExpenseData, retrieveExpenseDetail, retrieve, updateExpenseDetail,
   });
 }
