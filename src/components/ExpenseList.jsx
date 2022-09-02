@@ -22,7 +22,7 @@ const MapOfExpenses = ({ value, show, navigate }) =>
       index < show && (
         <Container
           key={expense.id}
-          onClick={() => navigate(`/expenses/${expense.id}`)}
+          onClick={() => navigate(`/dashboard/expenses/${expense.id}`)}
         >
           <Box mt={1}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
