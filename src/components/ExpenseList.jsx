@@ -20,7 +20,12 @@ const MapOfExpenses = ({ value, show, date, colors }) =>
     (expense, index) =>
       index < show && (
         <Container key={expense.id}>
-          <Typography mb={1} variant="h6" color={colors.primary.main}>
+          <Typography
+            mb={1}
+            variant="h6"
+            color={colors.primary.main}
+            sx={{ fontSize: 18 }}
+          >
             {expense.expenseDate}
           </Typography>
           <Divider />
@@ -55,11 +60,15 @@ const ExpenseList = ({ expenses, all }) => {
 
   console.log('grouped results ', groupedResults);
 
+  const newObj = { groupedResults };
+  console.log('new obj', newObj);
   // for (let [i, y] of Object.entries(groupedResults)) {
   //   y.map((data) => {
   //     console.log(i, data.amount);
   //   });
   // }
+
+  Object.entries(groupedResults).map((x) => console.log(x));
 
   const colors = useTheme().palette;
   for (let [date, value] of Object.entries(groupedResults)) {
