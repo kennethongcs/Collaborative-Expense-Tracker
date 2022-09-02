@@ -27,6 +27,7 @@ export default function routes(app) {
   app.post('/add-category', categoriesController.addCategories);
   app.post('/get-data-expense-form', expenseDataController.retrieveExpenseData);
   app.post('/add-expense', expenseDataController.addExpenseData);
+  app.get('/getExpenses', expenseDataController.retrieve);
   app.post('/get-expense-detail', expenseDataController.retrieveExpenseDetail);
 
   app.get('/stats', statsController.retrieve);

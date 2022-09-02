@@ -1,51 +1,76 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import axios from "axios";
-import Link from "@mui/material/Link";
-import ExpenseList from "../components/ExpenseList.jsx";
+import React, { useEffect, useState } from 'react';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import AvatarGroup from '@mui/material/AvatarGroup';
+
+import axios from 'axios';
+
+import { useNavigate } from 'react-router-dom';
+import ExpenseList from '../components/ExpenseList.jsx';
+import ExpensesBarChart from '../components/ExpensesBarChart.jsx';
+import StyledAvatar from '../components/StyledAvatar.jsx';
 
 const Dashboard = ({ user, workspace }) => {
   const [expenses, setExpenses] = useState([]);
+  const [selectedData, setSelectedData] = useState();
 
   useEffect(() => {
     axios
-      .post("/getExpenses", {
-        workspace,
+      .get('/getExpenses', {
+        params: {
+          workspaceId: workspace.id,
+        },
       })
       .then((res) => {
+        console.log(res.data);
         setExpenses(res.data);
       });
   }, []);
+
+  const navigate = useNavigate();
+
   return (
     <>
       <Typography component="h1" variant="h5">
-        Chart here
+        Dashboard
       </Typography>
       <Box sx={{ mt: 3 }}>
-        <div>
-          <div>Some info about collaborators in this workspace</div>
-          <br />
-          <div>
-            <Link
-              href="/all-expenses"
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <ExpensesBarChart workspace={workspace} setSelectedData={setSelectedData} />
+          </Grid>
+          <Grid item xs={12} mr={2}>
+            <AvatarGroup
+              max={3}
               sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                fontSize: 14,
+                '& .MuiAvatar-root': { width: 22, height: 22, fontSize: '0.8rem' },
               }}
+            >
+              <StyledAvatar>JD</StyledAvatar>
+              <StyledAvatar>MJ</StyledAvatar>
+              <StyledAvatar>PG</StyledAvatar>
+            </AvatarGroup>
+          </Grid>
+          <Grid item xs={12} mr={2}>
+            <Typography
+              textAlign="right"
               color="primary"
+              sx={{
+                fontSize: 14, textDecoration: 'underline',
+              }}
+              onClick={() => navigate('/expenses')}
             >
               Show all
-            </Link>
+            </Typography>
+          </Grid>
+          <Grid item xs={12} mr={2}>
             <ExpenseList
               expenses={expenses}
               workspace={workspace}
-              user={user}
             />
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </Box>
     </>
   );

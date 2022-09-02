@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import Cookies from 'js-cookie';
+
 import ExpenseList from '../components/ExpenseList.jsx';
 
-const AllExpenses = ({ workspace }) => {
-  const theme = createTheme();
+const ExpensesAll = ({ workspace }) => {
   const navigate = useNavigate();
 
   const handleBackButton = () => {
@@ -24,32 +18,33 @@ const AllExpenses = ({ workspace }) => {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
+    console.log(`workspace: ${workspace.id}`);
     axios
-      .post('/getExpenses', {
-        workspace,
+      .get('/getExpenses', {
+        params: {
+          workspaceId: workspace.id,
+        },
       })
       .then((res) => {
+        console.log(res.data);
         setExpenses(res.data);
       });
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box mt={4}>
-          <ArrowBackIosNewIcon onClick={handleBackButton} />
-        </Box>
-        <Box mt={3}>
-          <Typography component="h1" variant="h5">
-            All Expenses
-          </Typography>
-          <br />
-          <ExpenseList expenses={expenses} all="all" />
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <Container component="main" maxWidth="xs">
+      <Box mt={4}>
+        <ArrowBackIosNewIcon onClick={handleBackButton} />
+      </Box>
+      <Box mt={3}>
+        <Typography component="h1" variant="h5">
+          Expenses
+        </Typography>
+        <br />
+        <ExpenseList expenses={expenses} all />
+      </Box>
+    </Container>
   );
 };
 
-export default AllExpenses;
+export default ExpensesAll;

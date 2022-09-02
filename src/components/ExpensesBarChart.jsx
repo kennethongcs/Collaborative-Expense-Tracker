@@ -44,8 +44,6 @@ const ExpensesBarChart = ({ workspace, setSelectedData }) => {
         setDataKeys(Object.keys(chartData[indexWithMostCollaborators]).filter((key) => (key !== 'createdOn' && key !== 'period')));
       })
       .catch((error) => console.log(error));
-
-    console.log(dataKeys);
   }, []);
 
   /**
