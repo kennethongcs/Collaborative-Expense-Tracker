@@ -23,7 +23,7 @@ const Dashboard = ({ user, workspace }) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setExpenses(res.data);
       });
   }, []);
@@ -32,19 +32,24 @@ const Dashboard = ({ user, workspace }) => {
 
   return (
     <>
-      <Typography component="h1" variant="h5">
-        Dashboard
-      </Typography>
+      <Typography component="h1" variant="h5"></Typography>
       <Box sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <ExpensesBarChart workspace={workspace} setSelectedData={setSelectedData} />
+            <ExpensesBarChart
+              workspace={workspace}
+              setSelectedData={setSelectedData}
+            />
           </Grid>
           <Grid item xs={12} mr={2}>
             <AvatarGroup
               max={3}
               sx={{
-                '& .MuiAvatar-root': { width: 22, height: 22, fontSize: '0.8rem' },
+                '& .MuiAvatar-root': {
+                  width: 22,
+                  height: 22,
+                  fontSize: '0.8rem',
+                },
               }}
             >
               <StyledAvatar>JD</StyledAvatar>
@@ -57,7 +62,8 @@ const Dashboard = ({ user, workspace }) => {
               textAlign="right"
               color="primary"
               sx={{
-                fontSize: 14, textDecoration: 'underline',
+                fontSize: 14,
+                textDecoration: 'underline',
               }}
               onClick={() => navigate('/expenses')}
             >
@@ -65,10 +71,7 @@ const Dashboard = ({ user, workspace }) => {
             </Typography>
           </Grid>
           <Grid item xs={12} mr={2}>
-            <ExpenseList
-              expenses={expenses}
-              workspace={workspace}
-            />
+            <ExpenseList expenses={expenses} workspace={workspace} />
           </Grid>
         </Grid>
       </Box>
