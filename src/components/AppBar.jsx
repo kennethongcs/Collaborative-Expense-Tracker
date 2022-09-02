@@ -111,21 +111,26 @@ const AppBar = ({ user, workspace }) => {
           ))}
         </Menu>
       </Box>
-      <Box sx={{ ml: 1 }}>{workspace.name}</Box>
-      <AvatarGroup
-        max={3}
-        sx={{
-          '& .MuiAvatar-root': {
-            width: 22,
-            height: 22,
-            fontSize: '0.8rem',
-          },
-        }}
+      <Box
+        sx={{ ml: 1, mt: 1, display: 'flex', justifyContent: 'space-between' }}
       >
-        <StyledAvatar>JD</StyledAvatar>
-        <StyledAvatar>MJ</StyledAvatar>
-        <StyledAvatar>PG</StyledAvatar>
-      </AvatarGroup>
+        {workspace.name}
+
+        <AvatarGroup
+          max={3}
+          sx={{
+            '& .MuiAvatar-root': {
+              width: 22,
+              height: 22,
+              fontSize: '0.8rem',
+            },
+          }}
+        >
+          <StyledAvatar>JD</StyledAvatar>
+          <StyledAvatar>MJ</StyledAvatar>
+          <StyledAvatar>PG</StyledAvatar>
+        </AvatarGroup>
+      </Box>
     </Container>
   );
 };
