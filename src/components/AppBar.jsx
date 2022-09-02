@@ -9,6 +9,8 @@ import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useTheme from '@mui/material/styles/useTheme';
+import StyledAvatar from '../components/StyledAvatar.jsx';
+import AvatarGroup from '@mui/material/AvatarGroup';
 
 const settings = [
   {
@@ -109,7 +111,26 @@ const AppBar = ({ user, workspace }) => {
           ))}
         </Menu>
       </Box>
-      <Box sx={{ ml: 1 }}>{workspace.name}</Box>
+      <Box
+        sx={{ ml: 1, mt: 1, display: 'flex', justifyContent: 'space-between' }}
+      >
+        {workspace.name}
+
+        <AvatarGroup
+          max={3}
+          sx={{
+            '& .MuiAvatar-root': {
+              width: 22,
+              height: 22,
+              fontSize: '0.8rem',
+            },
+          }}
+        >
+          <StyledAvatar>JD</StyledAvatar>
+          <StyledAvatar>MJ</StyledAvatar>
+          <StyledAvatar>PG</StyledAvatar>
+        </AvatarGroup>
+      </Box>
     </Container>
   );
 };

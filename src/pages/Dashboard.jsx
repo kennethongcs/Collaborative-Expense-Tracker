@@ -41,23 +41,7 @@ const Dashboard = ({ user, workspace }) => {
               setSelectedData={setSelectedData}
             />
           </Grid>
-          <Grid item xs={12} mr={2}>
-            <AvatarGroup
-              max={3}
-              sx={{
-                '& .MuiAvatar-root': {
-                  width: 22,
-                  height: 22,
-                  fontSize: '0.8rem',
-                },
-              }}
-            >
-              <StyledAvatar>JD</StyledAvatar>
-              <StyledAvatar>MJ</StyledAvatar>
-              <StyledAvatar>PG</StyledAvatar>
-            </AvatarGroup>
-          </Grid>
-          <Grid item xs={12} mr={2}>
+          <Grid item xs={12} mr={2} mb={-2}>
             <Typography
               textAlign="right"
               color="primary"
