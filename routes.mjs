@@ -5,6 +5,7 @@ import initWorkspacesController from './controllers/workspaces-controller.mjs';
 import initCategoriesController from './controllers/categories-controller.mjs';
 import initStatisticsController from './controllers/stats-controller.mjs';
 import initExpenseDataController from './controllers/expense-data-controller.mjs';
+import initExpensesController from './controllers/expenses-controller.mjs';
 
 export default function routes(app) {
   const usersController = initUsersController(db);
@@ -12,6 +13,7 @@ export default function routes(app) {
   const categoriesController = initCategoriesController(db);
   const statsController = initStatisticsController(db);
   const expenseDataController = initExpenseDataController(db);
+  const expensesController = initExpensesController(db);
 
   app.get('/register', usersController.signup);
   app.post('/register', usersController.signup);
@@ -23,7 +25,7 @@ export default function routes(app) {
   app.post('/workspace', workspacesController.create);
   app.post('/joinworkspace', workspacesController.joinWorkspace);
   app.get('/workspace', workspacesController.retrieve);
-
+  app.post('/getexpenses', expensesController.retrieve);
   app.post('/add-category', categoriesController.addCategories);
   app.post('/get-data-expense-form', expenseDataController.retrieveExpenseData);
   app.post('/add-expense', expenseDataController.addExpenseData);
