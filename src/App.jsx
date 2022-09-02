@@ -19,6 +19,7 @@ import Statistics from './pages/Statistics.jsx';
 import Settings from './pages/Settings.jsx';
 import WorkspaceSettings from './pages/WorkspaceSettings.jsx';
 import Profile from './pages/Profile.jsx';
+import ExpensesAll from './pages/ExpensesAll.jsx';
 
 const App = () => {
   const [user, setUser] = useState(() => {
@@ -52,31 +53,62 @@ const App = () => {
         />
         <Route path="signup" element={<Signup />} />
 
-        <Route path="workspace/settings" element={<WorkspaceSettings user={user} workspace={workspace} setWorkspace={setWorkspace} />} />
+        <Route
+          path="workspace/settings"
+          element={(
+            <WorkspaceSettings
+              user={user}
+              workspace={workspace}
+              setWorkspace={setWorkspace}
+            />
+          )}
+        />
 
         <Route path="workspace" element={<WorkspaceLayout />}>
-          <Route index element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
-          <Route path="1" element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />} />
-          <Route path="2" element={<CategoryForm user={user} workspace={workspace} />} />
-          <Route path="3" element={<CollaboratorForm workspace={workspace} />} />
-          <Route path="4" element={<ExpenseForm user={user} workspace={workspace} />} />
+          <Route
+            index
+            element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />}
+          />
+          <Route
+            path="1"
+            element={<WorkspaceForm user={user} setWorkspace={setWorkspace} />}
+          />
+          <Route
+            path="2"
+            element={<CategoryForm user={user} workspace={workspace} />}
+          />
+          <Route
+            path="3"
+            element={<CollaboratorForm workspace={workspace} />}
+          />
+          <Route
+            path="4"
+            element={<ExpenseForm user={user} workspace={workspace} />}
+          />
         </Route>
 
         <Route path="dashboard" element={<DashboardLayout user={user} />}>
           <Route
             index
             element={
-                // <ProtectedRoute user={user}>
+              // <ProtectedRoute user={user}>
               <Dashboard user={user} workspace={workspace} />
-                // </ProtectedRoute>
-              }
+              // </ProtectedRoute>
+            }
           />
           <Route path="stats" element={<Statistics workspace={workspace} />} />
-          <Route path="expense" element={<ExpenseForm user={user} workspace={workspace} />} />
+          <Route
+            path="expense"
+            element={<ExpenseForm user={user} workspace={workspace} />}
+          />
           <Route path="expenses/:expenseId" element={<ExpenseDetail />} />
-          <Route path="settings" element={<Settings user={user} setUser={setUser} />} />
+          <Route
+            path="settings"
+            element={<Settings user={user} setUser={setUser} />}
+          />
         </Route>
 
+        <Route path="expenses" element={<ExpensesAll workspace={workspace} />} />
         <Route path="profile" element={<Profile user={user} setUser={setUser} />} />
 
         <Route path="*" element={<Error />} />

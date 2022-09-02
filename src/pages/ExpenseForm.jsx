@@ -227,9 +227,6 @@ const ExpenseForm = ({ user, workspace }) => {
                     }}
                   >
                     {/* Get Category */}
-                    {/* {storeDbData.data.category.map((x) => (
-                      <MenuItem value={x.categoryId}>{x.categoryName}</MenuItem>
-                    ))} */}
                     {storeDbData.data !== undefined
                       ? storeDbData.data.category.map((x) => (
                         <MenuItem key={x.categoryId} value={x.categoryId}>
