@@ -1,3 +1,5 @@
+import { Sequelize, Op } from 'sequelize';
+
 export default function initExpenseDataController(db) {
   // retrieve the following data from db:
   // categories, payee, paymentmode
@@ -83,6 +85,7 @@ export default function initExpenseDataController(db) {
         amount: expenseData.amount,
         notes: expenseData.notes,
         expenseDate: expenseData.expenseDate,
+        userId: expenseData.userId,
       });
       res.send(newExpense);
     }
@@ -103,7 +106,11 @@ export default function initExpenseDataController(db) {
           {
             model: db.Category,
           },
-        ],
+          {
+            model: db.User,
+          }],
+        where: { expense_date: { [Op.lte]: Date.now() } },
+        order: [[Sequelize.col('expense_date'), 'DESC']],
       });
       // console.log(expenseList);
       res.send(expenseList);
