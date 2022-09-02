@@ -1,35 +1,46 @@
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import InputAdornment from '@mui/material/InputAdornment';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import { useNavigate } from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useParams } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import Box from "@mui/material/Box";
+import { result } from "lodash";
 
 const ExpenseDetail = ({ user, workspace }) => {
-  const [addExpenseName, setaddExpenseName] = useState([]);
-  const [addExpenseAmount, setaddExpenseAmount] = useState([]);
+  const [addExpenseName, setaddExpenseName] = useState("");
+  const [addExpenseAmount, setaddExpenseAmount] = useState("");
   const [addExpenseDate, setaddExpenseDate] = useState(new Date());
-  const [addExpenseCategory, setaddExpenseCategory] = useState([]);
-  const [addExpensePayee, setaddExpensePayee] = useState([]);
-  const [addExpensePaymentMode, setaddExpensePaymentMode] = useState([]);
-  const [storeDbData, setstoreDbData] = useState('');
-  const [addNotes, setaddNotes] = useState([]);
-  const { expenseId } = useParams();
+  const [addExpenseCategory, setaddExpenseCategory] = useState(null);
+  const [addExpensePayee, setaddExpensePayee] = useState("");
+  const [addExpensePaymentMode, setaddExpensePaymentMode] = useState(null);
+  const [addComments, setaddComments] = useState("");
+  const [addNewComment, setaddNewComment] = useState("");
+  const [storeDbData, setstoreDbData] = useState("");
+  const [addNotes, setaddNotes] = useState("");
 
+  const { expenseId } = useParams();
   const fetchExpenseData = async () => {
-    // fetch categories, and paymode
+    // fetch expense data via id
     axios
-      .post('/get-expense-detail', {
+      .post("/get-expense-detail", {
         // send expenseId to retrieve expense details relating to it
         expenseIdData: expenseId,
       })
@@ -39,9 +50,13 @@ const ExpenseDetail = ({ user, workspace }) => {
         setaddExpenseName(response.data.name);
         setaddExpenseAmount(response.data.amount);
         setaddExpenseDate(response.data.expenseDate);
-        setaddExpenseCategory(response.data.category.name);
+        // add category id as well, need it as value,
+        // does it automatically selects the option if value tallies?
+        setaddExpenseCategory(response.data.category.id);
         setaddExpensePayee(response.data.payee);
-        setaddExpensePaymentMode(response.data.payment_mode.name);
+        // add paymentMode id as well, need it as value,
+        // does it automatically selects the option if value tallies?
+        setaddExpensePaymentMode(response.data.payment_mode.id);
         setaddNotes(response.data.notes);
       })
       .catch((error) => {
@@ -49,11 +64,10 @@ const ExpenseDetail = ({ user, workspace }) => {
         console.log(error);
       });
   };
-
-  const fetchData = async () => {
-    // fetch categories, and paymode
+  const fetchDataOptions = async () => {
+    // fetch categories via workspaceId, and payment mode via user
     axios
-      .post('/get-data-expense-form', {
+      .post("/get-data-expense-form", {
         // userId and workspaceId will allow us to retrieve:
         // categories(via ws_id), payee (via user_ws_id), payment mode (via user_id)
         userId: user.id,
@@ -62,7 +76,7 @@ const ExpenseDetail = ({ user, workspace }) => {
       // update useState
       .then((response) => {
         setstoreDbData(response);
-        console.log(response);
+        console.log("this is data option", response);
       })
       .catch((error) => {
         // handle error
@@ -70,39 +84,103 @@ const ExpenseDetail = ({ user, workspace }) => {
       });
   };
 
-  const handleSubmitExpense = () => {
-    // add expense
-    const data = {
-      name: addExpenseName,
-      userWorkspaceId: storeDbData.data.userWorkspaceId[0].userWorkspaceId,
-      categoryId: addExpenseCategory,
-      paymentModeId: addExpensePaymentMode,
-      payee: addExpensePayee,
-      amount: addExpenseAmount,
-      notes: addNotes,
-      expenseDate: addExpenseDate,
-    };
-    console.log('expense data into db:', data);
+  const fetchComments = async () => {
+    // fetch comments via expense Id
     axios
-      .post('/add-expense', {
-        data,
-        workspaceId: workspace.id,
+      .post("/get-comments", {
+        // send expenseId to retrieve all comments
+        expenseIdData: expenseId,
       })
+      // update useState
       .then((response) => {
-        console.log(response);
-        navigate('/dashboard');
+        console.log("these are comments", response.data);
+        setaddComments(response.data);
       })
       .catch((error) => {
+        // handle error
+        console.log(error);
+      });
+  };
+
+  const handleAddComment = async () => {
+    // fetch comments via expense Id
+    axios
+      .post("/add-comment", {
+        // send userId, expenseId detail to update comments table
+        userId: user.id,
+        expenseIdData: expenseId,
+        comment: addNewComment,
+      })
+      // fetch updated data and update addComments useState
+      .then((response) => {
+        console.log(response);
+        fetchComments();
+        setaddNewComment("");
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      });
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    // fetch comments via expense Id
+    axios
+      .post("/delete-comment", {
+        // send commentId in order to delete it
+        id: commentId,
+      })
+      // fetch updated data and update addComments useState
+      .then((response) => {
+        console.log(response);
+        fetchComments();
+      })
+      .catch((error) => {
+        // handle error
         console.log(error);
       });
   };
 
   useEffect(() => {
-    if (storeDbData === '') {
+    if (storeDbData === "") {
+      // fetch workspace/user data to render correct options
+      fetchDataOptions();
+      // fetch expense data for the expense id
       fetchExpenseData();
-      fetchData();
+      // fetch comments relating to expense
+      fetchComments();
     }
   });
+
+  const handleUpdateExpense = () => {
+    // add expense
+    const data = {
+      expenseIdData: expenseId,
+      userId: user.id,
+      name: addExpenseName,
+      userWorkspaceId: storeDbData.data.userWorkspaceId[0].userWorkspaceId,
+      categoryId: addExpenseCategory,
+      paymentModeId: addExpensePaymentMode,
+      payee: addExpensePayee,
+      amount: parseFloat(addExpenseAmount),
+      notes: addNotes,
+      expenseDate: addExpenseDate,
+    };
+
+    console.log("updating data in db:", data);
+    axios
+      .post("/update-expense", {
+        data,
+        workspaceId: workspace.id,
+      })
+      .then((response) => {
+        console.log(response);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -116,7 +194,7 @@ const ExpenseDetail = ({ user, workspace }) => {
             component="h2"
             gutterBottom
           >
-            Expense!
+            Expense Detail
           </Typography>
         </Grid>
         <Grid container alignItems="center" justifyContent="center">
@@ -212,8 +290,9 @@ const ExpenseDetail = ({ user, workspace }) => {
                   <Select
                     labelId="expense-category"
                     id="expense-payment-mode-input"
-                    value={addExpenseCategory}
-                    label="Payment Mode"
+                    // does it auto add the option if value tallies?
+                    value={addExpenseCategory || ""}
+                    label="Category"
                     onChange={(event) => {
                       setaddExpenseCategory(event.target.value);
                     }}
@@ -221,11 +300,11 @@ const ExpenseDetail = ({ user, workspace }) => {
                     {/* Get Category */}
                     {storeDbData.data !== undefined
                       ? storeDbData.data.category.map((x) => (
-                        <MenuItem value={x.categoryId}>
-                          {x.categoryName}
-                        </MenuItem>
-                      ))
-                      : console.log('No category data')}
+                          <MenuItem value={x.categoryId}>
+                            {x.categoryName}
+                          </MenuItem>
+                        ))
+                      : console.log("No category data")}
                   </Select>
                 </FormControl>
               </Grid>
@@ -260,21 +339,21 @@ const ExpenseDetail = ({ user, workspace }) => {
                   <Select
                     labelId="payment-mode"
                     id="expense-payment-mode-input"
-                    value={addExpensePaymentMode}
+                    value={addExpensePaymentMode || ""}
                     label="Payment Mode"
                     onChange={(event) => {
                       setaddExpensePaymentMode(event.target.value);
                     }}
                   >
                     {/* Get PaymentMode */}
-                    {storeDbData.data !== undefined
-                    && storeDbData.data.paymentMode[0] !== undefined
+                    {storeDbData.data !== undefined &&
+                    storeDbData.data.paymentMode[0] !== undefined
                       ? storeDbData.data.paymentMode.map((x) => (
-                        <MenuItem value={x.paymentModeId}>
-                          {x.paymentModeName}
-                        </MenuItem>
-                      ))
-                      : console.log('No payment mode data')}
+                          <MenuItem value={x.paymentModeId}>
+                            {x.paymentModeName}
+                          </MenuItem>
+                        ))
+                      : console.log("No payment mode data")}
                   </Select>
                 </FormControl>
               </Grid>
@@ -302,7 +381,6 @@ const ExpenseDetail = ({ user, workspace }) => {
             </Grid>
           </Grid>
         </Grid>
-
         {/* Submit Expense Button */}
         <Grid
           container
@@ -313,12 +391,85 @@ const ExpenseDetail = ({ user, workspace }) => {
           <Button
             minWidth="140px"
             minHeight="40px"
-            onClick={handleSubmitExpense}
+            onClick={handleUpdateExpense}
             variant="contained"
           >
-            Submit Expense
+            Update Expense
           </Button>
         </Grid>
+
+        <Box container>
+          {/* Get Comments */}
+          <Grid container alignItems="center" justifyContent="center">
+            <Typography
+              className="paragraph"
+              variant="h6"
+              // color="textSecondary"
+              component="h2"
+              gutterBottom
+            >
+              Comments
+            </Typography>
+          </Grid>
+          {addComments !== ""
+            ? addComments.map((x) => (
+                <Paper style={{ padding: "20px 20px" }}>
+                  <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item>
+                      <Avatar alt="Remy Sharp" />
+                    </Grid>
+                    <Grid justifyContent="left" item xs zeroMinWidth>
+                      <h4 style={{ margin: 0, textAlign: "left" }}>
+                        {user.firstName} {user.lastName}
+                      </h4>
+                      <p style={{ textAlign: "left" }}>{x.comment} </p>
+                      <p style={{ textAlign: "left", color: "gray" }}>
+                        Created at: {x.createdAt}
+                      </p>
+                    </Grid>
+                    <IconButton onClick={() => handleDeleteComment(x.id)}>
+                      <DeleteOutlinedIcon style={{ marginTop: "-80px" }} />
+                    </IconButton>
+                  </Grid>
+                  <Divider variant="fullWidth" style={{ margin: "0px 0" }} />
+                </Paper>
+              ))
+            : console.log("No comments")}
+          <Grid
+            padding="20px"
+            container
+            alignItems="center"
+            justifyContent="center"
+            minHeight="80px"
+          >
+            <TextField
+              id="comment-input"
+              label="Add Comments"
+              multiline
+              rows={4}
+              fullWidth
+              value={addNewComment}
+              onChange={(event) => {
+                setaddNewComment(event.target.value);
+              }}
+            />
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="center"
+              minHeight="70px"
+            >
+              <Button
+                minWidth="140px"
+                minHeight="40px"
+                onClick={handleAddComment}
+                variant="contained"
+              >
+                Add Comment!
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
       </Container>
     </>
   );

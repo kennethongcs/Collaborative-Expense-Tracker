@@ -38,12 +38,20 @@ const Dashboard = ({ user, workspace }) => {
               setSelectedData={setSelectedData}
             />
           </Grid>
-          <Grid item xs={12} mr={4} mt={3} mb={0} sx={{ display: 'flex', justifyContent: 'end' }}>
+          <Grid
+            item
+            xs={12}
+            mr={4}
+            mt={3}
+            mb={0}
+            sx={{ display: 'flex', justifyContent: 'end' }}
+          >
             <Typography
               textAlign="right"
               color="primary"
               sx={{
                 fontSize: 14,
+
                 textDecoration: 'underline',
                 cursor: 'pointer',
               }}
