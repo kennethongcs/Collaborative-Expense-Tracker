@@ -27,7 +27,7 @@ const MapOfExpenses = ({ value, show }) => value.map(
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography style={{ color: 'grey' }}>
-            {`User ${expense.user_workspace.userId}`}
+            {`${expense.user?.firstName} ${expense.user?.lastName}`}
           </Typography>
           <Typography style={{ color: 'grey' }}>
             {expense.category.name}

@@ -70,6 +70,7 @@ const ExpenseForm = ({ user, workspace }) => {
       amount: parseFloat(addExpenseAmount),
       notes: addNotes,
       expenseDate: addExpenseDate,
+      userId: user.id,
     };
     console.log('expense data into db:', data);
     axios

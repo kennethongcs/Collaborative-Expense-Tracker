@@ -33,7 +33,7 @@ const Dashboard = ({ user, workspace }) => {
   return (
     <>
       <Typography component="h1" variant="h5">
-        Dashboard
+        {workspace.name}
       </Typography>
       <Box sx={{ mt: 3 }}>
         <Grid container spacing={2}>
