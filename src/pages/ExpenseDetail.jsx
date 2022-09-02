@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -24,6 +25,7 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import Box from "@mui/material/Box";
 import { result } from "lodash";
 
+
 const ExpenseDetail = ({ user, workspace }) => {
   const [addExpenseName, setaddExpenseName] = useState("");
   const [addExpenseAmount, setaddExpenseAmount] = useState("");
@@ -35,11 +37,12 @@ const ExpenseDetail = ({ user, workspace }) => {
   const [addNewComment, setaddNewComment] = useState("");
   const [storeDbData, setstoreDbData] = useState("");
   const [addNotes, setaddNotes] = useState("");
+
   const { expenseId } = useParams();
   const fetchExpenseData = async () => {
     // fetch expense data via id
     axios
-      .post("/get-expense-detail", {
+      .post('/get-expense-detail', {
         // send expenseId to retrieve expense details relating to it
         expenseIdData: expenseId,
       })
@@ -66,7 +69,7 @@ const ExpenseDetail = ({ user, workspace }) => {
   const fetchDataOptions = async () => {
     // fetch categories via workspaceId, and payment mode via user
     axios
-      .post("/get-data-expense-form", {
+      .post('/get-data-expense-form', {
         // userId and workspaceId will allow us to retrieve:
         // categories(via ws_id), payee (via user_ws_id), payment mode (via user_id)
         userId: user.id,
@@ -165,15 +168,17 @@ const ExpenseDetail = ({ user, workspace }) => {
       notes: addNotes,
       expenseDate: addExpenseDate,
     };
+
     console.log("updating data in db:", data);
     axios
       .post("/update-expense", {
+
         data,
         workspaceId: workspace.id,
       })
       .then((response) => {
         console.log(response);
-        navigate("/dashboard");
+        navigate('/dashboard');
       })
       .catch((error) => {
         console.log(error);
@@ -298,11 +303,11 @@ const ExpenseDetail = ({ user, workspace }) => {
                     {/* Get Category */}
                     {storeDbData.data !== undefined
                       ? storeDbData.data.category.map((x) => (
-                          <MenuItem value={x.categoryId}>
-                            {x.categoryName}
-                          </MenuItem>
-                        ))
-                      : console.log("No category data")}
+                        <MenuItem value={x.categoryId}>
+                          {x.categoryName}
+                        </MenuItem>
+                      ))
+                      : console.log('No category data')}
                   </Select>
                 </FormControl>
               </Grid>
@@ -344,14 +349,14 @@ const ExpenseDetail = ({ user, workspace }) => {
                     }}
                   >
                     {/* Get PaymentMode */}
-                    {storeDbData.data !== undefined &&
-                    storeDbData.data.paymentMode[0] !== undefined
+                    {storeDbData.data !== undefined
+                    && storeDbData.data.paymentMode[0] !== undefined
                       ? storeDbData.data.paymentMode.map((x) => (
-                          <MenuItem value={x.paymentModeId}>
-                            {x.paymentModeName}
-                          </MenuItem>
-                        ))
-                      : console.log("No payment mode data")}
+                        <MenuItem value={x.paymentModeId}>
+                          {x.paymentModeName}
+                        </MenuItem>
+                      ))
+                      : console.log('No payment mode data')}
                   </Select>
                 </FormControl>
               </Grid>

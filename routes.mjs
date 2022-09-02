@@ -27,8 +27,10 @@ export default function routes(app) {
   app.post('/workspace', workspacesController.create);
   app.post('/joinworkspace', workspacesController.joinWorkspace);
   app.get('/workspace', workspacesController.retrieve);
-  // app.post('/getexpenses', expensesController.retrieve);
+  app.get('/workspace/collaborators', workspacesController.getCollaborators);
+
   app.post('/add-category', categoriesController.addCategories);
+
   app.post('/get-data-expense-form', expenseDataController.retrieveExpenseData);
   app.post('/add-expense', expenseDataController.addExpenseData);
   app.get('/getExpenses', expenseDataController.retrieve);

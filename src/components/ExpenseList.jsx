@@ -16,7 +16,7 @@ const formatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-const MapOfExpenses = ({ value, show, navigate }) =>
+const MapOfExpenses = ({ value, show, colors, navigate }) =>
   value.map(
     (expense, index) =>
       index < show && (
@@ -27,16 +27,16 @@ const MapOfExpenses = ({ value, show, navigate }) =>
           <Box mt={1}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>{expense.payee}</Box>
-              <Typography style={{ color: "red" }} component="span">
+              <Typography color={colors.error.main} component="span">
                 {formatter.format(expense.amount)}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography style={{ color: "grey" }}>
+              <Typography color={colors.text.disabled}>
                 {`${expense.user?.firstName} ${expense.user?.lastName}`}
               </Typography>
-              <Typography style={{ color: "grey" }}>
-                {expense.category.name}
+              <Typography color={colors.text.disabled}>
+                {expense.category?.name}
               </Typography>
             </Box>
           </Box>
@@ -48,6 +48,7 @@ const MapOfExpenses = ({ value, show, navigate }) =>
 const ExpenseList = ({ expenses, all }) => {
   const navigate = useNavigate();
   console.log(expenses);
+
   const groupedResults = groupBy(expenses, (result) =>
     moment(result).format("DD-MMM-YYYY")
   );
@@ -59,10 +60,18 @@ const ExpenseList = ({ expenses, all }) => {
     return (
       <>
         <Typography mb={1} variant="h6" color={colors.primary.main}>
-          {key}
+          {moment(key).isSame(moment().startOf("day"))
+            ? "Today"
+            : moment(key).format("DD MMM YYYY")}
         </Typography>
         <Divider />
-        <MapOfExpenses show={show} value={value} navigate={navigate} />
+
+        <MapOfExpenses
+          show={show}
+          value={value}
+          colors={colors}
+          avigate={navigate}
+        />
       </>
     );
   }

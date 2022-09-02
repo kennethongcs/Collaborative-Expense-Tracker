@@ -53,13 +53,13 @@ const App = () => {
 
         <Route
           path="workspace/settings"
-          element={
+          element={(
             <WorkspaceSettings
               user={user}
               workspace={workspace}
               setWorkspace={setWorkspace}
             />
-          }
+          )}
         />
 
         <Route path="workspace" element={<WorkspaceLayout />}>
@@ -87,7 +87,7 @@ const App = () => {
 
         <Route
           path="dashboard"
-          element={<DashboardLayout user={user} workspace={workspace} />}
+          element={<DashboardLayout user={user} workspace={workspace} setWorkspace={setWorkspace} />}
         >
           <Route
             index
