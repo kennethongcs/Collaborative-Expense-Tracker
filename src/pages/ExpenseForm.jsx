@@ -1,38 +1,38 @@
-import { useNavigate, useLocation } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import InputAdornment from '@mui/material/InputAdornment';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import InputAdornment from "@mui/material/InputAdornment";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const ExpenseForm = ({ user, workspace }) => {
-  const [addExpenseName, setaddExpenseName] = useState('');
-  const [addExpenseAmount, setaddExpenseAmount] = useState('');
+  const [addExpenseName, setaddExpenseName] = useState("");
+  const [addExpenseAmount, setaddExpenseAmount] = useState("");
   const [addExpenseDate, setaddExpenseDate] = useState(new Date());
   const [addExpenseCategory, setaddExpenseCategory] = useState(null);
-  const [addExpensePayee, setaddExpensePayee] = useState('');
+  const [addExpensePayee, setaddExpensePayee] = useState("");
   const [addExpensePaymentMode, setaddExpensePaymentMode] = useState(null);
-  const [storeDbData, setstoreDbData] = useState('');
-  const [addNotes, setaddNotes] = useState('');
+  const [storeDbData, setstoreDbData] = useState("");
+  const [addNotes, setaddNotes] = useState("");
 
   const location = useLocation();
-  const marginTop = location.pathname.endsWith('/dashboard/expense') ? 0 : 8;
+  const marginTop = location.pathname.endsWith("/dashboard/expense") ? 0 : 8;
 
   const navigate = useNavigate();
-  const fetchData = async () => {
+  const fetchDataOptions = async () => {
     // fetch categories, and paymode
     axios
-      .post('/get-data-expense-form', {
+      .post("/get-data-expense-form", {
         // userId and workspaceId will allow us to retrieve:
         // categories(via ws_id), payee (via user_ws_id), payment mode (via user_id)
         userId: user.id,
@@ -50,12 +50,12 @@ const ExpenseForm = ({ user, workspace }) => {
   };
 
   const handleNext = () => {
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   useEffect(() => {
-    if (storeDbData === '') {
-      fetchData();
+    if (storeDbData === "") {
+      fetchDataOptions();
     }
   });
 
@@ -73,32 +73,32 @@ const ExpenseForm = ({ user, workspace }) => {
         expenseDate: addExpenseDate,
         userId: user.id,
       };
-      console.log('expense data into db:', data);
+      console.log("expense data into db:", data);
       axios
-        .post('/add-expense', {
+        .post("/add-expense", {
           data,
           workspaceId: workspace.id,
         })
         .then((response) => {
           console.log(response);
 
-          if (marginTop > 0) navigate('/dashboard');
+          if (marginTop > 0) navigate("/dashboard");
           else {
-          // reset input boxes
-            setaddExpenseName('');
-            setaddExpenseAmount('');
+            // reset input boxes
+            setaddExpenseName("");
+            setaddExpenseAmount("");
             setaddExpenseDate(new Date());
             setaddExpenseCategory(null);
-            setaddExpensePayee('');
+            setaddExpensePayee("");
             setaddExpensePaymentMode(null);
-            setaddNotes('');
+            setaddNotes("");
           }
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   };
 
@@ -148,13 +148,11 @@ const ExpenseForm = ({ user, workspace }) => {
           <Box
             sx={{
               mt: marginTop,
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <Typography variant="h5">
-              Add a New Expense
-            </Typography>
+            <Typography variant="h5">Add a New Expense</Typography>
             <Grid
               container
               maxWidth="600px"
@@ -233,11 +231,11 @@ const ExpenseForm = ({ user, workspace }) => {
                     {/* Get Category */}
                     {storeDbData.data !== undefined
                       ? storeDbData.data.category.map((x) => (
-                        <MenuItem key={x.categoryId} value={x.categoryId}>
-                          {x.categoryName}
-                        </MenuItem>
-                      ))
-                      : console.log('No category data')}
+                          <MenuItem key={x.categoryId} value={x.categoryId}>
+                            {x.categoryName}
+                          </MenuItem>
+                        ))
+                      : console.log("No category data")}
                   </Select>
                 </FormControl>
               </Grid>
@@ -269,14 +267,17 @@ const ExpenseForm = ({ user, workspace }) => {
                     }}
                   >
                     {/* Get PaymentMode */}
-                    {storeDbData.data !== undefined
-                    && storeDbData.data.paymentMode[0] !== undefined
+                    {storeDbData.data !== undefined &&
+                    storeDbData.data.paymentMode[0] !== undefined
                       ? storeDbData.data.paymentMode.map((x) => (
-                        <MenuItem key={x.paymentModeId} value={x.paymentModeId}>
-                          {x.paymentModeName}
-                        </MenuItem>
-                      ))
-                      : console.log('No payment mode data')}
+                          <MenuItem
+                            key={x.paymentModeId}
+                            value={x.paymentModeId}
+                          >
+                            {x.paymentModeName}
+                          </MenuItem>
+                        ))
+                      : console.log("No payment mode data")}
                   </Select>
                 </FormControl>
               </Grid>
@@ -301,7 +302,6 @@ const ExpenseForm = ({ user, workspace }) => {
         </Grid>
         <ExpenseButtons />
       </Grid>
-
     </>
   );
 };
