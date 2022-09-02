@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import axios from 'axios';
-import Link from '@mui/material/Link';
-
-import ExpenseList from '../components/ExpenseList.jsx';
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import axios from "axios";
+import Link from "@mui/material/Link";
+import ExpenseList from "../components/ExpenseList.jsx";
 
 const Dashboard = ({ user, workspace }) => {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     axios
-      .post('/getExpenses', {
+      .post("/getExpenses", {
         workspace,
       })
       .then((res) => {
@@ -32,8 +31,8 @@ const Dashboard = ({ user, workspace }) => {
             <Link
               href="/all-expenses"
               sx={{
-                display: 'flex',
-                justifyContent: 'flex-end',
+                display: "flex",
+                justifyContent: "flex-end",
                 fontSize: 14,
               }}
               color="primary"
