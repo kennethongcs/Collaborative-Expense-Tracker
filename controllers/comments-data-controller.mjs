@@ -11,6 +11,10 @@ export default function initExpenseDataController(db) {
         where: {
           expenseId: expenseIdData,
         },
+        include: {
+          model: db.User,
+          attributes: ['firstName', 'lastName'],
+        },
       });
       // send final data back to display comments on the expense detail
       console.log('retrieve comments', retrieveComments);

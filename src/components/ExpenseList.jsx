@@ -19,7 +19,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 const MapOfExpenses = ({
   expense, colors, navigate,
 }) => (
-  <Container key={expense.id} onClick={() => navigate(`/dashboard/expenses/${expense.id}`)}>
+  <Container key={expense.id} onClick={() => navigate(`/expenses/${expense.id}`)}>
     <Box mt={1}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box>{expense.payee}</Box>

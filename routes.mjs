@@ -6,7 +6,6 @@ import initCategoriesController from './controllers/categories-controller.mjs';
 import initStatisticsController from './controllers/stats-controller.mjs';
 import initExpenseDataController from './controllers/expense-data-controller.mjs';
 import initCommentsDataController from './controllers/comments-data-controller.mjs';
-// import initExpensesController from './controllers/expenses-controller.mjs';
 
 export default function routes(app) {
   const usersController = initUsersController(db);
@@ -15,7 +14,6 @@ export default function routes(app) {
   const statsController = initStatisticsController(db);
   const expenseDataController = initExpenseDataController(db);
   const commentsDataController = initCommentsDataController(db);
-  // const expensesController = initExpensesController(db);
 
   app.get('/register', usersController.signup);
   app.post('/register', usersController.signup);
