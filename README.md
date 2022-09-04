@@ -27,3 +27,7 @@ Collaborative Expense Tracker
 - Database is using [PostgreSQL](https://www.postgresql.org/)
 - [Sequelize](https://sequelize.org/) is used for ORM
 - Module bundler done using [Webpack](https://webpack.js.org/)
+
+## Project Artifacts
+- [Wireframe](https://www.figma.com/file/7j7m1ieb9UYsUYxl33JLTo/Collaborative-Expense-Tracker?node-id=231%3A929) is done using [Figma](https://www.figma.com/)
+- [Task management](https://trello.com/b/HQA4ajW0/expense-tracker) is done using [Trello](https://trello.com/)
